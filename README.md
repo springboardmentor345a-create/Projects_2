@@ -16,16 +16,42 @@ ScoreSight is a machine learning project focused on predicting English Premier L
 
 ```
 ScoreSight/
-├── 01_Data_Loading_EDA.ipynb          # Data loading and initial exploration
-├── 02_Data_Cleaning.ipynb             # Data cleaning and preprocessing
-├── 03_Feature_Engineering.ipynb       # Feature creation and transformation
-├── 04_Encoding_Feature_Selection.ipynb # Encoding and feature selection
-├── 05_Data_Visualization.ipynb        # Data visualization and insights
-├── Match Winner.csv                   # Historical match results dataset
-├── Goals & Assist.xlsx                # Player statistics dataset
-├── ScoreSight_ML_Season_LeagueWinner_Champion.csv # Season-level data
+├── notebooks/                         # Jupyter notebooks
+│   ├── 01_Data_Loading_EDA.ipynb
+│   ├── 02_Data_Cleaning.ipynb
+│   ├── 03_Feature_Engineering.ipynb
+│   ├── 04_Encoding_Feature_Selection.ipynb
+│   └── 05_Data_Visualization.ipynb
+├── data/                              # All data files
+│   ├── raw/                           # Raw data after loading
+│   ├── cleaned/                       # Cleaned datasets
+│   ├── features/                      # Feature-engineered data
+│   ├── encoded/                       # Encoded datasets
+│   └── final/                         # Final modeling datasets
+├── datasets/                          # Original datasets
+│   ├── Match Winner.csv
+│   ├── Goals & Assist.xlsx
+│   └── ScoreSight_ML_Season_LeagueWinner_Champion.csv
+├── visualizations/                    # Generated visualizations
+│   ├── viz_match_correlation.png
+│   ├── viz_match_distributions.png
+│   ├── viz_player_correlation.png
+│   ├── viz_top_scorers.png
+│   ├── viz_league_statistics.png
+│   └── viz_summary_dashboard.png
+├── scripts/                           # Python automation scripts
+│   ├── execute_notebooks.py
+│   └── validate_data.py
+├── docs/                              # Documentation
+│   ├── PREPROCESSING_SUMMARY.md
+│   ├── PROJECT_STATUS.md
+│   ├── QUICK_START_GUIDE.md
+│   ├── EXECUTION_REPORT.md
+│   └── AI_ScoreSight Doc.pdf
 ├── requirements.txt                   # Python dependencies
-└── README.md                          # This file
+├── README.md                          # This file
+├── LICENSE                            # License file
+└── MIT LICENSE                        # MIT License
 ```
 
 ## Datasets
