@@ -32,7 +32,13 @@ match_drop_cols = [
     'am1_encoded', 'am2_encoded', 'am3_encoded', 'am4_encoded', 'am5_encoded'
 ]
 
-match_df_clean = match_df.drop(columns=match_drop_cols)
+# 1. MATCH PREDICTION DATASET: REMOVE DATA LEAK FEATURES - ONLY PRE-MATCH STATS
+# Drop all columns not available pre-match or that are targets
+leak_cols = ['fthg', 'ftag', 'ftr_encoded']  # outcome variables
+match_drop_cols += [col for col in leak_cols if col in match_df.columns]
+match_df_clean = match_df.drop(columns=match_drop_cols, errors='ignore')
+print(f"NEW: Also dropping leakage columns: {leak_cols}")
+
 print(f"Dropped columns: {match_drop_cols}")
 print(f"New shape: {match_df_clean.shape}")
 print(f"Remaining columns: {list(match_df_clean.columns)}")
@@ -77,7 +83,8 @@ player_drop_cols = [
     'progressive_receives'
 ]
 
-player_df_clean = player_df.drop(columns=player_drop_cols)
+# Player Top Scorer Prediction: Only features available BEFORE season/event can be used for valid prediction. Many statistics are only known after the season. Use errors='ignore' to prevent error if columns do not exist as user may pre-trimmed data.
+player_df_clean = player_df.drop(columns=player_drop_cols, errors='ignore')
 print(f"Dropped columns: {player_drop_cols}")
 print(f"New shape: {player_df_clean.shape}")
 print(f"Remaining columns: {list(player_df_clean.columns)}")
@@ -108,7 +115,8 @@ league_drop_cols = [
     'losses'
 ]
 
-league_df_clean = league_df.drop(columns=league_drop_cols)
+# League Points Dataset: Only features available BEFORE end of season are valid - drop with errors='ignore' for safety
+league_df_clean = league_df.drop(columns=league_drop_cols, errors='ignore')
 print(f"Dropped columns: {league_drop_cols}")
 print(f"New shape: {league_df_clean.shape}")
 print(f"Remaining columns: {list(league_df_clean.columns)}")

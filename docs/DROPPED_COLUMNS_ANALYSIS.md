@@ -175,5 +175,37 @@ No information critical to the problem statement was lost in the column reductio
 
 ---
 
+## Updated for Data Leakage Prevention (October 30, 2025)
+
+### Match Prediction Dataset
+- Dropped all match outcome columns ('fthg', 'ftag', 'ftr_encoded') to ensure NO data leakage; all remaining features reflect only what is knowable before the match is played.
+
+| Column Name            | Reason for Dropping              |
+|-----------------------|----------------------------------|
+| fthg                  | Full Time Home Goals - Target    |
+| ftag                  | Full Time Away Goals - Target    |
+| ftr_encoded           | Full Time Result - Target (leakage)     |
+
+Retained Columns (Now 23):
+- htgs, atgs, htgc, atgc, htp, atp, mw, htformpts, atformpts, htwinstreak3, htwinstreak5, htlossstreak3, htlossstreak5, atwinstreak3, atwinstreak5, atlossstreak3, atlossstreak5, htgd, atgd, diffpts, diffformpts, hometeam_encoded, awayteam_encoded
+
+*All columns above represent stats up to (not including) the current match, i.e., strictly pre-event features.*
+
+---
+
+### Player/Top Scorer Dataset Caveat
+- "goals", "assists", per-90 stats are only valid as pre-event features if based on last/historical season, **not** the season being predicted. If these are in-season stats, you may only use them for mid-season or continual forecast, NOT pre-season projections.
+
+*Best practice: Use previous season/career stats as features for any pre-season prediction. In documentation and modeling, be explicit about what stats you have access to at prediction time to avoid leakage.*
+
+---
+
+## All clean datasets are now:
+- Composed entirely of pre-event features,
+- Free from label leakage,
+- And thus compliant for real machine learning/forecasting use.
+
+---
+
 **Status:** Complete  
 **Next Step:** Model training with cleaned datasets
