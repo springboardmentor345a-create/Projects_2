@@ -1,10 +1,10 @@
-# 🚀 ScoreSight - Quick Start Guide
+# ScoreSight - Quick Start Guide
 
 **Welcome to ScoreSight!** This guide will help you get started with the data preprocessing phase.
 
 ---
 
-## ⚡ Quick Setup (5 Minutes)
+## Quick Setup (5 Minutes)
 
 ### Step 1: Install Dependencies
 ```bash
@@ -26,13 +26,13 @@ Execute these notebooks sequentially:
 
 ---
 
-## 📋 Detailed Instructions
+## Detailed Instructions
 
 ### Prerequisites
-- ✅ Python 3.8 or higher installed
-- ✅ Jupyter Notebook installed
-- ✅ Git installed (already done)
-- ✅ Internet connection for package installation
+- Python 3.8 or higher installed
+- Jupyter Notebook installed
+- Git installed (already done)
+- Internet connection for package installation
 
 ### Installation Steps
 
@@ -167,31 +167,31 @@ Your browser will open with the Jupyter interface.
 
 ---
 
-## 🎯 Expected Results
+## Expected Results
 
 After running all notebooks, you should have:
 
-### 📁 Data Files (15 CSV files)
+### Data Files (15 CSV files)
 - 3 raw data files
 - 3 cleaned data files
 - 3 feature-engineered files
 - 3 encoded data files
 - 3 final modeling files
 
-### 🖼️ Visualizations (6 PNG files)
+### Visualizations (6 PNG files)
 - Correlation heatmaps
 - Distribution plots
 - Top scorer charts
 - Summary dashboards
 
-### 📊 Total Processing
+### Total Processing
 - **Time**: ~15-20 minutes
 - **Data Processed**: 6,841+ match records, player stats, league data
 - **Features Created**: Varies based on data structure
 
 ---
 
-## ✅ Verification Checklist
+## Verification Checklist
 
 After running all notebooks, verify:
 
@@ -235,7 +235,7 @@ pip install openpyxl
 
 ---
 
-## 💡 Tips for Success
+## Tips for Success
 
 1. **Run Cells Sequentially**: Don't skip cells or run out of order
 2. **Check Outputs**: Verify each cell's output before proceeding
@@ -245,7 +245,7 @@ pip install openpyxl
 
 ---
 
-## 📚 Additional Resources
+## Additional Resources
 
 ### Documentation
 - `README.md` - Complete project overview
@@ -262,7 +262,7 @@ pip install openpyxl
 
 ---
 
-## 🎓 Learning Path
+## Learning Path
 
 ### Beginner Level
 1. Run notebooks and observe outputs
@@ -284,7 +284,7 @@ pip install openpyxl
 
 ---
 
-## 🚀 Next Steps After Preprocessing
+## Next Steps After Preprocessing
 
 Once all notebooks are executed:
 
@@ -296,7 +296,7 @@ Once all notebooks are executed:
 
 ---
 
-## 📞 Need Help?
+## Need Help?
 
 If you encounter issues:
 1. Check the troubleshooting section above
@@ -307,30 +307,32 @@ If you encounter issues:
 
 ---
 
-## ✨ Success Indicators
+## Success Indicators
 
 You'll know preprocessing is successful when:
-- ✅ All notebooks execute without errors
-- ✅ All expected files are generated
-- ✅ Visualizations display correctly
-- ✅ Data quality metrics are satisfactory
-- ✅ No missing values in final datasets
+- All notebooks execute without errors
+- All expected files are generated
+- Visualizations display correctly
+- Data quality metrics are satisfactory
+- No missing values in final datasets
+- 33 unnecessary columns removed
 
 ---
 
-## 🎉 Congratulations!
+## Congratulations!
 
 Once you complete all notebooks, you'll have:
-- ✅ Clean, preprocessed datasets
-- ✅ Engineered features ready for modeling
-- ✅ Comprehensive visualizations
-- ✅ Understanding of data patterns
-- ✅ Foundation for model building
+- Clean, preprocessed datasets
+- Engineered features ready for modeling
+- Comprehensive visualizations
+- Understanding of data patterns
+- Foundation for model building
+- Optimized feature sets
 
-**You're now ready for Phase 2: Model Building!** 🚀
+**You're now ready for Phase 2: Model Building!**
 
 ---
 
-*Last Updated: October 28, 2025*  
+*Last Updated: October 30, 2025*  
 *Author: Prathamesh Fuke*  
 *Branch: Prathamesh_Fuke*
