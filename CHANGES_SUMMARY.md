@@ -250,3 +250,9 @@ All changes have been:
 **Status:** Complete  
 **Ready for:** Phase 2 - Model Building  
 **Last Updated:** October 30, 2025
+
+### Oct 30, 2025: DATA LEAKAGE REMOVAL
+- Match prediction: fthg, ftag, ftr_encoded fully dropped (no outcome variables remain)
+- Player/top scorer and league datasets clarified; document explains correct usage to avoid leakage
+- README updated: all datasets only use pre-event features, anti-leakage is enforced
+- See docs/DROPPED_COLUMNS_ANALYSIS.md for final feature lists and leakage discussion

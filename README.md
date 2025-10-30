@@ -269,6 +269,9 @@ A total of 33 unnecessary columns were dropped across all datasets:
 
 See `docs/DROPPED_COLUMNS_ANALYSIS.md` for detailed analysis.
 
+## Data Leakage Prevention Policy (2025 Update)
+All final datasets (see `data/final/`) now include **only features available before the predicted event**. For match prediction, only pre-match team characteristics and recent form are used; for top scorer, only stats available before the season or up to the current match point are included. See [docs/DROPPED_COLUMNS_ANALYSIS.md] for full details on column drops and new anti-leakage protocol.
+
 ## Technologies Used
 
 - **Python 3.8+**: Core programming language
