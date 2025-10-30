@@ -6,11 +6,12 @@
 
 ## Project Overview
 
-ScoreSight is a machine learning project focused on predicting English Premier League (EPL) outcomes:
-- **Match Results**: Predict individual match scores and winners
-- **Points Tally**: Forecast total points for each team
-- **League Winner**: Identify the probable champion
-- **Top Scorer**: Predict the season's leading goal scorer
+ScoreSight is a machine learning project focused on predicting English Premier League (EPL) outcomes using historical match data, player statistics, and team performance metrics.
+
+### Prediction Objectives
+1. **Match Outcomes** - Predict match scores and winners
+2. **Top Scorer** - Identify the season's leading goal scorer
+3. **League Winner & Points Tally** - Forecast team points and champion
 
 ## Project Structure
 
@@ -57,27 +58,27 @@ ScoreSight/
 ## Datasets
 
 ### 1. Match Winner.csv
-Historical match results including:
+Historical match results with 6,840 records including:
 - Team names (home/away)
-- Match scores
-- Match dates
-- Season information
-- Match outcomes
+- Match scores (full-time home/away goals)
+- Team form indicators (points, streaks)
+- Goal statistics (scored, conceded, difference)
+- Match context (week, season)
 
 ### 2. Goals & Assist.xlsx
-Player performance statistics:
-- Player names
-- Goals scored
-- Assists provided
-- Team affiliations
-- Season data
+Player performance statistics with 2,274 player-season records:
+- Player demographics (age, position, nationality)
+- Scoring statistics (goals, assists, penalties)
+- Expected goals metrics (xG, npxG, xAG)
+- Per-90 normalized statistics
+- Match participation data
 
 ### 3. ScoreSight_ML_Season_LeagueWinner_Champion.csv
-Season-level league data:
-- Team standings
-- Points tallies
-- League winners
-- Season summaries
+Season-level league data with 180 team-season records:
+- Team performance (wins, draws, losses)
+- Points and goal statistics
+- League position and championship status
+- Season identifiers
 
 ## Workflow
 
@@ -222,25 +223,27 @@ After running all notebooks, you'll have:
 ## Key Features
 
 ### Data Preprocessing
-- ✅ Comprehensive data cleaning
-- ✅ Missing value imputation
-- ✅ Duplicate removal
-- ✅ Column standardization
-- ✅ Data type corrections
+- Comprehensive data cleaning
+- Missing value imputation (median/mode/zero)
+- Duplicate removal
+- Column standardization (lowercase, underscores)
+- Data type corrections
+- Unnecessary column removal (33 columns dropped)
 
 ### Feature Engineering
-- Team form indicators
+- Team form indicators (points, streaks)
 - Home/away performance metrics
-- Player performance ratios
-- Historical averages
-- Goal contribution metrics
+- Player performance ratios (per-90 statistics)
+- Expected goals (xG) metrics
+- Goal difference calculations
 
 ### Data Quality
 - Zero missing values after cleaning
-- No duplicates
+- No duplicate records
 - Standardized column names
 - Consistent data types
 - Validated data ranges
+- Optimized feature set (57 final features)
 
 ## Evaluation Metrics
 
@@ -253,9 +256,18 @@ Models will be evaluated using:
 ## Project Milestones
 
 - [x] **Milestone 1**: Repository setup and data familiarization
-- [x] **Milestone 2**: Data preprocessing and cleaning ✅ **COMPLETED**
+- [x] **Milestone 2**: Data preprocessing and cleaning - COMPLETED
 - [ ] **Milestone 3**: Model building and evaluation
 - [ ] **Milestone 4**: Web application and final presentation
+
+## Column Optimization
+
+A total of 33 unnecessary columns were dropped across all datasets:
+- **Match Prediction**: 14 columns dropped (40 to 26 features)
+- **Top Scorer**: 13 columns dropped (34 to 21 features)
+- **Points Tally**: 6 columns dropped (16 to 10 features)
+
+See `docs/DROPPED_COLUMNS_ANALYSIS.md` for detailed analysis.
 
 ## Technologies Used
 
@@ -297,6 +309,6 @@ Branch: Prathamesh_Fuke
 
 ---
 
-**Status**: Phase 1 (Data Preprocessing) - ✅ COMPLETED  
+**Status**: Phase 1 (Data Preprocessing) - COMPLETED  
 **Next**: Phase 2 (Model Building)  
-**Last Updated**: October 28, 2025
+**Last Updated**: October 30, 2025
