@@ -94,3 +94,31 @@ GENERAL ANTI-LEAKAGE AND OVERFITTING GUIDELINES
 Status
 - All final datasets have been updated to remove direct leakage features and redundant columns.
 - Documentation and scripts are aligned with this policy.
+
+===============================================================================
+MENTOR-SELECTED DATASETS RECONCILIATION
+===============================================================================
+Files: datasets/Goals & Assist_selected.xlsx, datasets/Match_winner_selected_columns.csv
+
+Coverage Summary
+- Player selected columns present in final dataset: age, matches_played, goals, assists,
+  non_penalty_goals, penalty_goals_made, penalty_attempts, xg, npxg, xag, npxg + xag,
+  goals_per_90, assists_per_90, goals + assists per 90, non_penalty_goals_per_90,
+  xg_per_90, xag_per_90, npxg_per_90. Identity fields are represented via
+  player_encoded, nation_encoded, position_encoded.
+- Match selected columns present in final dataset: HTGS, ATGS, HTGC, ATGC, HTP, ATP,
+  MW, HTFormPts, ATFormPts, HTWinStreak3/5, HTLossStreak3/5, ATWinStreak3/5,
+  ATLossStreak3/5, HTGD, ATGD, DiffPts, DiffFormPts. Team identities are represented
+  via hometeam_encoded and awayteam_encoded.
+
+Intentionally Excluded (with reasons)
+- Player: starts, minutes, 90s_played, progressive_* , cards, compound per-90 variants
+  (redundant/less predictive; removed to reduce overfitting). Raw identity strings
+  (Player, Nation, Position) replaced by encoded columns for modeling.
+- Match: FTHG, FTAG, FTR (targets/leakage), Date (redundant with MW), HM*/AM* last-5
+  and *FormPtsStr (redundant with numeric form/streaks). Raw team names replaced by
+  encoded identifiers for modeling.
+
+Status: All essential features from the mentor-selected files are covered in the
+final datasets in a leakage-safe form; excluded columns are documented above with
+justifications.
