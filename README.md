@@ -34,13 +34,16 @@ ScoreSight/
 │   ├── Goals & Assist.xlsx
 │   └── ScoreSight_ML_Season_LeagueWinner_Champion.csv
 ├── visualizations/                    # Generated visualizations
-│   ├── viz_match_correlation.png
-│   ├── viz_match_distributions.png
-│   ├── viz_player_correlation.png
-│   ├── viz_top_scorers.png
-│   ├── viz_league_statistics.png
-│   └── viz_summary_dashboard.png
+│   ├── viz_match_distributions_prematch.png
+│   ├── viz_match_corr_prematch.png
+│   ├── viz_player_core_features.png
+│   ├── viz_league_gd_vs_ppg.png
+│   └── viz_league_top15_ppg.png
 ├── scripts/                           # Python automation scripts
+│   ├── generate_visualizations.py
+│   ├── data_quality_check.py
+│   ├── drop_unnecessary_columns.py
+│   ├── analyze_dropped_columns.py
 │   ├── execute_notebooks.py
 │   └── validate_data.py
 ├── docs/                              # Documentation
@@ -82,7 +85,7 @@ Season-level league data with 180 team-season records:
 
 ## Workflow
 
-### Phase 1: Data Preprocessing (Current)
+### Phase 1: Data Preprocessing (COMPLETED)
 
 #### Notebook 01: Data Loading and EDA
 - Load all three datasets
@@ -213,22 +216,22 @@ After running all notebooks, you'll have:
 - `data_final_points_tally.csv` - For points tally prediction
 
 **Visualizations:**
-- `viz_match_correlation.png`
-- `viz_match_distributions.png`
-- `viz_player_correlation.png`
-- `viz_top_scorers.png`
-- `viz_league_statistics.png`
-- `viz_summary_dashboard.png`
+- `viz_match_distributions_prematch.png` - Pre-match feature distributions
+- `viz_match_corr_prematch.png` - Pre-match feature correlations
+- `viz_player_core_features.png` - Player scoring metrics
+- `viz_league_gd_vs_ppg.png` - Goal difference vs points per game
+- `viz_league_top15_ppg.png` - Top teams by PPG
 
 ## Key Features
 
 ### Data Preprocessing
 - Comprehensive data cleaning
-- Missing value imputation (median/mode/zero)
-- Duplicate removal
+- **NO null values** (fully cleaned)
+- **Duplicate removal** (18 match rows, 204 player rows removed)
 - Column standardization (lowercase, underscores)
 - Data type corrections
-- Unnecessary column removal (33 columns dropped)
+- **33 columns dropped** (unnecessary/redundant)
+- **Data leakage prevention** (only pre-event features)
 
 ### Feature Engineering
 - Team form indicators (points, streaks)
@@ -238,12 +241,13 @@ After running all notebooks, you'll have:
 - Goal difference calculations
 
 ### Data Quality
-- Zero missing values after cleaning
-- No duplicate records
+- **Zero missing values** after cleaning
+- **Duplicate records removed** (222 total)
 - Standardized column names
 - Consistent data types
 - Validated data ranges
-- Optimized feature set (57 final features)
+- **Optimized feature set**: 23 match + 21 player + 10 league = 54 features
+- **Leakage-safe**: All features available pre-match/pre-event
 
 ## Evaluation Metrics
 
@@ -262,15 +266,21 @@ Models will be evaluated using:
 
 ## Column Optimization
 
-A total of 33 unnecessary columns were dropped across all datasets:
-- **Match Prediction**: 14 columns dropped (40 to 26 features)
-- **Top Scorer**: 13 columns dropped (34 to 21 features)
-- **Points Tally**: 6 columns dropped (16 to 10 features)
+A total of **33 unnecessary columns** were dropped across all datasets:
+- **Match Prediction**: 14 columns dropped (40 → 23 features)
+- **Top Scorer**: 13 columns dropped (34 → 21 features)
+- **Points Tally**: 6 columns dropped (16 → 10 features)
 
-See `docs/DROPPED_COLUMNS_ANALYSIS.md` for detailed analysis.
+See `docs/DROPPED_COLUMNS_ANALYSIS.md` and `docs/DATA_LEAKAGE_AND_OVERFITTING.txt` for detailed analysis.
 
-## Data Leakage Prevention Policy (2025 Update)
-All final datasets (see `data/final/`) now include **only features available before the predicted event**. For match prediction, only pre-match team characteristics and recent form are used; for top scorer, only stats available before the season or up to the current match point are included. See [docs/DROPPED_COLUMNS_ANALYSIS.md] for full details on column drops and new anti-leakage protocol.
+## Data Leakage Prevention Policy
+
+All final datasets now include **only features available before the predicted event**:
+- **Match prediction**: Pre-match team stats, form indicators, streaks
+- **Top scorer**: Prior season/career stats or mid-season stats-to-date
+- **League winner**: End-of-season aggregates as targets only
+
+See `docs/DATA_LEAKAGE_AND_OVERFITTING.txt` for complete justification of all features and why each was retained or dropped.
 
 ## Technologies Used
 
@@ -312,6 +322,7 @@ Branch: Prathamesh_Fuke
 
 ---
 
-**Status**: Phase 1 (Data Preprocessing) - COMPLETED  
+**Status**: Phase 1 (Data Preprocessing) - **COMPLETED**  
 **Next**: Phase 2 (Model Building)  
+**Dataset Quality**: Zero nulls, no duplicates, leakage-safe, 54 optimized features  
 **Last Updated**: October 30, 2025
