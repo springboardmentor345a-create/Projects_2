@@ -20,7 +20,7 @@
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 ```bash
@@ -40,7 +40,7 @@ jupyter notebook notebooks/07_Feature_Engineering_v3_Advanced.ipynb
 
 ---
 
-## 🏗️ Architecture Overview
+## Architecture Overview
 
 ### Three-Tier Feature Engineering System
 
@@ -74,19 +74,19 @@ jupyter notebook notebooks/07_Feature_Engineering_v3_Advanced.ipynb
 
 ---
 
-## 📊 Implementation Status
+## Implementation Status
 
-### ✅ COMPLETED: Phase 1 - Tiers 1-3
+### COMPLETED: Phase 1 - Tiers 1-3
 
 #### Tier 1: Statistical & Distributional Features (19 features)
 **Expected Impact:** +2-4% MAE
 
 | Feature Category | Count | Implementation |
 |---|---|---|
-| Percentile Features | 4 | ✅ Implemented |
-| Distribution Features | 4 | ✅ Implemented |
-| Quantile Features | 8 | ✅ Implemented |
-| Anomaly Features | 3 | ✅ Implemented |
+| Percentile Features | 4 | [DONE] Implemented |
+| Distribution Features | 4 | [DONE] Implemented |
+| Quantile Features | 8 | [DONE] Implemented |
+| Anomaly Features | 3 | [DONE] Implemented |
 
 **Key Features:**
 - `home_goals_percentile` - Relative scoring performance (0-100 scale)
@@ -103,9 +103,9 @@ jupyter notebook notebooks/07_Feature_Engineering_v3_Advanced.ipynb
 
 | Feature Category | Count | Implementation |
 |---|---|---|
-| Team Quality Proxies | 5 | ✅ Implemented |
-| Scheduling Effects | 4 | ✅ Implemented |
-| Psychological Factors | 4 | ✅ Implemented |
+| Team Quality Proxies | 5 | [DONE] Implemented |
+| Scheduling Effects | 4 | [DONE] Implemented |
+| Psychological Factors | 4 | [DONE] Implemented |
 
 **Key Features:**
 - `home_team_tier` - Team classification (1=Elite, 2=Mid, 3=Struggling)
@@ -123,10 +123,10 @@ jupyter notebook notebooks/07_Feature_Engineering_v3_Advanced.ipynb
 
 | Feature Category | Count | Implementation |
 |---|---|---|
-| Polynomial Transforms | 6 | ✅ Implemented |
-| Efficiency Ratios | 6 | ✅ Implemented |
-| Composite Indices | 4 | ✅ Implemented |
-| Interactions | 4 | ✅ Implemented |
+| Polynomial Transforms | 6 | [DONE] Implemented |
+| Efficiency Ratios | 6 | [DONE] Implemented |
+| Composite Indices | 4 | [DONE] Implemented |
+| Interactions | 4 | [DONE] Implemented |
 
 **Key Features:**
 - `home_goals_sqrt` - Square root transform (dampen large values)
@@ -158,7 +158,7 @@ jupyter notebook notebooks/07_Feature_Engineering_v3_Advanced.ipynb
 
 ---
 
-### ⏸️ NOT STARTED: Phases 3-4
+### NOT STARTED: Phases 3-4
 
 #### Tier 6-7: Clustering & Dimensionality Reduction
 - Unsupervised clustering (K-means on match characteristics)
@@ -185,7 +185,7 @@ jupyter notebook notebooks/07_Feature_Engineering_v3_Advanced.ipynb
 
 ---
 
-## 🔍 Tier-by-Tier Breakdown
+## Tier-by-Tier Breakdown
 
 ### TIER 1: Statistical & Distributional Features
 
@@ -413,7 +413,7 @@ efficiency_x_rest = offensive_eff × log(days_rest)
 
 ---
 
-## ▶️ Running the Notebook
+## Running the Notebook
 
 ### Step 1: Prepare Environment
 ```bash
@@ -482,7 +482,7 @@ window = 10  # Try 5, 7, 15 instead
 
 ---
 
-## 🎯 Performance Benchmarks
+## Performance Benchmarks
 
 ### Expected Results After Tier 1-3
 
@@ -499,7 +499,7 @@ window = 10  # Try 5, 7, 15 instead
 
 ---
 
-## 📈 Next Steps
+## Next Steps
 
 ### Immediate (This Week)
 - [ ] Run Tier 1-3 notebook
