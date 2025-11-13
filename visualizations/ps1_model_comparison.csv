@@ -1,0 +1,6 @@
+Model,Best_Params,CV_F1,Test_Accuracy,Test_Precision,Test_Recall,Test_F1,Test_ROC_AUC,Training_Time_s
+LightGBM,"{'class_weight': 'balanced', 'colsample_bytree': 0.8, 'learning_rate': 0.05, 'max_depth': 5, 'min_child_samples': 20, 'n_estimators': 100, 'num_leaves': 15, 'subsample': 0.8}",0.8807192807192807,0.9722222222222222,0.875,1.0,0.9333333333333333,0.9950738916256157,177.66568040847778
+Logistic Regression,"{'C': 0.1, 'class_weight': None, 'penalty': 'l1', 'solver': 'liblinear'}",0.8654545454545455,0.9722222222222222,1.0,0.8571428571428571,0.9230769230769231,0.9876847290640395,2.6616194248199463
+Random Forest,"{'class_weight': None, 'max_depth': None, 'min_samples_leaf': 1, 'min_samples_split': 10, 'n_estimators': 100}",0.8623310023310025,0.9722222222222222,1.0,0.8571428571428571,0.9230769230769231,0.9950738916256159,25.584271907806396
+XGBoost,"{'colsample_bytree': 0.8, 'learning_rate': 0.01, 'max_depth': 3, 'min_child_weight': 5, 'n_estimators': 200, 'scale_pos_weight': 1, 'subsample': 0.8}",0.8539060939060941,0.9722222222222222,1.0,0.8571428571428571,0.9230769230769231,1.0,4.559600591659546
+Gradient Boosting,"{'learning_rate': 0.1, 'max_depth': 5, 'min_samples_split': 2, 'n_estimators': 100, 'subsample': 1.0}",0.8785547785547786,0.9444444444444444,0.8571428571428571,0.8571428571428571,0.8571428571428571,0.9901477832512315,3.929985523223877
