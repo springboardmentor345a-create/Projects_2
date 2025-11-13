@@ -17,45 +17,94 @@ ScoreSight is a machine learning project focused on predicting English Premier L
 
 ```
 ScoreSight/
-├── notebooks/                         # Jupyter notebooks
-│   ├── 01_Data_Loading_EDA.ipynb
-│   ├── 02_Data_Cleaning.ipynb
-│   ├── 03_Feature_Engineering.ipynb
-│   ├── 04_Encoding_Feature_Selection.ipynb
-│   └── 05_Data_Visualization.ipynb
-├── data/                              # All data files
-│   ├── raw/                           # Raw data after loading
-│   ├── cleaned/                       # Cleaned datasets
-│   ├── features/                      # Feature-engineered data
-│   ├── encoded/                       # Encoded datasets
-│   └── final/                         # Final modeling datasets
-├── datasets/                          # Original datasets
+├── notebooks/                         # Jupyter notebooks for ML pipeline
+│   ├── 01_Data_Loading_EDA.ipynb     # Data loading and exploration
+│   ├── 02_Data_Cleaning.ipynb        # Data cleaning and preprocessing
+│   ├── 03_Feature_Engineering.ipynb  # Feature creation and engineering
+│   ├── 04_Encoding_Feature_Selection.ipynb  # Encoding and feature selection
+│   ├── 05_Data_Visualization.ipynb   # Data visualization and analysis
+│   ├── 06_Data_Leakage_Validation.ipynb  # Data leakage prevention validation
+│   ├── 07_Feature_Engineering_v3_Advanced.ipynb  # Advanced feature engineering
+│   ├── 08_Model_Training_v1.ipynb    # Initial model training experiments
+│   ├── 10_League_Winner_PS1.ipynb    # PS1: League winner/top-4 prediction
+│   ├── 11_Match_Winner_PS2.ipynb     # PS2: Match winner (H/D/A) prediction
+│   ├── 12_Top_Scorer_PS3.ipynb       # PS3: Top scorer goals prediction
+│   ├── 13_Total_Points_PS4.ipynb     # PS4: Team total points prediction
+│   ├── 14_Match_Result_PS5.ipynb     # PS5: Match result prediction
+│   ├── train_all_models.py           # Automated training script for all PS
+│   ├── models/                        # Trained ML models (joblib files)
+│   │   ├── ps1_league_winner_lightgbm.joblib  # Best model for PS1
+│   │   ├── ps1_scaler.joblib          # Scaler for PS1
+│   │   ├── ps1_metadata.json          # PS1 training metadata
+│   │   ├── ps2_match_winner_model.joblib  # Best model for PS2
+│   │   ├── ps3_top_scorer_best_model.joblib  # Best model for PS3
+│   │   ├── ps3_top_scorer_metadata.json  # PS3 training metadata
+│   │   ├── ps4_total_points_best_model.joblib  # Best model for PS4
+│   │   ├── ps4_total_points_metadata.json  # PS4 training metadata
+│   │   ├── ps5_match_result_best_model.joblib  # Best model for PS5
+│   │   └── ps5_match_result_metadata.json  # PS5 training metadata
+│   └── README.md                      # Notebooks documentation
+├── data/                              # All data files organized by stage
+│   ├── raw/                           # Raw data after initial loading
+│   │   ├── data_raw_league.csv
+│   │   ├── data_raw_match.csv
+│   │   └── data_raw_player.csv
+│   ├── cleaned/                       # Cleaned datasets (no nulls/dupes)
+│   │   ├── data_cleaned_league.csv
+│   │   ├── data_cleaned_match.csv
+│   │   └── data_cleaned_player.csv
+│   ├── features/                      # Feature-engineered datasets
+│   │   ├── data_features_league.csv
+│   │   ├── data_features_match.csv
+│   │   └── data_features_player.csv
+│   ├── encoded/                       # Label-encoded datasets
+│   │   ├── data_encoded_league.csv
+│   │   ├── data_encoded_match.csv
+│   │   └── data_encoded_player.csv
+│   ├── engineered/                    # Advanced engineered features v3
+│   │   ├── data_engineered_league_points.csv
+│   │   ├── data_engineered_match_prediction.csv
+│   │   ├── data_engineered_match_v3.csv
+│   │   ├── data_engineered_top_scorer.csv
+│   │   ├── feature_descriptions_v3.json
+│   │   └── model_comparison_results.csv
+│   ├── corrected/                     # Corrected datasets for training
+│   │   ├── league_winner_corrected.csv
+│   │   ├── league_winner_with_top4.csv
+│   │   ├── match_prediction_corrected.csv
+│   │   ├── match_prediction_with_ftr.csv
+│   │   └── top_scorer_corrected.csv
+│   └── final/                         # Final modeling-ready datasets
+│       ├── data_final_match_prediction.csv
+│       ├── data_final_points_tally.csv
+│       └── data_final_top_scorer.csv
+├── datasets/                          # Original raw datasets
+│   ├── EPL(Overall Points & Ranking).csv
 │   ├── Match Winner.csv
-│   ├── Goals & Assist.xlsx
+│   ├── Match_winner_selected_columns.csv
 │   └── ScoreSight_ML_Season_LeagueWinner_Champion.csv
-├── visualizations/                    # Generated visualizations
+├── visualizations/                    # Generated visualizations and charts
 │   ├── viz_match_distributions_prematch.png
 │   ├── viz_match_corr_prematch.png
 │   ├── viz_player_core_features.png
 │   ├── viz_league_gd_vs_ppg.png
-│   └── viz_league_top15_ppg.png
-├── scripts/                           # Python automation scripts
-│   ├── generate_visualizations.py
-│   ├── data_quality_check.py
-│   ├── drop_unnecessary_columns.py
-│   ├── analyze_dropped_columns.py
-│   ├── execute_notebooks.py
-│   └── validate_data.py
-├── docs/                              # Documentation
-│   ├── PREPROCESSING_SUMMARY.md
-│   ├── PROJECT_STATUS.md
+│   ├── viz_league_top15_ppg.png
+│   ├── ps1_feature_importance.png
+│   ├── ps1_model_comparison.csv
+│   └── ps2_model_comparison.csv
+├── docs/                              # Project documentation
+│   ├── DROPPED_COLUMNS_ANALYSIS.md    # Analysis of dropped columns
+│   ├── FEATURE_ENGINEERING_PHASE1_SUMMARY.md
+│   ├── FEATURE_ENGINEERING_V3_GUIDE.md
+│   ├── GOOGLE_COLAB_SETUP.md
+│   ├── MODEL_TRAINING_COMPARISON.md
+│   ├── PROBLEM_STATEMENTS_TRAINING_STATUS.md
 │   ├── QUICK_START_GUIDE.md
-│   ├── EXECUTION_REPORT.md
-│   └── AI_ScoreSight Doc.pdf
+│   └── SCORESIGHT_V3_COMPLETION_REPORT.md
 ├── requirements.txt                   # Python dependencies
 ├── README.md                          # This file
-├── LICENSE                            # License file
-└── MIT LICENSE                        # MIT License
+├── LICENSE                            # Project license
+└── MIT LICENSE                        # MIT License text
 ```
 
 ## Datasets
@@ -121,7 +170,48 @@ Season-level league data with 180 team-season records:
 - Summary dashboards
 - **Output**: Visualization PNG files
 
-### Phase 2: Model Building (Next)
+### Phase 2: Model Building (COMPLETED ✅)
+
+All five problem statements have been trained with production-ready models:
+
+#### Problem Statement 1: League Winner (Top-4) Prediction
+- **Type**: Binary Classification
+- **Target**: Teams finishing in top 4 positions
+- **Best Model**: LightGBM
+- **Performance**: 97.2% accuracy, 0.93 F1-score
+- **Key Features**: goals_conceded, goal_difference, goals_scored
+- **Model File**: `ps1_league_winner_lightgbm.joblib`
+
+#### Problem Statement 2: Match Winner Prediction  
+- **Type**: Multi-class Classification (Home/Draw/Away)
+- **Target**: Match result (H/D/A)
+- **Best Model**: XGBoost
+- **Performance**: 46.1% accuracy (excellent for football prediction!)
+- **Baseline**: 33.3% (random guess)
+- **Model File**: `ps2_match_winner_model.joblib`
+
+#### Problem Statement 3: Top Scorer Prediction
+- **Type**: Regression
+- **Target**: Player total goals scored
+- **Best Model**: XGBoost
+- **Performance**: R² = 0.977, MAE = 0.136 goals
+- **Key Features**: xG, goals_per_90, assists, match participation
+- **Model File**: `ps3_top_scorer_best_model.joblib`
+
+#### Problem Statement 4: Total Points Prediction
+- **Type**: Regression
+- **Target**: Team's total season points
+- **Best Model**: Gradient Boosting/XGBoost
+- **Performance**: High R² score, low MAE
+- **Model File**: `ps4_total_points_best_model.joblib`
+
+#### Problem Statement 5: Match Result Prediction
+- **Type**: Multi-class Classification
+- **Target**: Match outcome with context
+- **Best Model**: LightGBM/XGBoost
+- **Model File**: `ps5_match_result_best_model.joblib`
+
+### Phase 3: Evaluation and Improvement (In Progress)
 - Train regression models (Linear, Ridge, Lasso, Random Forest, XGBoost)
 - Evaluate using MAE and RMSE metrics
 - Hyperparameter tuning
@@ -261,8 +351,14 @@ Models will be evaluated using:
 
 - [x] **Milestone 1**: Repository setup and data familiarization
 - [x] **Milestone 2**: Data preprocessing and cleaning - COMPLETED
-- [ ] **Milestone 3**: Model building and evaluation
-- [ ] **Milestone 4**: Web application and final presentation
+- [x] **Milestone 3**: Model building and training - COMPLETED
+  - PS1: League Winner (Top-4) Prediction - LightGBM (97.2% accuracy)
+  - PS2: Match Winner (H/D/A) Prediction - XGBoost (46.1% accuracy)
+  - PS3: Top Scorer Goals Prediction - XGBoost (R² = 0.977)
+  - PS4: Total Points Prediction - Best regression model
+  - PS5: Match Result Prediction - Best classifier
+- [ ] **Milestone 4**: Model evaluation and optimization
+- [ ] **Milestone 5**: Web application and final presentation
 
 ## Column Optimization
 
@@ -322,7 +418,8 @@ Branch: Prathamesh_Fuke
 
 ---
 
-**Status**: Phase 1 (Data Preprocessing) - **COMPLETED**  
-**Next**: Phase 2 (Model Building)  
-**Dataset Quality**: Zero nulls, no duplicates, leakage-safe, 54 optimized features  
-**Last Updated**: October 30, 2025
+**Status**: Phase 3 (Model Training) - **COMPLETED**  
+**Next**: Phase 4 (Model Evaluation and Optimization)  
+**Models Trained**: 5 Problem Statements with best models saved  
+**Dataset Quality**: Zero nulls, no duplicates, leakage-safe, optimized features  
+**Last Updated**: November 13, 2025
