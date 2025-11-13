@@ -1,0 +1,35 @@
+{
+    "problem_statement": "PS1: League Winner Prediction",
+    "model_type": "GradientBoosting",
+    "pipeline_steps": [
+        "imputer",
+        "scaler",
+        "model"
+    ],
+    "performance_metrics": {
+        "accuracy": 0.95,
+        "f1_macro": 0.48717948717948717,
+        "roc_auc": 0.9473684210526316
+    },
+    "features": [
+        "matches_played",
+        "goals_scored",
+        "goals_conceded",
+        "goal_difference"
+    ],
+    "target": "target_champion",
+    "temporal_split": {
+        "train_seasons": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+        ],
+        "test_season": 8
+    },
+    "training_timestamp": "2025-11-13T16:22:34.607212"
+}
