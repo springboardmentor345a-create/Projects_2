@@ -1,0 +1,74 @@
+{
+    "problem_statement": "PS2: Match Winner Prediction",
+    "version": "4.0 (Ultimate Features & GridSearchCV)",
+    "model_name": "RandomForest",
+    "model_path": "models\\ps2_match_winner_best_model_v4_ultimate.joblib",
+    "features": [
+        "H_avg_gs_5",
+        "H_avg_gc_5",
+        "H_avg_gd_5",
+        "H_avg_pts_5",
+        "H_avg_gs_10",
+        "H_avg_gc_10",
+        "H_avg_gd_10",
+        "H_avg_pts_10",
+        "H_ewma_gs_0.1",
+        "H_ewma_gc_0.1",
+        "H_ewma_gd_0.1",
+        "H_ewma_gs_0.2",
+        "H_ewma_gc_0.2",
+        "H_ewma_gd_0.2",
+        "H_h2h_avg_gs",
+        "H_h2h_avg_gc",
+        "H_h2h_win_rate",
+        "A_avg_gs_5",
+        "A_avg_gc_5",
+        "A_avg_gd_5",
+        "A_avg_pts_5",
+        "A_avg_gs_10",
+        "A_avg_gc_10",
+        "A_avg_gd_10",
+        "A_avg_pts_10",
+        "A_ewma_gs_0.1",
+        "A_ewma_gc_0.1",
+        "A_ewma_gd_0.1",
+        "A_ewma_gs_0.2",
+        "A_ewma_gc_0.2",
+        "A_ewma_gd_0.2",
+        "A_h2h_avg_gs",
+        "A_h2h_avg_gc",
+        "A_h2h_win_rate",
+        "diff_avg_gd_5",
+        "diff_avg_gd_10",
+        "diff_ewma_gd_0.1",
+        "diff_ewma_gd_0.2"
+    ],
+    "target_variable": "FTR_encoded",
+    "target_mapping": {
+        "0": "H",
+        "1": "NH"
+    },
+    "evaluation_metric": "accuracy",
+    "performance_metrics": {
+        "accuracy": 0.6380434782608696,
+        "f1_macro": 0.635354736424891,
+        "classification_report": "              precision    recall  f1-score   support\n\n           0       0.61      0.60      0.60       424\n           1       0.66      0.67      0.67       496\n\n    accuracy                           0.64       920\n   macro avg       0.64      0.64      0.64       920\nweighted avg       0.64      0.64      0.64       920\n",
+        "confusion_matrix": [
+            [
+                254,
+                170
+            ],
+            [
+                163,
+                333
+            ]
+        ]
+    },
+    "hyperparameters": {
+        "model__max_depth": 10,
+        "model__max_features": "log2",
+        "model__min_samples_leaf": 2,
+        "model__n_estimators": 200
+    },
+    "training_methodology": "Temporal split (85/15), Ultimate Features (EWMA, H2H), GridSearchCV with 5-fold TimeSeriesSplit and SMOTE."
+}
