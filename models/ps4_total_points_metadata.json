@@ -1,27 +1,35 @@
 {
-  "problem_statement": "PS4: Total Points Prediction",
-  "model_name": "GradientBoosting",
-  "model_path": "models\\ps4_total_points_best_model.joblib",
+  "problem_statement": "PS4: Total Points Tally Prediction",
+  "task_type": "Regression",
+  "best_model": "Lasso",
+  "best_test_mae": 2.9935614572454674,
+  "best_test_r2": 0.9491130378100586,
+  "data": {
+    "path": "data\\engineered\\data_engineered_league_points.csv",
+    "train_size": 160,
+    "test_size": 20,
+    "n_features": 16
+  },
   "features": [
     "matches_played",
     "goals_scored",
     "goals_conceded",
     "goal_difference",
-    "target_league_position",
-    "target_champion",
-    "season_encoded",
-    "team_encoded"
+    "goal_conversion_efficiency",
+    "defensive_solidity",
+    "offensive_power",
+    "offensive_dominance",
+    "gd_squared",
+    "positive_gd_indicator",
+    "elite_performance",
+    "title_contender",
+    "mid_table",
+    "goals_distribution_variance",
+    "performance_volatility",
+    "projected_upper_tier"
   ],
-  "target_variable": "target_total_points",
-  "cv": "TimeSeriesSplit(n_splits=5)",
-  "metrics": {
-    "rmse": 2.592416367919934,
-    "mae": 2.241431193950689,
-    "r2": 0.9794995153711656
-  },
+  "cv_strategy": "TimeSeriesSplit (n_splits=5)",
   "best_params": {
-    "model__n_estimators": 200,
-    "model__max_depth": 3,
-    "model__learning_rate": 0.05
+    "model__alpha": 0.1
   }
 }

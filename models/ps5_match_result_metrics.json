@@ -2,8 +2,6 @@
     "model_name": "LogisticRegression",
     "accuracy": 0.5197368421052632,
     "f1_macro": 0.41903158203900454,
-    "precision_macro": 0.449946891389925,
-    "recall_macro": 0.445303003987002,
     "best_cv_params": {
         "classifier__C": 0.1
     }
