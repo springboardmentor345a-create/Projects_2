@@ -1,57 +1,66 @@
 {
-  "problem_statement": "PS3: Top Scorer Goals Prediction",
-  "task_type": "Regression",
-  "best_model": "Ridge",
-  "best_test_mae": 4.271692431421086e-05,
-  "best_test_r2": 0.9999999965827759,
-  "data": {
-    "path": "data\\engineered\\data_engineered_top_scorer.csv",
-    "train_size": 1656,
-    "test_size": 414,
-    "n_features": 38
-  },
-  "features": [
-    "age",
-    "matches_played",
-    "assists",
-    "penalty_attempts",
-    "xg",
-    "npxg",
-    "xag",
-    "npxg_+_xag",
-    "goals_per_90",
-    "assists_per_90",
-    "goals_+_assists_per_90",
-    "non_penalty_goals_per_90",
-    "xg_per_90",
-    "xag_per_90",
-    "npxg_per_90",
-    "goals_per_match",
-    "assists_per_match",
-    "combined_per_match",
-    "scoring_consistency",
-    "penalty_ratio",
-    "open_play_goal_ratio",
-    "age_squared",
-    "age_goals_interaction",
-    "age_efficiency_index",
-    "experience_factor",
-    "prime_age_indicator",
-    "goals_vs_xg",
-    "goals_vs_xg_ratio",
-    "assists_vs_xag",
-    "scoring_threat_index",
-    "total_involvement",
-    "involvement_per_90",
-    "primary_threat_ratio",
-    "match_availability",
-    "high_availability",
-    "overall_threat_score",
-    "xg_consistency",
-    "penalty_dependence"
+  "problem": "PS3_Top_Scorer",
+  "task_type": "regression",
+  "target": "goals",
+  "start_time": "2025-11-18T01:25:08.478477",
+  "models_attempted": [
+    {
+      "model_name": "Ridge",
+      "test_metrics": {
+        "mae": 0.6818627187214021,
+        "mse": 1.9515988819894154,
+        "rmse": 1.3969963786600936,
+        "r2": 0.8132115544444245
+      },
+      "cv_score": -0.6252564729296365,
+      "training_time": 0.08429098129272461
+    },
+    {
+      "model_name": "RandomForest",
+      "test_metrics": {
+        "mae": 0.21617094103823428,
+        "mse": 0.4521482995940348,
+        "rmse": 0.6724197346851405,
+        "r2": 0.9567246738962703
+      },
+      "cv_score": -0.2820248457853511,
+      "training_time": 2.539745807647705
+    },
+    {
+      "model_name": "GradientBoosting",
+      "test_metrics": {
+        "mae": 0.14463755322997288,
+        "mse": 0.2663368399516179,
+        "rmse": 0.5160783273415169,
+        "r2": 0.9745087759642319
+      },
+      "cv_score": -0.2127012616963034,
+      "training_time": 3.483917713165283
+    },
+    {
+      "model_name": "XGBoost",
+      "test_metrics": {
+        "mae": 0.12440497428178787,
+        "mse": 0.1942209154367447,
+        "rmse": 0.44070502088896685,
+        "r2": 0.9814110398292542
+      },
+      "cv_score": -0.18239697217941284,
+      "training_time": 0.709726095199585
+    },
+    {
+      "model_name": "LightGBM",
+      "test_metrics": {
+        "mae": 0.12934367805725977,
+        "mse": 0.21312828455812738,
+        "rmse": 0.4616581901776761,
+        "r2": 0.9796013917901215
+      },
+      "cv_score": -0.2000501574933257,
+      "training_time": 2.901780366897583
+    }
   ],
-  "cv_strategy": "KFold (n_splits=5)",
-  "best_params": {
-    "model__alpha": 0.001
-  }
+  "best_model": "XGBoost",
+  "training_duration_seconds": 9.719850301742554,
+  "end_time": "2025-11-18T01:25:18.198327"
 }
