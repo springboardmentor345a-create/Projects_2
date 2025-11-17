@@ -1,0 +1,13 @@
+[
+  "season",
+  "matches_played",
+  "wins",
+  "draws",
+  "losses",
+  "goals_scored",
+  "goals_conceded",
+  "goal_difference",
+  "target_top_4",
+  "target_top_6",
+  "target_relegated"
+]

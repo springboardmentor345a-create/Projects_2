@@ -1,41 +1,44 @@
 {
-    "problem_statement": "PS1: League Winner Prediction",
-    "model_type": "GradientBoosting",
-    "performance_metrics": {
-        "accuracy": 0.95,
-        "f1_macro": 0.48717948717948717,
-        "roc_auc": 0.5
+  "problem": "PS1_League_Winner",
+  "task_type": "classification",
+  "target": "target_champion",
+  "start_time": "2025-11-18T01:25:01.884365",
+  "models_attempted": [
+    {
+      "model_name": "RandomForest",
+      "test_metrics": {
+        "accuracy": 0.9555555555555556,
+        "f1_macro": 0.8214285714285714,
+        "precision_macro": 0.75,
+        "recall_macro": 0.9767441860465116
+      },
+      "cv_score": 0.6752678118982466,
+      "training_time": 4.425020933151245
     },
-    "features": [
-        "matches_played",
-        "goals_scored",
-        "goals_conceded",
-        "goal_difference",
-        "goal_conversion_efficiency",
-        "defensive_solidity",
-        "offensive_power",
-        "offensive_dominance",
-        "gd_squared",
-        "positive_gd_indicator",
-        "elite_performance",
-        "title_contender",
-        "mid_table",
-        "goals_distribution_variance",
-        "performance_volatility",
-        "projected_upper_tier"
-    ],
-    "target": "target_champion",
-    "temporal_split": {
-        "train_seasons": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7
-        ],
-        "test_season": 8
+    {
+      "model_name": "GradientBoosting",
+      "test_metrics": {
+        "accuracy": 0.9555555555555556,
+        "f1_macro": 0.7383720930232558,
+        "precision_macro": 0.7383720930232558,
+        "recall_macro": 0.7383720930232558
+      },
+      "cv_score": 0.7197577108881458,
+      "training_time": 0.6493020057678223
+    },
+    {
+      "model_name": "XGBoost",
+      "test_metrics": {
+        "accuracy": 0.9555555555555556,
+        "f1_macro": 0.8214285714285714,
+        "precision_macro": 0.75,
+        "recall_macro": 0.9767441860465116
+      },
+      "cv_score": 0.6234159600463947,
+      "training_time": 0.8174021244049072
     }
+  ],
+  "best_model": "RandomForest",
+  "training_duration_seconds": 5.8920300006866455,
+  "end_time": "2025-11-18T01:25:07.776395"
 }
