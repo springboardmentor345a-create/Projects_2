@@ -1,0 +1,48 @@
+{
+  "target": "target_champion",
+  "selected_features": [
+    "matches_played",
+    "goals_scored",
+    "goals_conceded",
+    "target_top_4",
+    "target_top_6",
+    "target_relegated"
+  ],
+  "feature_scores": {
+    "matches_played": NaN,
+    "goals_scored": 51.77656029819032,
+    "goals_conceded": 27.54071661237785,
+    "target_top_4": 45.453571428571415,
+    "target_top_6": 24.184782608695638,
+    "target_relegated": 1.6687500000000044
+  },
+  "excluded_columns": [
+    "target_champion",
+    "points_per_game",
+    "target_total_points",
+    "target_league_position",
+    "goal_difference",
+    "wins",
+    "draws",
+    "losses",
+    "points",
+    "team",
+    "season_encoded",
+    "team_encoded"
+  ],
+  "leakage_prevented": [
+    "points_per_game",
+    "target_total_points",
+    "target_league_position",
+    "goal_difference",
+    "wins",
+    "draws",
+    "losses",
+    "points"
+  ],
+  "rows_after_cleaning": 180,
+  "class_distribution": {
+    "0": 171,
+    "1": 9
+  }
+}

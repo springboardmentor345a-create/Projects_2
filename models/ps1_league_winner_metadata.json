@@ -1,44 +1,9 @@
 {
-  "problem": "PS1_League_Winner",
-  "task_type": "classification",
-  "target": "target_champion",
-  "start_time": "2025-11-18T17:33:13.049730",
-  "models_attempted": [
-    {
-      "model_name": "RandomForest",
-      "test_metrics": {
-        "accuracy": 0.9555555555555556,
-        "f1_macro": 0.8214285714285714,
-        "precision_macro": 0.75,
-        "recall_macro": 0.9767441860465116
-      },
-      "cv_score": 0.6752678118982466,
-      "training_time": 4.3354270458221436
-    },
-    {
-      "model_name": "GradientBoosting",
-      "test_metrics": {
-        "accuracy": 0.9555555555555556,
-        "f1_macro": 0.7383720930232558,
-        "precision_macro": 0.7383720930232558,
-        "recall_macro": 0.7383720930232558
-      },
-      "cv_score": 0.7197577108881458,
-      "training_time": 0.6570494174957275
-    },
-    {
-      "model_name": "XGBoost",
-      "test_metrics": {
-        "accuracy": 0.9555555555555556,
-        "f1_macro": 0.8214285714285714,
-        "precision_macro": 0.75,
-        "recall_macro": 0.9767441860465116
-      },
-      "cv_score": 0.6234159600463947,
-      "training_time": 1.186521053314209
-    }
-  ],
-  "best_model": "RandomForest",
-  "training_duration_seconds": 6.179271936416626,
-  "end_time": "2025-11-18T17:33:19.229000"
+  "Model": "RandomForest",
+  "Best CV F1": NaN,
+  "Test F1": 0.8941176470588236,
+  "Accuracy": 0.9777777777777777,
+  "Precision": 0.8333333333333333,
+  "Recall": 0.9883720930232558,
+  "ROC_AUC": 0.9767441860465116
 }

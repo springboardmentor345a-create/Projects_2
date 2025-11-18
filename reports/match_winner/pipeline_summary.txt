@@ -1,0 +1,48 @@
+
+================================================================================
+MATCH WINNER PREDICTION - FINAL REPORT
+================================================================================
+
+Generated: 2025-11-19 02:40:31
+
+TARGET DISTRIBUTION
+================================================================================
+  - Home Win: 3176 matches
+  - Away Win: 1913 matches
+  - Draw: 1751 matches
+Total Matches: 6840
+
+FEATURES USED
+================================================================================
+  - Home Team Tier
+  - Away Team Tier
+  - Tier Difference
+  - Home Quality
+  - Away Quality
+  - Rest Days Advantage
+  - Midweek Match
+
+These are PRE-MATCH features only - no post-match data used to prevent leakage.
+
+MODEL PERFORMANCE
+================================================================================
+Best Model: LogisticRegression
+
+Metrics:
+  - Test F1 (Macro): 0.4623
+  - Test Accuracy: 0.4803
+  - Test Precision: 0.4650
+  - Test Recall: 0.4698
+
+ALL MODELS COMPARISON
+================================================================================
+                Model  Best_CV_F1  Test_F1_Macro  Test_F1_Weighted  Test_Accuracy  Test_Precision  Test_Recall
+0  LogisticRegression    0.461817       0.462251          0.485104       0.480263        0.464955     0.469777
+2    GradientBoosting    0.456518       0.452800          0.477740       0.476608        0.452496     0.460214
+3             XGBoost    0.458656       0.448834          0.475677       0.474415        0.449004     0.456239
+1        RandomForest    0.443403       0.438206          0.468236       0.469298        0.436481     0.444409
+
+================================================================================
+END OF REPORT
+================================================================================
+    
