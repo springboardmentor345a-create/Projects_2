@@ -1,0 +1,145 @@
+{
+  "pipeline_info": {
+    "name": "League Winner Prediction",
+    "timestamp": "2025-11-19 02:35:08",
+    "random_state": 42,
+    "test_size": 0.25
+  },
+  "data_quality": {
+    "timestamp": "2025-11-19 02:34:57",
+    "initial_rows": 180,
+    "initial_columns": 16,
+    "duplicates_removed": "0",
+    "final_rows": 180,
+    "final_columns": 16,
+    "missing_values": {
+      "season": 0,
+      "team": 0,
+      "matches_played": 0,
+      "wins": 0,
+      "draws": 0,
+      "losses": 0,
+      "points_per_game": 0,
+      "goals_scored": 0,
+      "goals_conceded": 0,
+      "goal_difference": 0,
+      "target_total_points": 0,
+      "target_league_position": 0,
+      "target_champion": 0,
+      "target_top_4": 0,
+      "target_top_6": 0,
+      "target_relegated": 0
+    },
+    "data_types": {
+      "season": "object",
+      "team": "object",
+      "matches_played": "int64",
+      "wins": "int64",
+      "draws": "int64",
+      "losses": "int64",
+      "points_per_game": "float64",
+      "goals_scored": "float64",
+      "goals_conceded": "float64",
+      "goal_difference": "float64",
+      "target_total_points": "int64",
+      "target_league_position": "int64",
+      "target_champion": "int64",
+      "target_top_4": "int64",
+      "target_top_6": "int64",
+      "target_relegated": "int64"
+    }
+  },
+  "feature_engineering": {
+    "target": "target_champion",
+    "selected_features": [
+      "matches_played",
+      "goals_scored",
+      "goals_conceded",
+      "target_top_4",
+      "target_top_6",
+      "target_relegated"
+    ],
+    "feature_scores": {
+      "matches_played": NaN,
+      "goals_scored": 51.77656029819032,
+      "goals_conceded": 27.54071661237785,
+      "target_top_4": 45.453571428571415,
+      "target_top_6": 24.184782608695638,
+      "target_relegated": 1.6687500000000044
+    },
+    "excluded_columns": [
+      "target_champion",
+      "points_per_game",
+      "target_total_points",
+      "target_league_position",
+      "goal_difference",
+      "wins",
+      "draws",
+      "losses",
+      "points",
+      "team",
+      "season_encoded",
+      "team_encoded"
+    ],
+    "leakage_prevented": [
+      "points_per_game",
+      "target_total_points",
+      "target_league_position",
+      "goal_difference",
+      "wins",
+      "draws",
+      "losses",
+      "points"
+    ],
+    "rows_after_cleaning": 180,
+    "class_distribution": {
+      "0": 171,
+      "1": 9
+    }
+  },
+  "model_performance": {
+    "best_model": "RandomForest",
+    "all_models": [
+      {
+        "Model": "RandomForest",
+        "Best_CV_F1": NaN,
+        "Test_F1_Macro": 0.8941176470588236,
+        "Test_F1_Weighted": 0.9798692810457518,
+        "Test_Accuracy": 0.9777777777777777,
+        "Test_Precision": 0.8333333333333333,
+        "Test_Recall": 0.9883720930232558,
+        "Test_ROC_AUC": 0.9767441860465116
+      },
+      {
+        "Model": "GradientBoosting",
+        "Best_CV_F1": NaN,
+        "Test_F1_Macro": 0.8941176470588236,
+        "Test_F1_Weighted": 0.9798692810457518,
+        "Test_Accuracy": 0.9777777777777777,
+        "Test_Precision": 0.8333333333333333,
+        "Test_Recall": 0.9883720930232558,
+        "Test_ROC_AUC": 0.9883720930232558
+      },
+      {
+        "Model": "XGBoost",
+        "Best_CV_F1": NaN,
+        "Test_F1_Macro": 0.8941176470588236,
+        "Test_F1_Weighted": 0.9798692810457518,
+        "Test_Accuracy": 0.9777777777777777,
+        "Test_Precision": 0.8333333333333333,
+        "Test_Recall": 0.9883720930232558,
+        "Test_ROC_AUC": 0.9825581395348837
+      }
+    ]
+  },
+  "best_model_metrics": {
+    "Model": "RandomForest",
+    "Best_CV_F1": NaN,
+    "Test_F1_Macro": 0.8941176470588236,
+    "Test_F1_Weighted": 0.9798692810457518,
+    "Test_Accuracy": 0.9777777777777777,
+    "Test_Precision": 0.8333333333333333,
+    "Test_Recall": 0.9883720930232558,
+    "Test_ROC_AUC": 0.9767441860465116
+  }
+}

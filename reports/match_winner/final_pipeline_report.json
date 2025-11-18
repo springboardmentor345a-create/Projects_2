@@ -1,0 +1,184 @@
+{
+  "pipeline_info": {
+    "name": "Match Winner Prediction",
+    "timestamp": "2025-11-19 02:40:31",
+    "random_state": 42,
+    "test_size": 0.2
+  },
+  "target_engineering": {
+    "encoding": {
+      "Away Win": "0",
+      "Draw": "1",
+      "Home Win": "2"
+    },
+    "distribution": {
+      "Home Win": 3176,
+      "Away Win": 1913,
+      "Draw": 1751
+    },
+    "total_matches": 6840
+  },
+  "feature_engineering": {
+    "features": [
+      "home_team_tier",
+      "away_team_tier",
+      "team_tier_diff",
+      "home_quality_score",
+      "away_quality_score",
+      "rest_advantage",
+      "is_midweek"
+    ],
+    "friendly_names": {
+      "home_team_tier": "Home Team Tier",
+      "away_team_tier": "Away Team Tier",
+      "team_tier_diff": "Tier Difference",
+      "home_quality_score": "Home Quality",
+      "away_quality_score": "Away Quality",
+      "rest_advantage": "Rest Days Advantage",
+      "is_midweek": "Midweek Match"
+    },
+    "statistics": {
+      "count": {
+        "home_team_tier": 6840.0,
+        "away_team_tier": 6840.0,
+        "team_tier_diff": 6840.0,
+        "home_quality_score": 6840.0,
+        "away_quality_score": 6840.0,
+        "rest_advantage": 6840.0,
+        "is_midweek": 6840.0
+      },
+      "mean": {
+        "home_team_tier": 1.7166666666666666,
+        "away_team_tier": 1.7166666666666666,
+        "team_tier_diff": 0.0,
+        "home_quality_score": 0.5036335886665788,
+        "away_quality_score": 0.5036335886665788,
+        "rest_advantage": 0.12119883040935672,
+        "is_midweek": 0.32207602339181285
+      },
+      "std": {
+        "home_team_tier": 0.7837451564406556,
+        "away_team_tier": 0.7837451564406556,
+        "team_tier_diff": 1.1245053826494318,
+        "home_quality_score": 0.2583088531728714,
+        "away_quality_score": 0.2583088531728714,
+        "rest_advantage": 125.04363240600749,
+        "is_midweek": 0.4673060931715799
+      },
+      "min": {
+        "home_team_tier": 1.0,
+        "away_team_tier": 1.0,
+        "team_tier_diff": -2.0,
+        "home_quality_score": 0.0,
+        "away_quality_score": 0.0,
+        "rest_advantage": -3593.0,
+        "is_midweek": 0.0
+      },
+      "25%": {
+        "home_team_tier": 1.0,
+        "away_team_tier": 1.0,
+        "team_tier_diff": -1.0,
+        "home_quality_score": 0.3090097548202619,
+        "away_quality_score": 0.3090097548202619,
+        "rest_advantage": -7.0,
+        "is_midweek": 0.0
+      },
+      "50%": {
+        "home_team_tier": 2.0,
+        "away_team_tier": 2.0,
+        "team_tier_diff": 0.0,
+        "home_quality_score": 0.399313345316126,
+        "away_quality_score": 0.399313345316126,
+        "rest_advantage": 0.0,
+        "is_midweek": 0.0
+      },
+      "75%": {
+        "home_team_tier": 2.0,
+        "away_team_tier": 2.0,
+        "team_tier_diff": 1.0,
+        "home_quality_score": 0.6456846861321561,
+        "away_quality_score": 0.6456846861321561,
+        "rest_advantage": 7.0,
+        "is_midweek": 1.0
+      },
+      "max": {
+        "home_team_tier": 3.0,
+        "away_team_tier": 3.0,
+        "team_tier_diff": 2.0,
+        "home_quality_score": 0.9968234270229558,
+        "away_quality_score": 0.9968234270229558,
+        "rest_advantage": 3344.0,
+        "is_midweek": 1.0
+      },
+      "friendly_name": {
+        "home_team_tier": "Home Team Tier",
+        "away_team_tier": "Away Team Tier",
+        "team_tier_diff": "Tier Difference",
+        "home_quality_score": "Home Quality",
+        "away_quality_score": "Away Quality",
+        "rest_advantage": "Rest Days Advantage",
+        "is_midweek": "Midweek Match"
+      }
+    },
+    "correlations": {
+      "home_quality_score": 0.2712293899006173,
+      "away_team_tier": 0.21163559177948493,
+      "is_midweek": 0.01790529262809563,
+      "rest_advantage": -0.028644717576538574,
+      "home_team_tier": -0.22365820268457035,
+      "away_quality_score": -0.2775960001193287,
+      "team_tier_diff": -0.3033861894338619
+    },
+    "final_samples": 6840
+  },
+  "model_performance": {
+    "best_model": "LogisticRegression",
+    "all_models": [
+      {
+        "Model": "LogisticRegression",
+        "Best_CV_F1": 0.4618168590771165,
+        "Test_F1_Macro": 0.4622507256476632,
+        "Test_F1_Weighted": 0.48510379607097187,
+        "Test_Accuracy": 0.48026315789473684,
+        "Test_Precision": 0.46495536732390486,
+        "Test_Recall": 0.46977734832754264
+      },
+      {
+        "Model": "GradientBoosting",
+        "Best_CV_F1": 0.45651753563053193,
+        "Test_F1_Macro": 0.4528000548835614,
+        "Test_F1_Weighted": 0.47774034794748155,
+        "Test_Accuracy": 0.4766081871345029,
+        "Test_Precision": 0.45249576015664505,
+        "Test_Recall": 0.46021432046842703
+      },
+      {
+        "Model": "XGBoost",
+        "Best_CV_F1": 0.45865565920668905,
+        "Test_F1_Macro": 0.44883382681419143,
+        "Test_F1_Weighted": 0.47567745758239804,
+        "Test_Accuracy": 0.47441520467836257,
+        "Test_Precision": 0.4490041607400436,
+        "Test_Recall": 0.4562389557702154
+      },
+      {
+        "Model": "RandomForest",
+        "Best_CV_F1": 0.44340337454436873,
+        "Test_F1_Macro": 0.4382059407182309,
+        "Test_F1_Weighted": 0.46823648018775643,
+        "Test_Accuracy": 0.4692982456140351,
+        "Test_Precision": 0.43648053872606746,
+        "Test_Recall": 0.44440862646738344
+      }
+    ]
+  },
+  "best_model_metrics": {
+    "Model": "LogisticRegression",
+    "Best_CV_F1": 0.4618168590771165,
+    "Test_F1_Macro": 0.4622507256476632,
+    "Test_F1_Weighted": 0.48510379607097187,
+    "Test_Accuracy": 0.48026315789473684,
+    "Test_Precision": 0.46495536732390486,
+    "Test_Recall": 0.46977734832754264
+  }
+}
