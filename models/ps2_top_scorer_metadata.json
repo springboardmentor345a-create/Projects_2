@@ -1,8 +1,8 @@
 {
-  "problem": "PS3_Top_Scorer",
+  "problem": "PS2_Top_Scorer",
   "task_type": "regression",
   "target": "goals",
-  "start_time": "2025-11-18T01:25:08.478477",
+  "start_time": "2025-11-18T17:33:19.773406",
   "models_attempted": [
     {
       "model_name": "Ridge",
@@ -13,18 +13,18 @@
         "r2": 0.8132115544444245
       },
       "cv_score": -0.6252564729296365,
-      "training_time": 0.08429098129272461
+      "training_time": 0.0777740478515625
     },
     {
       "model_name": "RandomForest",
       "test_metrics": {
-        "mae": 0.21617094103823428,
-        "mse": 0.4521482995940348,
-        "rmse": 0.6724197346851405,
+        "mae": 0.2161709410382343,
+        "mse": 0.4521482995940346,
+        "rmse": 0.6724197346851404,
         "r2": 0.9567246738962703
       },
       "cv_score": -0.2820248457853511,
-      "training_time": 2.539745807647705
+      "training_time": 2.5341317653656006
     },
     {
       "model_name": "GradientBoosting",
@@ -35,7 +35,7 @@
         "r2": 0.9745087759642319
       },
       "cv_score": -0.2127012616963034,
-      "training_time": 3.483917713165283
+      "training_time": 3.882218599319458
     },
     {
       "model_name": "XGBoost",
@@ -46,7 +46,7 @@
         "r2": 0.9814110398292542
       },
       "cv_score": -0.18239697217941284,
-      "training_time": 0.709726095199585
+      "training_time": 0.8420321941375732
     },
     {
       "model_name": "LightGBM",
@@ -57,10 +57,10 @@
         "r2": 0.9796013917901215
       },
       "cv_score": -0.2000501574933257,
-      "training_time": 2.901780366897583
+      "training_time": 3.9022176265716553
     }
   ],
   "best_model": "XGBoost",
-  "training_duration_seconds": 9.719850301742554,
-  "end_time": "2025-11-18T01:25:18.198327"
+  "training_duration_seconds": 11.238691806793213,
+  "end_time": "2025-11-18T17:33:31.012096"
 }

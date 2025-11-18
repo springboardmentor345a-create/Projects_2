@@ -2,7 +2,7 @@
   "problem": "PS1_League_Winner",
   "task_type": "classification",
   "target": "target_champion",
-  "start_time": "2025-11-18T01:25:01.884365",
+  "start_time": "2025-11-18T17:33:13.049730",
   "models_attempted": [
     {
       "model_name": "RandomForest",
@@ -13,7 +13,7 @@
         "recall_macro": 0.9767441860465116
       },
       "cv_score": 0.6752678118982466,
-      "training_time": 4.425020933151245
+      "training_time": 4.3354270458221436
     },
     {
       "model_name": "GradientBoosting",
@@ -24,7 +24,7 @@
         "recall_macro": 0.7383720930232558
       },
       "cv_score": 0.7197577108881458,
-      "training_time": 0.6493020057678223
+      "training_time": 0.6570494174957275
     },
     {
       "model_name": "XGBoost",
@@ -35,10 +35,10 @@
         "recall_macro": 0.9767441860465116
       },
       "cv_score": 0.6234159600463947,
-      "training_time": 0.8174021244049072
+      "training_time": 1.186521053314209
     }
   ],
   "best_model": "RandomForest",
-  "training_duration_seconds": 5.8920300006866455,
-  "end_time": "2025-11-18T01:25:07.776395"
+  "training_duration_seconds": 6.179271936416626,
+  "end_time": "2025-11-18T17:33:19.229000"
 }
