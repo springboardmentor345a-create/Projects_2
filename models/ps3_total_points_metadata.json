@@ -1,8 +1,8 @@
 {
-  "problem": "PS4_Total_Points",
+  "problem": "PS3_Total_Points",
   "task_type": "regression",
   "target": "total_points",
-  "start_time": "2025-11-18T01:25:18.957614",
+  "start_time": "2025-11-18T17:33:31.541764",
   "models_attempted": [
     {
       "model_name": "Ridge",
@@ -13,18 +13,18 @@
         "r2": 0.9340131883682855
       },
       "cv_score": -3.7633578507634766,
-      "training_time": 0.051561594009399414
+      "training_time": 0.04529142379760742
     },
     {
       "model_name": "RandomForest",
       "test_metrics": {
-        "mae": 3.821751434483128,
-        "mse": 31.06554734413865,
-        "rmse": 5.573647579829447,
-        "r2": 0.9052381287593669
+        "mae": 3.8217514344831316,
+        "mse": 31.06554734413868,
+        "rmse": 5.57364757982945,
+        "r2": 0.9052381287593668
       },
       "cv_score": -4.879529160549303,
-      "training_time": 0.7592909336090088
+      "training_time": 0.8121392726898193
     },
     {
       "model_name": "GradientBoosting",
@@ -35,7 +35,7 @@
         "r2": 0.8762387699686085
       },
       "cv_score": -7.730124010060824,
-      "training_time": 0.21854925155639648
+      "training_time": 0.25168299674987793
     },
     {
       "model_name": "XGBoost",
@@ -46,7 +46,7 @@
         "r2": 0.9160019159317017
       },
       "cv_score": -4.747644662857056,
-      "training_time": 0.1699380874633789
+      "training_time": 0.22673726081848145
     },
     {
       "model_name": "LightGBM",
@@ -57,10 +57,10 @@
         "r2": 0.897913284362464
       },
       "cv_score": -5.428375994345369,
-      "training_time": 0.7207562923431396
+      "training_time": 0.7212316989898682
     }
   ],
   "best_model": "Ridge",
-  "training_duration_seconds": 1.920548915863037,
-  "end_time": "2025-11-18T01:25:20.878161"
+  "training_duration_seconds": 2.057516574859619,
+  "end_time": "2025-11-18T17:33:33.599281"
 }

@@ -1,8 +1,8 @@
 {
-  "problem": "PS5_Match_Result",
+  "problem": "PS4_Match_Result",
   "task_type": "classification",
   "target": "match_result",
-  "start_time": "2025-11-18T01:25:21.527065",
+  "start_time": "2025-11-18T17:33:34.073862",
   "models_attempted": [
     {
       "model_name": "LogisticRegression",
@@ -13,7 +13,7 @@
         "recall_macro": 0.5089013198331653
       },
       "cv_score": 0.5143357471513557,
-      "training_time": 0.463733434677124
+      "training_time": 0.44265174865722656
     },
     {
       "model_name": "RandomForest",
@@ -24,7 +24,7 @@
         "recall_macro": 0.5018008375856505
       },
       "cv_score": 0.5240817292897078,
-      "training_time": 5.267092704772949
+      "training_time": 5.855214595794678
     },
     {
       "model_name": "GradientBoosting",
@@ -35,7 +35,7 @@
         "recall_macro": 0.5070366131932943
       },
       "cv_score": 0.5198940943206263,
-      "training_time": 47.44398760795593
+      "training_time": 72.52343940734863
     },
     {
       "model_name": "XGBoost",
@@ -46,10 +46,10 @@
         "recall_macro": 0.5024800465063562
       },
       "cv_score": 0.5118517623952742,
-      "training_time": 4.000589370727539
+      "training_time": 4.750962734222412
     }
   ],
   "best_model": "LogisticRegression",
-  "training_duration_seconds": 57.17569899559021,
-  "end_time": "2025-11-18T01:26:18.702762"
+  "training_duration_seconds": 83.57252955436707,
+  "end_time": "2025-11-18T17:34:57.646390"
 }
