@@ -1,79 +1,79 @@
 {
   "pipeline": "Match Winner Prediction",
   "problem_statement": "PS4 - Match Winner",
-  "timestamp": "2025-11-20 02:26:23",
-  "best_model": "GradientBoosting",
+  "timestamp": "2025-11-20 02:50:31",
+  "best_model": "StackingEnsemble",
   "target_classes": [
     "H",
     "NH"
   ],
   "metrics": {
-    "Model": "GradientBoosting",
-    "Accuracy": 0.672514619883041,
-    "Precision": 0.6783284331041478,
-    "Recall": 0.672514619883041,
-    "F1_Score": 0.6638916738764007
+    "Model": "StackingEnsemble",
+    "Accuracy": 0.6652046783625731,
+    "Precision": 0.664896364688759,
+    "Recall": 0.6652046783625731,
+    "F1_Score": 0.6621194441450524
   },
   "all_results": [
     {
       "Model": "LogisticRegression",
-      "Accuracy": 0.6637426900584795,
-      "Precision": 0.6656936469124602,
-      "Recall": 0.6637426900584795,
-      "F1_Score": 0.6577113747567519
+      "Accuracy": 0.652046783625731,
+      "Precision": 0.6524449989738949,
+      "Recall": 0.652046783625731,
+      "F1_Score": 0.6522110815901935
     },
     {
       "Model": "RandomForest",
-      "Accuracy": 0.6410818713450293,
-      "Precision": 0.6400842766814722,
-      "Recall": 0.6410818713450293,
-      "F1_Score": 0.6378291510686245
+      "Accuracy": 0.6264619883040936,
+      "Precision": 0.6250000225928272,
+      "Recall": 0.6264619883040936,
+      "F1_Score": 0.6239308201193909
     },
     {
       "Model": "XGBoost",
-      "Accuracy": 0.6571637426900585,
-      "Precision": 0.6630950858261639,
-      "Recall": 0.6571637426900585,
-      "F1_Score": 0.646769167282783
+      "Accuracy": 0.6630116959064327,
+      "Precision": 0.666362794277468,
+      "Recall": 0.6630116959064327,
+      "F1_Score": 0.6555430653578186
     },
     {
       "Model": "GradientBoosting",
-      "Accuracy": 0.672514619883041,
-      "Precision": 0.6783284331041478,
-      "Recall": 0.672514619883041,
-      "F1_Score": 0.6638916738764007
+      "Accuracy": 0.6659356725146199,
+      "Precision": 0.6686821297530962,
+      "Recall": 0.6659356725146199,
+      "F1_Score": 0.6592936644565466
     },
     {
       "Model": "NeuralNetwork",
-      "Accuracy": 0.6622807017543859,
-      "Precision": 0.6679830751561349,
-      "Recall": 0.6622807017543859,
-      "F1_Score": 0.6526822940149488
+      "Accuracy": 0.6608187134502924,
+      "Precision": 0.6598815256376015,
+      "Recall": 0.6608187134502924,
+      "F1_Score": 0.6593124807633118
     },
     {
       "Model": "StackingEnsemble",
       "Accuracy": 0.6652046783625731,
-      "Precision": 0.668466458370333,
+      "Precision": 0.664896364688759,
       "Recall": 0.6652046783625731,
-      "F1_Score": 0.6580181121195394
+      "F1_Score": 0.6621194441450524
     }
   ],
   "features_used": [
     "points_gap",
     "diffpts",
-    "away_goal_advantage",
     "points_ratio",
+    "away_goal_advantage",
     "goal_efficiency_diff",
     "home_goal_advantage",
-    "form_momentum",
-    "htgd",
-    "away_defense_strength",
-    "gd_x_formpts_away",
-    "diffformpts",
-    "home_defense_strength",
     "atgd",
+    "form_momentum",
+    "recent_form_diff",
+    "home_defense_strength",
     "gd_x_formpts",
-    "htp"
+    "atp",
+    "htgd",
+    "htformpts",
+    "diffformpts"
   ],
   "target_column": "match_outcome",
   "random_state": 42,
