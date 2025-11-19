@@ -1,47 +1,56 @@
 {
   "pipeline": "Top Scorer Prediction",
   "problem_statement": "PS2 - Top Scorer",
-  "timestamp": "2025-11-19 17:21:37",
+  "timestamp": "2025-11-20 01:21:17",
   "best_model": "XGBoost (Scorer)",
   "metrics": {
     "Model": "XGBoost (Scorer)",
-    "MAE": 0.14375251531600952,
-    "MSE": 0.1389457732439041,
-    "RMSE": 0.3727543068079886,
-    "R2_Score": 0.9837709665298462
+    "MAE": 0.030020389705896378,
+    "MSE": 0.005601579323410988,
+    "RMSE": 0.0748436992899936,
+    "R2_Score": 0.957249641418457
   },
   "all_results": [
     {
       "Model": "Ridge (Scorer)",
-      "MAE": 0.3953250742709507,
-      "MSE": 0.5396316421504578,
-      "RMSE": 0.7345962443073458,
-      "R2_Score": 0.9369703729084398
+      "MAE": 0.11854109454827697,
+      "MSE": 0.03847763255689085,
+      "RMSE": 0.19615716289978005,
+      "R2_Score": 0.7049032792697433
     },
     {
       "Model": "RandomForest (Scorer)",
-      "MAE": 0.1789289046573812,
-      "MSE": 0.27712186082022755,
-      "RMSE": 0.5264236514635598,
-      "R2_Score": 0.9676318321942504
+      "MAE": 0.028613612092553226,
+      "MSE": 0.006663646471957358,
+      "RMSE": 0.08163116115771818,
+      "R2_Score": 0.9488977560730949
+    },
+    {
+      "Model": "GradientBoosting (Scorer)",
+      "MAE": 0.028809506834481247,
+      "MSE": 0.005791246366175451,
+      "RMSE": 0.0761002389363887,
+      "R2_Score": 0.9558632652390955
     },
     {
       "Model": "XGBoost (Scorer)",
-      "MAE": 0.14375251531600952,
-      "MSE": 0.1389457732439041,
-      "RMSE": 0.3727543068079886,
-      "R2_Score": 0.9837709665298462
+      "MAE": 0.030020389705896378,
+      "MSE": 0.005601579323410988,
+      "RMSE": 0.0748436992899936,
+      "R2_Score": 0.957249641418457
     }
   ],
   "features_used": [
-    "goals_+_assists",
-    "penalty_attempts",
-    "xg",
-    "npxg",
-    "progressive_receives",
-    "non_penalty_goals_per_90",
-    "non_penalty_goals_+_assists_per_90"
+    "goals_per_90",
+    "assists_per_90",
+    "xg_per_90",
+    "npxg_per_90",
+    "xag_per_90",
+    "npxg_plus_xag_per_90"
   ],
-  "target_column": "goals",
+  "target_column": [
+    "goals",
+    "assists"
+  ],
   "random_state": 42
 }

@@ -1,29 +1,29 @@
 {
   "pipeline": "League Winner Prediction",
   "problem_statement": "PS1 - League Winner",
-  "timestamp": "2025-11-19 17:23:27",
+  "timestamp": "2025-11-19 23:55:16",
   "best_model": "RandomForest",
   "metrics": {
     "Model": "RandomForest",
-    "Accuracy": 0.9666666666666667,
-    "Precision": 0.9666666666666667,
-    "Recall": 0.9666666666666667,
-    "F1_Score": 0.9666666666666667
+    "Accuracy": 0.95,
+    "Precision": 0.975,
+    "Recall": 0.95,
+    "F1_Score": 0.9576576576576576
   },
   "all_results": [
     {
       "Model": "RandomForest",
-      "Accuracy": 0.9666666666666667,
-      "Precision": 0.9666666666666667,
-      "Recall": 0.9666666666666667,
-      "F1_Score": 0.9666666666666667
+      "Accuracy": 0.95,
+      "Precision": 0.975,
+      "Recall": 0.95,
+      "F1_Score": 0.9576576576576576
     },
     {
       "Model": "XGBoost",
       "Accuracy": 0.95,
-      "Precision": 0.9025,
+      "Precision": 0.975,
       "Recall": 0.95,
-      "F1_Score": 0.9256410256410257
+      "F1_Score": 0.9576576576576576
     }
   ],
   "features_used": [
@@ -32,8 +32,7 @@
     "losses",
     "points_per_game",
     "goals_scored",
-    "goals_conceded",
-    "goal_difference"
+    "goals_conceded"
   ],
   "target_column": "target_champion",
   "random_state": 42,

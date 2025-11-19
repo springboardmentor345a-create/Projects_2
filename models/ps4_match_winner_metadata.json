@@ -1,55 +1,81 @@
 {
   "pipeline": "Match Winner Prediction",
   "problem_statement": "PS4 - Match Winner",
-  "timestamp": "2025-11-19 17:44:07",
-  "best_model": "LogisticRegression",
+  "timestamp": "2025-11-20 02:26:23",
+  "best_model": "GradientBoosting",
   "target_classes": [
     "H",
     "NH"
   ],
   "metrics": {
-    "Model": "LogisticRegression",
-    "Accuracy": 0.6695906432748538,
-    "Precision": 0.6708423104544988,
-    "Recall": 0.6695906432748538,
-    "F1_Score": 0.664726095614207
+    "Model": "GradientBoosting",
+    "Accuracy": 0.672514619883041,
+    "Precision": 0.6783284331041478,
+    "Recall": 0.672514619883041,
+    "F1_Score": 0.6638916738764007
   },
   "all_results": [
     {
       "Model": "LogisticRegression",
-      "Accuracy": 0.6695906432748538,
-      "Precision": 0.6708423104544988,
-      "Recall": 0.6695906432748538,
-      "F1_Score": 0.664726095614207
+      "Accuracy": 0.6637426900584795,
+      "Precision": 0.6656936469124602,
+      "Recall": 0.6637426900584795,
+      "F1_Score": 0.6577113747567519
     },
     {
       "Model": "RandomForest",
-      "Accuracy": 0.6659356725146199,
-      "Precision": 0.669166913428459,
-      "Recall": 0.6659356725146199,
-      "F1_Score": 0.6588416063760997
+      "Accuracy": 0.6410818713450293,
+      "Precision": 0.6400842766814722,
+      "Recall": 0.6410818713450293,
+      "F1_Score": 0.6378291510686245
     },
     {
       "Model": "XGBoost",
-      "Accuracy": 0.6644736842105263,
-      "Precision": 0.668288037902646,
-      "Recall": 0.6644736842105263,
-      "F1_Score": 0.6567195532930095
+      "Accuracy": 0.6571637426900585,
+      "Precision": 0.6630950858261639,
+      "Recall": 0.6571637426900585,
+      "F1_Score": 0.646769167282783
+    },
+    {
+      "Model": "GradientBoosting",
+      "Accuracy": 0.672514619883041,
+      "Precision": 0.6783284331041478,
+      "Recall": 0.672514619883041,
+      "F1_Score": 0.6638916738764007
+    },
+    {
+      "Model": "NeuralNetwork",
+      "Accuracy": 0.6622807017543859,
+      "Precision": 0.6679830751561349,
+      "Recall": 0.6622807017543859,
+      "F1_Score": 0.6526822940149488
+    },
+    {
+      "Model": "StackingEnsemble",
+      "Accuracy": 0.6652046783625731,
+      "Precision": 0.668466458370333,
+      "Recall": 0.6652046783625731,
+      "F1_Score": 0.6580181121195394
     }
   ],
   "features_used": [
-    "htgd",
-    "atgd",
-    "htformpts",
-    "atformpts",
+    "points_gap",
     "diffpts",
+    "away_goal_advantage",
+    "points_ratio",
+    "goal_efficiency_diff",
+    "home_goal_advantage",
+    "form_momentum",
+    "htgd",
+    "away_defense_strength",
+    "gd_x_formpts_away",
     "diffformpts",
-    "htwinstreak3",
-    "atwinstreak3",
-    "htlossstreak3",
-    "atlossstreak3"
+    "home_defense_strength",
+    "atgd",
+    "gd_x_formpts",
+    "htp"
   ],
-  "target_column": "ftr",
+  "target_column": "match_outcome",
   "random_state": 42,
   "test_size": 0.2
 }
