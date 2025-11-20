@@ -1,81 +1,30 @@
 {
-  "pipeline": "Match Winner Prediction",
-  "problem_statement": "PS4 - Match Winner",
-  "timestamp": "2025-11-20 02:50:31",
-  "best_model": "StackingEnsemble",
-  "target_classes": [
-    "H",
-    "NH"
-  ],
-  "metrics": {
-    "Model": "StackingEnsemble",
-    "Accuracy": 0.6652046783625731,
-    "Precision": 0.664896364688759,
-    "Recall": 0.6652046783625731,
-    "F1_Score": 0.6621194441450524
-  },
-  "all_results": [
-    {
-      "Model": "LogisticRegression",
-      "Accuracy": 0.652046783625731,
-      "Precision": 0.6524449989738949,
-      "Recall": 0.652046783625731,
-      "F1_Score": 0.6522110815901935
+    "timestamp": "2025-11-20 11:37:46",
+    "best_model": "LogisticRegression",
+    "metrics": {
+        "Model": "LogisticRegression",
+        "Accuracy": 0.6549707602339181,
+        "Precision": 0.6551212552914774,
+        "Recall": 0.6549707602339181,
+        "F1_Score": 0.6550404111680764,
+        "F1_Macro": 0.653333963281198
     },
-    {
-      "Model": "RandomForest",
-      "Accuracy": 0.6264619883040936,
-      "Precision": 0.6250000225928272,
-      "Recall": 0.6264619883040936,
-      "F1_Score": 0.6239308201193909
-    },
-    {
-      "Model": "XGBoost",
-      "Accuracy": 0.6630116959064327,
-      "Precision": 0.666362794277468,
-      "Recall": 0.6630116959064327,
-      "F1_Score": 0.6555430653578186
-    },
-    {
-      "Model": "GradientBoosting",
-      "Accuracy": 0.6659356725146199,
-      "Precision": 0.6686821297530962,
-      "Recall": 0.6659356725146199,
-      "F1_Score": 0.6592936644565466
-    },
-    {
-      "Model": "NeuralNetwork",
-      "Accuracy": 0.6608187134502924,
-      "Precision": 0.6598815256376015,
-      "Recall": 0.6608187134502924,
-      "F1_Score": 0.6593124807633118
-    },
-    {
-      "Model": "StackingEnsemble",
-      "Accuracy": 0.6652046783625731,
-      "Precision": 0.664896364688759,
-      "Recall": 0.6652046783625731,
-      "F1_Score": 0.6621194441450524
-    }
-  ],
-  "features_used": [
-    "points_gap",
-    "diffpts",
-    "points_ratio",
-    "away_goal_advantage",
-    "goal_efficiency_diff",
-    "home_goal_advantage",
-    "atgd",
-    "form_momentum",
-    "recent_form_diff",
-    "home_defense_strength",
-    "gd_x_formpts",
-    "atp",
-    "htgd",
-    "htformpts",
-    "diffformpts"
-  ],
-  "target_column": "match_outcome",
-  "random_state": 42,
-  "test_size": 0.2
+    "features_used": [
+        "home_goal_advantage",
+        "points_gap",
+        "points_ratio",
+        "diffpts",
+        "goal_efficiency_diff",
+        "form_momentum",
+        "gd_x_formpts",
+        "away_goal_advantage",
+        "diffformpts",
+        "form_ratio",
+        "htgd",
+        "recent_form_diff",
+        "htformpts",
+        "home_goal_efficiency",
+        "home_defense_strength"
+    ],
+    "random_state": 42
 }

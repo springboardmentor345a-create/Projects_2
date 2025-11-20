@@ -1,0 +1,6 @@
+{
+    "lr_balanced_mean_f1_macro": 0.615773683463601,
+    "lr_balanced_std_f1_macro": 0.013733498152079113,
+    "lr_smote_mean_f1_macro": 0.615773683463601,
+    "lr_smote_std_f1_macro": 0.013733498152079113
+}

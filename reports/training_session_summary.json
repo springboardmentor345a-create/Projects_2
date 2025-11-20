@@ -1,9 +1,0 @@
-{
-  "timestamp": "2025-11-18T17:33:12.952798",
-  "models_trained": [
-    "PS1_League_Winner",
-    "PS2_Top_Scorer",
-    "PS3_Total_Points",
-    "PS4_Match_Result"
-  ]
-}
