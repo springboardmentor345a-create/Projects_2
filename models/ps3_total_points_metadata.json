@@ -1,32 +1,32 @@
 {
   "pipeline": "Total Points Prediction",
   "problem_statement": "PS3 - Total Points",
-  "timestamp": "2025-11-20 13:06:40",
+  "timestamp": "2025-11-20 22:45:26",
   "best_model": "Ridge (Points)",
   "metrics": {
     "Model": "Ridge (Points)",
-    "R2_Score": 0.9374715453770909,
-    "MAE": 3.704629499541615,
-    "RMSE": 4.643214520955818
+    "R2_Score": 0.9374798771084207,
+    "MAE": 3.7044905414264315,
+    "RMSE": 4.642905163360831
   },
   "all_results": [
     {
       "Model": "Ridge (Points)",
-      "R2_Score": 0.9374715453770909,
-      "MAE": 3.704629499541615,
-      "RMSE": 4.643214520955818
+      "R2_Score": 0.9374798771084207,
+      "MAE": 3.7044905414264315,
+      "RMSE": 4.642905163360831
     },
     {
       "Model": "RandomForest (Points)",
-      "R2_Score": 0.9303581921840491,
-      "MAE": 3.9881425164495266,
-      "RMSE": 4.900212563668895
+      "R2_Score": 0.93018192542042,
+      "MAE": 4.002258682943583,
+      "RMSE": 4.9064099814453295
     },
     {
       "Model": "XGBoost (Points)",
-      "R2_Score": 0.9302977323532104,
-      "MAE": 4.031729221343994,
-      "RMSE": 4.9023384975693975
+      "R2_Score": 0.9283725023269653,
+      "MAE": 4.117119789123535,
+      "RMSE": 4.969580622887892
     }
   ],
   "features_used": [
