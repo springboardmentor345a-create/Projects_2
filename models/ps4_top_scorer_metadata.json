@@ -1,9 +1,0 @@
-{
-  "name": "XGBoost",
-  "metrics": {
-    "Model": "XGBoost",
-    "Test MAE": 0.1395546942949295,
-    "Test MSE": 0.16518326103687286,
-    "Test R-squared": 0.9807063937187195
-  }
-}
