@@ -1,31 +1,26 @@
 {
-    "mean_f1_macro_cv": 0.620314128498307,
-    "std_f1_macro_cv": 0.014447812410294907,
+    "mean_f1_macro_cv": 0.6311324056371796,
+    "std_f1_macro_cv": 0.013164654246466468,
     "test_metrics": {
         "Model": "ElasticNetLR_Pruned",
-        "Accuracy": 0.6505847953216374,
-        "Precision": 0.6505847953216374,
-        "Recall": 0.6505847953216374,
-        "F1_Score": 0.6505847953216374,
-        "F1_Macro": 0.6487823742359626
+        "Accuracy": 0.6498538011695907,
+        "Precision": 0.6502110140131335,
+        "Recall": 0.6498538011695907,
+        "F1_Score": 0.6500043064841854,
+        "F1_Macro": 0.6483654708363764
     },
     "dropped_features": [
-        "htgd",
-        "form_momentum",
-        "form_ratio"
+        "Away_Win_Streak",
+        "Home_Win_Streak",
+        "Home_Goals_Conceded"
     ],
     "remaining_features": [
-        "home_goal_advantage",
-        "points_gap",
-        "points_ratio",
-        "diffpts",
-        "goal_efficiency_diff",
-        "gd_x_formpts",
-        "away_goal_advantage",
-        "diffformpts",
-        "recent_form_diff",
-        "htformpts",
-        "home_goal_efficiency",
-        "home_defense_strength"
+        "Points_Gap",
+        "Goal_Difference_Gap",
+        "Form_Gap",
+        "Home_Goal_Difference",
+        "Away_Goal_Difference",
+        "Home_Goals_Scored",
+        "Away_Goals_Scored"
     ]
 }
