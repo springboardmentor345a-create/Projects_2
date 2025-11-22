@@ -1,30 +1,25 @@
 {
-    "timestamp": "2025-11-20 11:37:46",
-    "best_model": "LogisticRegression",
+    "timestamp": "2025-11-22 21:55:58",
+    "best_model": "XGBoost",
     "metrics": {
-        "Model": "LogisticRegression",
-        "Accuracy": 0.6549707602339181,
-        "Precision": 0.6551212552914774,
-        "Recall": 0.6549707602339181,
-        "F1_Score": 0.6550404111680764,
-        "F1_Macro": 0.653333963281198
+        "Model": "XGBoost",
+        "Accuracy": 0.6600877192982456,
+        "Precision": 0.6592868778070943,
+        "Recall": 0.6600877192982456,
+        "F1_Score": 0.6577844057837902,
+        "F1_Macro": 0.6546922862712337
     },
     "features_used": [
-        "home_goal_advantage",
-        "points_gap",
-        "points_ratio",
-        "diffpts",
-        "goal_efficiency_diff",
-        "form_momentum",
-        "gd_x_formpts",
-        "away_goal_advantage",
-        "diffformpts",
-        "form_ratio",
-        "htgd",
-        "recent_form_diff",
-        "htformpts",
-        "home_goal_efficiency",
-        "home_defense_strength"
+        "Points_Gap",
+        "Goal_Difference_Gap",
+        "Form_Gap",
+        "Home_Goal_Difference",
+        "Away_Goal_Difference",
+        "Home_Win_Streak",
+        "Away_Win_Streak",
+        "Home_Goals_Scored",
+        "Away_Goals_Scored",
+        "Home_Goals_Conceded"
     ],
     "random_state": 42
 }
