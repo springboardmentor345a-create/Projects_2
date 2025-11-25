@@ -170,7 +170,7 @@ Season-level league data with 180 team-season records:
 - Summary dashboards
 - **Output**: Visualization PNG files
 
-### Phase 2: Model Building (COMPLETED ✅)
+### Phase 2: Model Building (COMPLETED)
 
 All five problem statements have been trained with production-ready models:
 
@@ -194,7 +194,7 @@ All five problem statements have been trained with production-ready models:
 - **Type**: Regression
 - **Target**: Player total goals scored
 - **Best Model**: XGBoost
-- **Performance**: R² = 0.977, MAE = 0.136 goals
+- **Performance**: R2 = 0.977, MAE = 0.136 goals
 - **Key Features**: xG, goals_per_90, assists, match participation
 - **Model File**: `ps3_top_scorer_best_model.joblib`
 
@@ -202,7 +202,7 @@ All five problem statements have been trained with production-ready models:
 - **Type**: Regression
 - **Target**: Team's total season points
 - **Best Model**: Gradient Boosting/XGBoost
-- **Performance**: High R² score, low MAE
+- **Performance**: High R2 score, low MAE
 - **Model File**: `ps4_total_points_best_model.joblib`
 
 #### Problem Statement 5: Match Result Prediction
@@ -217,17 +217,24 @@ All five problem statements have been trained with production-ready models:
 - Hyperparameter tuning
 - Model comparison and selection
 
-### Phase 3: Evaluation and Improvement
-- Cross-validation
-- Feature importance analysis
-- Model optimization
-- Performance benchmarking
-
 ### Phase 4: Deployment and Presentation
 - Build web application interface
 - Create interactive dashboards
 - Prepare documentation
 - Final presentation
+
+## Web Application
+
+A Streamlit-based web application has been developed to provide an interactive interface for the prediction models.
+
+### Features
+- **League Winner Prediction:** Predict if a team will win the league based on season statistics.
+- **Match Winner Prediction:** Predict the outcome of specific matches (Home/Draw/Away).
+- **Top Scorer Prediction:** Forecast a player's total season goals based on performance metrics.
+- **Total Points Prediction:** Estimate a team's final points tally.
+
+### Access
+The application source code is located in the `app/` directory. Refer to `app/README.md` for detailed usage instructions.
 
 ## Installation
 
@@ -344,7 +351,7 @@ After running all notebooks, you'll have:
 Models will be evaluated using:
 - **MAE (Mean Absolute Error)**: Average prediction error
 - **RMSE (Root Mean Squared Error)**: Penalizes larger errors
-- **R² Score**: Proportion of variance explained
+- **R2 Score**: Proportion of variance explained
 - **Cross-validation scores**: Model generalization
 
 ## Project Milestones
@@ -354,7 +361,7 @@ Models will be evaluated using:
 - [x] **Milestone 3**: Model building and training - COMPLETED
   - PS1: League Winner (Top-4) Prediction - LightGBM (97.2% accuracy)
   - PS2: Match Winner (H/D/A) Prediction - XGBoost (46.1% accuracy)
-  - PS3: Top Scorer Goals Prediction - XGBoost (R² = 0.977)
+  - PS3: Top Scorer Goals Prediction - XGBoost (R2 = 0.977)
   - PS4: Total Points Prediction - Best regression model
   - PS5: Match Result Prediction - Best classifier
 - [ ] **Milestone 4**: Model evaluation and optimization
@@ -363,9 +370,9 @@ Models will be evaluated using:
 ## Column Optimization
 
 A total of **33 unnecessary columns** were dropped across all datasets:
-- **Match Prediction**: 14 columns dropped (40 → 23 features)
-- **Top Scorer**: 13 columns dropped (34 → 21 features)
-- **Points Tally**: 6 columns dropped (16 → 10 features)
+- **Match Prediction**: 14 columns dropped (40 -> 23 features)
+- **Top Scorer**: 13 columns dropped (34 -> 21 features)
+- **Points Tally**: 6 columns dropped (16 -> 10 features)
 
 See `docs/DROPPED_COLUMNS_ANALYSIS.md` and `docs/DATA_LEAKAGE_AND_OVERFITTING.txt` for detailed analysis.
 
