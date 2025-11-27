@@ -1,0 +1,32 @@
+
+        .stApp {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f8fafc;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+            transition: transform 0.2s;
+            height: 100%;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        h1, h2, h3 {
+            color: #f8fafc !important;
+        }
+        .stButton button {
+            background: linear-gradient(90deg, #38bdf8 0%, #818cf8 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-weight: 600;
+            width: 100%;
+        }
+        

@@ -1,3 +1,3 @@
 Model,BrierScore
-LogisticRegression,0.21303711686498777
-CalibratedStacking,0.21378596050240467
+LogisticRegression,0.21302888534389375
+CalibratedStacking,0.2133871753216464
