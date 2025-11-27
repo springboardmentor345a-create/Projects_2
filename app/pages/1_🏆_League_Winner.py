@@ -5,15 +5,13 @@ Predict teams that will finish in Top 4
 
 import streamlit as st
 import pandas as pd
-import numpy as np
 import sys
 from pathlib import Path
 
 # Add parent directory to path
 sys.path.append(str(Path(__file__).parent.parent))
 
-from utils.model_loader import load_model, get_model_info, get_feature_order
-from utils.data_loader import load_league_winner_data
+from utils.model_loader import load_model, get_feature_order
 
 # Page config
 st.set_page_config(page_title="League Winner | ScoreSight", page_icon="🏆", layout="wide")
@@ -47,25 +45,38 @@ st.markdown("""
     border-radius: 12px;
     padding: 12px 32px;
     font-weight: 600;
+    width: 100%;
 }
 </style>
 """, unsafe_allow_html=True)
 
 def main():
+    # Back Button
+    # When running from app/main.py, the pages are in app/pages/
+    # To go back to main.py, we just point to it.
+    # Streamlit page_link behavior:
+    # If file is "app/main.py", and we are in "app/pages/1.py",
+    # "app/main.py" is the path from root.
+    # BUT the error said "relative to entrypoint".
+    # If entrypoint is "app/main.py", then "app/main.py" is relative to... where?
+    # Actually, if entrypoint is "app/main.py", then "app/main.py" IS the file.
+    # Let's try "main.py" if the entrypoint is considered the root context.
+    # OR, if we run `streamlit run app/main.py`, the root is likely where we ran it from (d:\ScoreSight).
+    # The error "You must provide a file path relative to the entrypoint file (from the directory `app`)"
+    # suggests that if entrypoint is `app/main.py`, the directory is `app`.
+    # So `main.py` should be the path relative to `app`.
+    st.page_link("main.py", label="Back to Home", icon="🏠")
+    
+    # Page Image
+    img_path = Path("app/image/league_winner.jpg")
+    if img_path.exists():
+        _, col_img, _ = st.columns([1, 2, 1])
+        with col_img:
+            st.image(str(img_path), use_container_width=True)
+    
     # Header
     st.markdown("# 🏆 League Winner Prediction")
     st.markdown("### Predict if a team will become the Premier League Champion")
-    
-    # Model info
-    model_info = get_model_info("league_winner")
-    
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.metric("Model Type", "RandomForest")
-    with col2:
-        st.metric("Accuracy", "95%")
-    with col3:
-        st.metric("F1-Score", "0.958")
     
     st.markdown("---")
     
@@ -74,7 +85,7 @@ def main():
     
     with col_input:
         st.markdown("### 📊 Enter Team Statistics")
-        st.markdown("*Enter the team's season statistics to predict Top 4 qualification*")
+        st.markdown("*Enter the team's season statistics to predict Championship chances*")
         
         with st.form("league_winner_form"):
             # Input fields for all required features
@@ -208,19 +219,6 @@ def main():
                     st.metric("Goals Scored", goals_scored)
                     st.metric("Goals Conceded", goals_conceded)
                 
-                # Feature importance
-                st.markdown("### 🔍 Key Factors")
-                st.markdown("""
-                <div style='background: rgba(56, 189, 248, 0.1); padding: 16px; border-radius: 8px; border-left: 4px solid #38bdf8;'>
-                    <p><strong>Top factors influencing this prediction:</strong></p>
-                    <ul>
-                        <li>✅ <strong>Goals Scored:</strong> High scoring teams typically finish in Top 4</li>
-                        <li>✅ <strong>Points Per Game:</strong> Need ~2.0 PPG for Top 4</li>
-                        <li>✅ <strong>Goals Conceded:</strong> Strong defense is crucial</li>
-                    </ul>
-                </div>
-                """, unsafe_allow_html=True)
-                
             except Exception as e:
                 st.error(f"❌ Prediction Error: {str(e)}")
                 st.exception(e)
@@ -231,14 +229,14 @@ def main():
             st.markdown("### 💡 Example Input")
             st.markdown("""
             <div class="metric-card">
-                <h4>Premier League Top 4 Team (Typical Stats)</h4>
+                <h4>Champion Team Profile (Typical Stats)</h4>
                 <ul style='line-height: 2;'>
-                    <li><strong>Wins:</strong> 20-25</li>
-                    <li><strong>Draws:</strong> 6-10</li>
-                    <li><strong>Losses:</strong> 5-12</li>
-                    <li><strong>PPG:</strong> 1.8-2.3</li>
-                    <li><strong>Goals Scored:</strong> 60-80</li>
-                    <li><strong>Goals Conceded:</strong> 30-45</li>
+                    <li><strong>Wins:</strong> 25-30</li>
+                    <li><strong>Draws:</strong> 5-8</li>
+                    <li><strong>Losses:</strong> 2-5</li>
+                    <li><strong>PPG:</strong> 2.3+</li>
+                    <li><strong>Goals Scored:</strong> 85+</li>
+                    <li><strong>Goals Conceded:</strong> <35</li>
                 </ul>
             </div>
             """, unsafe_allow_html=True)

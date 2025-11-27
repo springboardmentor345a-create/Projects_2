@@ -1,13 +1,13 @@
 {
-    "mean_f1_macro_cv": 0.6305894575428848,
-    "std_f1_macro_cv": 0.012965505765531371,
+    "mean_f1_macro_cv": 0.6306908873751651,
+    "std_f1_macro_cv": 0.01309369031593471,
     "test_metrics": {
         "Model": "ElasticNetLR_Pruned",
-        "Accuracy": 0.6483918128654971,
-        "Precision": 0.6489256190888745,
-        "Recall": 0.6483918128654971,
-        "F1_Score": 0.6486002278720407,
-        "F1_Macro": 0.6470290993611734
+        "Accuracy": 0.6469298245614035,
+        "Precision": 0.6474650972853946,
+        "Recall": 0.6469298245614035,
+        "F1_Score": 0.6471391061584109,
+        "F1_Macro": 0.6455614448886626
     },
     "dropped_features": [
         "Away_Win_Streak",

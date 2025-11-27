@@ -1,11 +1,10 @@
 """
 Match Winner Prediction Page
-Predict Home Win / Draw / Away Win
+Predict Home/Draw/Away outcome
 """
 
 import streamlit as st
 import pandas as pd
-import numpy as np
 import plotly.graph_objects as go
 import sys
 from pathlib import Path
@@ -13,8 +12,8 @@ from pathlib import Path
 # Add parent directory to path
 sys.path.append(str(Path(__file__).parent.parent))
 
-from utils.model_loader import load_model, get_model_info, get_feature_order
-from utils.data_loader import load_match_winner_data, get_unique_teams, calculate_match_features
+from utils.model_loader import load_model, get_feature_order
+from utils.data_loader import load_match_winner_data, get_unique_teams, get_team_stats, calculate_match_features
 
 # Page config
 st.set_page_config(page_title="Match Winner | ScoreSight", page_icon="⚽", layout="wide")
@@ -25,6 +24,14 @@ st.markdown("""
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
 * { font-family: 'Inter', sans-serif; }
 .main { background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%); }
+.metric-card {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
 .stButton>button {
     background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
     color: white;
@@ -32,288 +39,189 @@ st.markdown("""
     border-radius: 12px;
     padding: 12px 32px;
     font-weight: 600;
+    width: 100%;
 }
 </style>
 """, unsafe_allow_html=True)
 
 def main():
+    # Back Button
+    st.page_link("main.py", label="Back to Home", icon="🏠")
+    
+    # Page Image
+    img_path = Path("app/image/matchwinner.jpg")
+    if img_path.exists():
+        _, col_img, _ = st.columns([1, 2, 1])
+        with col_img:
+            st.image(str(img_path), use_container_width=True)
+    
     # Header
     st.markdown("# ⚽ Match Winner Prediction")
-    st.markdown("### Predict match outcome: Home Win / Draw / Away Win")
-    
-    # Model info
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.metric("Model Type", "XGBoost")
-    with col2:
-        st.metric("Accuracy", "66%")
-    with col3:
-        st.metric("F1-Score", "0.658")
+    st.markdown("### Predict the outcome of a match between two teams")
     
     st.markdown("---")
     
-    # Mode selection
-    mode = st.radio(
-        "**Input Mode:**",
-        ["Manual Input", "Team Selection (Auto-Calculate)"],
-        horizontal=True,
-        help="Choose how you want to input the match features"
-    )
+    # Load data
+    try:
+        df = load_match_winner_data()
+        teams = get_unique_teams("match_winner")
+    except Exception as e:
+        st.error(f"Error loading data: {str(e)}")
+        return
+
+    # Create tabs for different input modes
+    tab1, tab2 = st.tabs(["🤖 Team Selection (Auto)", "✍️ Manual Input"])
     
-    col_input, col_result = st.columns([1, 1])
+    input_data = {}
     
-    with col_input:
-        st.markdown("### 📊 Match Features")
+    with tab1:
+        st.markdown("### Select Teams")
+        col1, col2 = st.columns(2)
         
-        if mode == "Team Selection (Auto-Calculate)":
-            st.info("Select teams and we'll automatically fetch their current statistics")
+        with col1:
+            home_team = st.selectbox("Home Team", teams, index=0)
+        with col2:
+            away_team = st.selectbox("Away Team", teams, index=1)
             
-            # Load teams
-            teams = get_unique_teams("match_winner")
-            
-            with st.form("match_teams_form"):
-                home_team = st.selectbox("🏠 **Home Team**", teams, index=0 if teams else None)
-                away_team = st.selectbox("✈️ **Away Team**", teams, index=1 if len(teams) > 1 else 0)
-                
-                submitted = st.form_submit_button("🔮 Predict Match Winner", use_container_width=True)
-                
-                if submitted:
-                    # Load match data
-                    df = load_match_winner_data()
-                    features = calculate_match_features(home_team, away_team, df)
-                    
-                    if features is None:
-                        st.error("❌ Could not find statistics for the selected teams")
-                        return
-                    
-                    # Store features in session state
-                    st.session_state['match_features'] = features
-                    st.session_state['home_team'] = home_team
-                    st.session_state['away_team'] = away_team
-                    st.session_state['prediction_mode'] = 'auto'
-        
-        else:  # Manual Input
-            st.markdown("*Enter the match statistics manually*")
-            
-            with st.form("match_manual_form"):
-                points_gap = st.number_input(
-                    "**Points Gap** (Home - Away)",
-                    min_value=-100,
-                    max_value=100,
-                    value=5,
-                    help="Difference in current league points (Home team points - Away team points)"
-                )
-                
-                goal_diff_gap = st.number_input(
-                    "**Goal Difference Gap** (Home - Away)",
-                    min_value=-100,
-                    max_value=100,
-                    value=10,
-                    help="Difference in goal difference (Home GD - Away GD)"
-                )
-                
-                form_gap = st.number_input(
-                    "**Form Gap** (Recent Points)",
-                    min_value=-30,
-                    max_value=30,
-                    value=3,
-                    help="Difference in recent form points (Home - Away)"
-                )
-                
-                home_gd = st.number_input(
-                    "**Home Team Goal Difference**",
-                    min_value=-100,
-                    max_value=100,
-                    value=15,
-                    help="Home team's goal difference this season"
-                )
-                
-                away_gd = st.number_input(
-                    "**Away Team Goal Difference**",
-                    min_value=-100,
-                    max_value=100,
-                    value=5,
-                    help="Away team's goal difference this season"
-                )
-                
-                home_streak = st.number_input(
-                    "**Home Team Win Streak**",
-                    min_value=0,
-                    max_value=20,
-                    value=2,
-                    help="Number of consecutive wins for home team"
-                )
-                
-                away_streak = st.number_input(
-                    "**Away Team Win Streak**",
-                    min_value=0,
-                    max_value=20,
-                    value=0,
-                    help="Number of consecutive wins for away team"
-                )
-                
-                home_scored = st.number_input(
-                    "**Home Team Goals Scored**",
-                    min_value=0,
-                    max_value=150,
-                    value=45,
-                    help="Total goals scored by home team this season"
-                )
-                
-                away_scored = st.number_input(
-                    "**Away Team Goals Scored**",
-                    min_value=0,
-                    max_value=150,
-                    value=35,
-                    help="Total goals scored by away team this season"
-                )
-                
-                home_conceded = st.number_input(
-                    "**Home Team Goals Conceded**",
-                    min_value=0,
-                    max_value=150,
-                    value=30,
-help="Total goals conceded by home team this season"
-                )
-                
-                submitted = st.form_submit_button("🔮 Predict Match Winner", use_container_width=True)
-                
-                if submitted:
-                    features = {
-                        'Points_Gap': points_gap,
-                        'Goal_Difference_Gap': goal_diff_gap,
-                        'Form_Gap': form_gap,
-                        'Home_Goal_Difference': home_gd,
-                        'Away_Goal_Difference': away_gd,
-                        'Home_Win_Streak': home_streak,
-                        'Away_Win_Streak': away_streak,
-                        'Home_Goals_Scored': home_scored,
-                        'Away_Goals_Scored': away_scored,
-                        'Home_Goals_Conceded': home_conceded,
-                    }
-                    
-                    st.session_state['match_features'] = features
-                    st.session_state['home_team'] = "Home Team"
-                    st.session_state['away_team'] = "Away Team"
-                    st.session_state['prediction_mode'] = 'manual'
-    
-    with col_result:
-        st.markdown("### 🎯 Match Prediction")
-        
-        if 'match_features' in st.session_state:
-            try:
-                features = st.session_state['match_features']
-                home_team = st.session_state.get('home_team', 'Home')
-                away_team = st.session_state.get('away_team', 'Away')
-                
-                # Load model
-                with st.spinner("Loading model..."):
-                    model = load_model("match_winner")
-                
-                # Prepare input
-                feature_order = get_feature_order("match_winner")
-                input_df = pd.DataFrame([features])[feature_order]
-                
-                # Make prediction
-                with st.spinner("Analyzing match..."):
-                    prediction = model.predict(input_df)[0]
-                    
-                    # Get probabilities if available
-                    if hasattr(model, 'predict_proba'):
-                        probabilities = model.predict_proba(input_df)[0]
-                        # Assuming order: H, D, A or similar
-                        class_labels = ['Home Win', 'Draw', 'Away Win']
-                        
-                        # Create probability chart
-                        fig = go.Figure(data=[
-                            go.Bar(
-                                x=class_labels,
-                                y=probabilities * 100,
-                                marker=dict(
-                                    color=['#22c55e', '#fbbf24', '#ef4444'],
-                                    line=dict(color='rgba(255, 255, 255, 0.2)', width=2)
-                                ),
-                                text=[f'{p*100:.1f}%' for p in probabilities],
-                                textposition='auto',
-                            )
-                        ])
-                        
-                        fig.update_layout(
-                            title="Match Outcome Probabilities",
-                            yaxis_title="Probability (%)",
-                            template="plotly_dark",
-                            height=350,
-                            plot_bgcolor='rgba(0,0,0,0)',
-                            paper_bgcolor='rgba(0,0,0,0)',
-                        )
-                        
-                        st.plotly_chart(fig, use_container_width=True)
-                        
-                        # Determine prediction based on highest probability
-                        max_idx = np.argmax(probabilities)
-                        predicted_outcome = class_labels[max_idx]
-                        confidence = probabilities[max_idx] * 100
-                    else:
-                        # Fallback if no probabilities
-                        outcomes = {0: 'Home Win', 1: 'Draw', 2: 'Away Win'}
-                        predicted_outcome = outcomes.get(prediction, 'Unknown')
-                        confidence = 66  # Model accuracy
-                
-                # Display prediction
-                if 'Home' in predicted_outcome:
-                    color = "#22c55e"
-                    icon = "🏠"
-                    result_text = f"{home_team} Wins"
-                elif 'Draw' in predicted_outcome:
-                    color = "#fbbf24"
-                    icon = "⚖️"
-                    result_text = "Match Drawn"
-                else:
-                    color = "#ef4444"
-                    icon = "✈️"
-                    result_text = f"{away_team} Wins"
-                
-                st.markdown(f"""
-                <div style='background: linear-gradient(135deg, {color} 0%, {color}dd 100%);
-                     color: white; padding: 32px; border-radius: 16px; text-align: center;
-                     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);'>
-                    <h2 style='margin: 0;'>{icon} PREDICTED OUTCOME</h2>
-                    <h1 style='font-size: 3rem; margin: 20px 0;'>{result_text}</h1>
-                    <p style='font-size: 1.2rem; opacity: 0.9;'>Confidence: {confidence:.1f}%</p>
-                </div>
-                """, unsafe_allow_html=True)
-                
-                # Feature summary
-                st.markdown("### 📋 Match Statistics")
-                col1, col2 = st.columns(2)
-                
-                with col1:
-                    st.metric("Points Gap", features['Points_Gap'])
-                    st.metric("Home Goal Diff", features['Home_Goal_Difference'])
-                    st.metric("Home Win Streak", features['Home_Win_Streak'])
-                
-                with col2:
-                    st.metric("Form Gap", features['Form_Gap'])
-                    st.metric("Away Goal Diff", features['Away_Goal_Difference'])
-                    st.metric("Away Win Streak", features['Away_Win_Streak'])
-                
-            except Exception as e:
-                st.error(f"❌ Prediction Error: {str(e)}")
-                st.exception(e)
+        if home_team == away_team:
+            st.warning("Please select different teams for Home and Away.")
         else:
-            st.info("👈 Fill in the match details and click **Predict** to see results")
+            # Calculate features automatically
+            if st.button("Generate Match Stats"):
+                try:
+                    with st.spinner("Calculating team stats..."):
+                        features = calculate_match_features(home_team, away_team, df)
+                        st.session_state['match_features'] = features
+                        st.success("Stats calculated successfully!")
+                except Exception as e:
+                    st.error(f"Error calculating stats: {str(e)}")
+                    
+        # Use calculated features if available
+        if 'match_features' in st.session_state:
+            input_data = st.session_state['match_features']
             
-            st.markdown("### 💡 Tip")
-            st.markdown("""
-            <div style='background: rgba(56, 189, 248, 0.1); padding: 16px; border-radius: 8px;'>
-                <p><strong>For best results:</strong></p>
-                <ul>
-                    <li>Use current season statistics</li>
-                    <li>Higher positive gaps favor home team</li>
-                    <li>Win streaks significantly influence outcomes</li>
-                </ul>
-            </div>
-            """, unsafe_allow_html=True)
+            # Show calculated stats
+            st.markdown("### 📊 Calculated Match Stats")
+            col_s1, col_s2, col_s3 = st.columns(3)
+            with col_s1:
+                st.metric("Points Gap", f"{input_data.get('Points_Gap', 0):.1f}")
+                st.metric("Goal Diff Gap", f"{input_data.get('Goal_Difference_Gap', 0):.1f}")
+            with col_s2:
+                st.metric("Home Win Streak", int(input_data.get('Home_Win_Streak', 0)))
+                st.metric("Away Win Streak", int(input_data.get('Away_Win_Streak', 0)))
+            with col_s3:
+                st.metric("Home Goals Scored", int(input_data.get('Home_Goals_Scored', 0)))
+                st.metric("Away Goals Scored", int(input_data.get('Away_Goals_Scored', 0)))
+
+    with tab2:
+        st.markdown("### Manual Feature Input")
+        with st.form("manual_match_form"):
+            col_m1, col_m2 = st.columns(2)
+            
+            with col_m1:
+                points_gap = st.number_input("Points Gap (Home - Away)", value=0.0)
+                gd_gap = st.number_input("Goal Difference Gap", value=0.0)
+                form_gap = st.number_input("Form Gap", value=0.0)
+                home_gd = st.number_input("Home Goal Difference", value=0.0)
+                away_gd = st.number_input("Away Goal Difference", value=0.0)
+                
+            with col_m2:
+                home_streak = st.number_input("Home Win Streak", value=0, min_value=0)
+                away_streak = st.number_input("Away Win Streak", value=0, min_value=0)
+                home_scored = st.number_input("Home Goals Scored", value=0, min_value=0)
+                away_scored = st.number_input("Away Goals Scored", value=0, min_value=0)
+                home_conceded = st.number_input("Home Goals Conceded", value=0, min_value=0)
+                
+            submitted = st.form_submit_button("Set Manual Stats")
+            
+            if submitted:
+                input_data = {
+                    "Points_Gap": points_gap,
+                    "Goal_Difference_Gap": gd_gap,
+                    "Form_Gap": form_gap,
+                    "Home_Goal_Difference": home_gd,
+                    "Away_Goal_Difference": away_gd,
+                    "Home_Win_Streak": home_streak,
+                    "Away_Win_Streak": away_streak,
+                    "Home_Goals_Scored": home_scored,
+                    "Away_Goals_Scored": away_scored,
+                    "Home_Goals_Conceded": home_conceded
+                }
+                st.session_state['match_features'] = input_data
+
+    st.markdown("---")
+    
+    # Prediction Section
+    if input_data:
+        col_pred, col_viz = st.columns([1, 2])
+        
+        with col_pred:
+            st.markdown("### 🔮 Prediction")
+            if st.button("Predict Match Winner", use_container_width=True):
+                try:
+                    with st.spinner("Analyzing match-up..."):
+                        model = load_model("match_winner")
+                        feature_order = get_feature_order("match_winner")
+                        
+                        # Prepare dataframe
+                        input_df = pd.DataFrame([input_data])[feature_order]
+                        
+                        # Predict
+                        probabilities = model.predict_proba(input_df)[0]
+                        
+                        # Model is binary: 0=H (Home Win), 1=NH (Not Home Win)
+                        # Based on alphabetical sorting of classes ['H', 'NH']
+                        
+                        probs = {
+                            "Home Win": probabilities[0],
+                            "Not Home Win (Draw/Away)": probabilities[1]
+                        }
+                        
+                        # Find winner
+                        winner = max(probs, key=probs.get)
+                        confidence = probs[winner] * 100
+                        
+                        # Display Result
+                        st.markdown(f"""
+                        <div class="metric-card" style="text-align: center;">
+                            <h2 style="margin:0;">{winner}</h2>
+                            <h1 style="font-size: 3rem; color: #38bdf8;">{confidence:.1f}%</h1>
+                            <p>Probability</p>
+                        </div>
+                        """, unsafe_allow_html=True)
+                        
+                        # Store for visualization
+                        st.session_state['probs'] = probs
+                        
+                except Exception as e:
+                    st.error(f"Prediction Error: {str(e)}")
+        
+        with col_viz:
+            if 'probs' in st.session_state:
+                st.markdown("### 📊 Probability Distribution")
+                probs = st.session_state['probs']
+                
+                # Create Plotly Chart
+                fig = go.Figure(data=[
+                    go.Bar(
+                        x=list(probs.keys()),
+                        y=[v*100 for v in probs.values()],
+                        marker_color=['#22c55e', '#ef4444'], # Green (Home), Red (Not Home)
+                        text=[f"{v*100:.1f}%" for v in probs.values()],
+                        textposition='auto',
+                    )
+                ])
+                
+                fig.update_layout(
+                    plot_bgcolor='rgba(0,0,0,0)',
+                    paper_bgcolor='rgba(0,0,0,0)',
+                    font_color='white',
+                    yaxis_title="Probability (%)",
+                    margin=dict(t=20, b=20, l=20, r=20),
+                    height=300
+                )
+                
+                st.plotly_chart(fig, use_container_width=True)
 
 if __name__ == "__main__":
     main()
