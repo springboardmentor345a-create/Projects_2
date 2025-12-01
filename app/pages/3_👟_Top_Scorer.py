@@ -83,9 +83,10 @@ def main():
     with col_viz:
         if submitted:
             try:
-                # Load model
+                # Load models
                 with st.spinner("Analyzing player profile..."):
-                    model = load_model("top_scorer")
+                    model_goals = load_model("top_scorer")
+                    model_assists = load_model("top_scorer_assists")
                 
                 # Prepare input data
                 feature_order = get_feature_order("top_scorer")
@@ -105,15 +106,22 @@ def main():
                 input_df = pd.DataFrame([input_data])[feature_order]
                 
                 # Predict
-                predicted_goals = model.predict(input_df)[0]
+                predicted_goals = model_goals.predict(input_df)[0]
+                predicted_assists = model_assists.predict(input_df)[0]
                 
                 # Display Result
                 st.markdown(f"""
-                <div class="metric-card" style="text-align: center; margin-top: 20px;">
-                    <h2 style="margin:0; color: #f8fafc;">Predicted Season Goals</h2>
-                    <h1 style="font-size: 5rem; margin: 10px 0; background: linear-gradient(90deg, #38bdf8, #22c55e); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">{int(predicted_goals)}</h1>
-                    <p style="opacity: 0.8;">Based on {matches_played} matches</p>
+                <div style="display: flex; gap: 20px; justify-content: center; margin-top: 20px;">
+                    <div class="metric-card" style="text-align: center; flex: 1;">
+                        <h2 style="margin:0; color: #f8fafc; font-size: 1.2rem;">Predicted Goals</h2>
+                        <h1 style="font-size: 4rem; margin: 10px 0; background: linear-gradient(90deg, #38bdf8, #22c55e); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">{int(predicted_goals)}</h1>
+                    </div>
+                    <div class="metric-card" style="text-align: center; flex: 1;">
+                        <h2 style="margin:0; color: #f8fafc; font-size: 1.2rem;">Predicted Assists</h2>
+                        <h1 style="font-size: 4rem; margin: 10px 0; background: linear-gradient(90deg, #fbbf24, #f87171); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">{int(predicted_assists)}</h1>
+                    </div>
                 </div>
+                <p style="text-align: center; opacity: 0.8; margin-top: 10px;">Based on {matches_played} matches</p>
                 """, unsafe_allow_html=True)
                 
                 # Radar Chart

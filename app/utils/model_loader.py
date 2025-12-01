@@ -35,8 +35,8 @@ MODEL_CONFIG = {
         "accuracy": 0.66
     },
     "top_scorer": {
-        "model_file": "ps2_top_scorer_goals_model.joblib",
-        "metadata_file": "ps2_top_scorer_metadata.json",
+        "model_file": "ps3_top_scorer_goals_model.joblib",
+        "metadata_file": "ps3_top_scorer_goals_metadata.json",
         "features": [
             "goals_per_90",
             "goals_per_90 xg_per_90",
@@ -49,7 +49,24 @@ MODEL_CONFIG = {
         ],
         "target": "goals",
         "model_type": "XGBoost",
-        "r2_score": 0.957
+        "r2_score": 0.9408
+    },
+    "top_scorer_assists": {
+        "model_file": "ps3_top_scorer_assists_model.joblib",
+        "metadata_file": "ps3_top_scorer_assists_metadata.json",
+        "features": [
+            "goals_per_90",
+            "goals_per_90 xg_per_90",
+            "goals_per_90 npxg_per_90",
+            "goals_per_90 xag_per_90",
+            "goals_per_90 npxg_plus_xag_per_90",
+            "goals_per_90 matches_played",
+            "xg_per_90 matches_played",
+            "npxg_per_90 matches_played"
+        ],
+        "target": "assists",
+        "model_type": "XGBoost",
+        "r2_score": 0.9778
     },
     "total_points": {
         "model_file": "ps3_total_points_best_model.joblib",
