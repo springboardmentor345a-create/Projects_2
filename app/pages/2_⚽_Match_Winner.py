@@ -14,35 +14,13 @@ sys.path.append(str(Path(__file__).parent.parent))
 
 from utils.model_loader import load_model, get_feature_order
 from utils.data_loader import load_match_winner_data, get_unique_teams, get_team_stats, calculate_match_features
+from utils.ui import load_css
 
 # Page config
 st.set_page_config(page_title="Match Winner | ScoreSight", page_icon="⚽", layout="wide")
 
-# Apply custom CSS
-st.markdown("""
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
-* { font-family: 'Inter', sans-serif; }
-.main { background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%); }
-.metric-card {
-    background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(56, 189, 248, 0.2);
-    border-radius: 16px;
-    padding: 24px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-}
-.stButton>button {
-    background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    padding: 12px 32px;
-    font-weight: 600;
-    width: 100%;
-}
-</style>
-""", unsafe_allow_html=True)
+# Load Global CSS
+load_css()
 
 def main():
     # Back Button

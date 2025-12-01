@@ -13,35 +13,13 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 
 from utils.model_loader import load_model, get_feature_order
+from utils.ui import load_css
 
 # Page config
 st.set_page_config(page_title="Total Points | ScoreSight", page_icon="📊", layout="wide")
 
-# Apply custom CSS
-st.markdown("""
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
-* { font-family: 'Inter', sans-serif; }
-.main { background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%); }
-.metric-card {
-    background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(56, 189, 248, 0.2);
-    border-radius: 16px;
-    padding: 24px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-}
-.stButton>button {
-    background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    padding: 12px 32px;
-    font-weight: 600;
-    width: 100%;
-}
-</style>
-""", unsafe_allow_html=True)
+# Load Global CSS
+load_css()
 
 def main():
     # Back Button
@@ -92,7 +70,7 @@ def main():
                 st.markdown(f"""
                 <div class="metric-card" style="text-align: center; margin-top: 20px;">
                     <h2 style="margin:0; color: #f8fafc;">Projected Final Points</h2>
-                    <h1 style="font-size: 5rem; margin: 10px 0; background: linear-gradient(90deg, #c084fc, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">{int(predicted_points)}</h1>
+                    <h1 style="font-size: 5rem; margin: 10px 0; background: linear-gradient(90deg, #c084fc, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">{int(round(predicted_points))}</h1>
                     <p style="opacity: 0.8;">After 38 Matches</p>
                 </div>
                 """, unsafe_allow_html=True)

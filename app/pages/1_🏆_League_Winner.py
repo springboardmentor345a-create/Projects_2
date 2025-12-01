@@ -12,59 +12,16 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 
 from utils.model_loader import load_model, get_feature_order
+from utils.ui import load_css
 
 # Page config
 st.set_page_config(page_title="League Winner | ScoreSight", page_icon="🏆", layout="wide")
 
-# Apply custom CSS
-st.markdown("""
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
-* { font-family: 'Inter', sans-serif; }
-.main { background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%); }
-.metric-card {
-    background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(56, 189, 248, 0.2);
-    border-radius: 16px;
-    padding: 24px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-}
-.prediction-result {
-    background: linear-gradient(135deg, #22c55e 0%, #10b981 100%);
-    color: white;
-    padding: 32px;
-    border-radius: 16px;
-    text-align: center;
-    box-shadow: 0 8px 32px rgba(34, 197, 94, 0.3);
-}
-.stButton>button {
-    background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    padding: 12px 32px;
-    font-weight: 600;
-    width: 100%;
-}
-</style>
-""", unsafe_allow_html=True)
+# Load Global CSS
+load_css()
 
 def main():
     # Back Button
-    # When running from app/main.py, the pages are in app/pages/
-    # To go back to main.py, we just point to it.
-    # Streamlit page_link behavior:
-    # If file is "app/main.py", and we are in "app/pages/1.py",
-    # "app/main.py" is the path from root.
-    # BUT the error said "relative to entrypoint".
-    # If entrypoint is "app/main.py", then "app/main.py" is relative to... where?
-    # Actually, if entrypoint is "app/main.py", then "app/main.py" IS the file.
-    # Let's try "main.py" if the entrypoint is considered the root context.
-    # OR, if we run `streamlit run app/main.py`, the root is likely where we ran it from (d:\ScoreSight).
-    # The error "You must provide a file path relative to the entrypoint file (from the directory `app`)"
-    # suggests that if entrypoint is `app/main.py`, the directory is `app`.
-    # So `main.py` should be the path relative to `app`.
     st.page_link("main.py", label="Back to Home", icon="🏠")
     
     # Page Image
@@ -179,9 +136,9 @@ def main():
                 # Display result
                 if prediction == 1:
                     st.markdown(f"""
-                    <div class="prediction-result">
-                        <h2 style='margin: 0;'>🏆 LEAGUE CHAMPION</h2>
-                        <h1 style='font-size: 4rem; margin: 20px 0;'>LIKELY</h1>
+                    <div class="card" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(16, 185, 129, 0.2) 100%); border-color: #22c55e;">
+                        <h2 style='margin: 0; color: #4ade80 !important;'>🏆 LEAGUE CHAMPION</h2>
+                        <h1 style='font-size: 4rem; margin: 20px 0; color: #ffffff;'>LIKELY</h1>
                         <p style='font-size: 1.2rem; opacity: 0.9;'>Confidence: {confidence:.1f}%</p>
                     </div>
                     """, unsafe_allow_html=True)
@@ -189,11 +146,9 @@ def main():
                     st.success("**Predicted to WIN the Premier League! 🥇**")
                 else:
                     st.markdown(f"""
-                    <div style='background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); 
-                         color: white; padding: 32px; border-radius: 16px; text-align: center;
-                         box-shadow: 0 8px 32px rgba(239, 68, 68, 0.3);'>
-                        <h2 style:'margin: 0;'>🏆 LEAGUE CHAMPION</h2>
-                        <h1 style='font-size: 4rem; margin: 20px 0;'>UNLIKELY</h1>
+                    <div class="card" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.2) 100%); border-color: #ef4444;">
+                        <h2 style='margin: 0; color: #f87171 !important;'>🏆 LEAGUE CHAMPION</h2>
+                        <h1 style='font-size: 4rem; margin: 20px 0; color: #ffffff;'>UNLIKELY</h1>
                         <p style='font-size: 1.2rem; opacity: 0.9;'>Confidence: {confidence:.1f}%</p>
                     </div>
                     """, unsafe_allow_html=True)
@@ -228,7 +183,7 @@ def main():
             # Show example
             st.markdown("### 💡 Example Input")
             st.markdown("""
-            <div class="metric-card">
+            <div class="card">
                 <h4>Champion Team Profile (Typical Stats)</h4>
                 <ul style='line-height: 2;'>
                     <li><strong>Wins:</strong> 25-30</li>
