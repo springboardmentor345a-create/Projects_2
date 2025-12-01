@@ -2,7 +2,7 @@
 
 **Author:** Prathamesh Fuke  
 **Branch:** Prathamesh_Fuke  
-**Repository:** https://github.com/springboardmentor345a-create/Projects_2.git
+**Repository:** https://github.com/prathameshfuke/scoresight.git
 
 ## Project Overview
 
@@ -12,6 +12,25 @@ ScoreSight is a machine learning project focused on predicting English Premier L
 1. **Match Outcomes** - Predict match scores and winners
 2. **Top Scorer** - Identify the season's leading goal scorer
 3. **League Winner & Points Tally** - Forecast team points and champion
+
+## Visualizations
+
+Here are some key insights and model performance metrics from the project:
+
+### 1. League Insights
+**Goal Difference vs Points Per Game**
+![Goal Difference vs PPG](visualizations/viz_league_gd_vs_ppg.png)
+
+### 2. Feature Analysis
+**Pre-match Feature Correlations**
+![Feature Correlations](visualizations/viz_match_corr_prematch.png)
+
+### 3. Model Performance
+**League Winner Feature Importance**
+![Feature Importance](visualizations/ps1_league_winner_feature_importance.png)
+
+**Match Winner Confusion Matrix**
+![Confusion Matrix](visualizations/ps2_match_winner_confusion_matrix.png)
 
 ## Project Structure
 
@@ -73,7 +92,7 @@ ScoreSight/
 │   │   ├── league_winner_with_top4.csv
 │   │   ├── match_prediction_corrected.csv
 │   │   ├── match_prediction_with_ftr.csv
-│   │   └── top_scorer_corrected.csv
+│   │   ├── top_scorer_corrected.csv
 │   └── final/                         # Final modeling-ready datasets
 │       ├── data_final_match_prediction.csv
 │       ├── data_final_points_tally.csv
@@ -247,9 +266,8 @@ The application source code is located in the `app/` directory. Refer to `app/RE
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/springboardmentor345a-create/Projects_2.git
-cd Projects_2
-git checkout Prathamesh_Fuke
+git clone https://github.com/prathameshfuke/scoresight.git
+cd scoresight
 ```
 
 2. **Install dependencies**

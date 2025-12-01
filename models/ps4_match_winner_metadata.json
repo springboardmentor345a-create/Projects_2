@@ -1,13 +1,13 @@
 {
-    "timestamp": "2025-11-22 21:55:58",
-    "best_model": "XGBoost",
+    "timestamp": "2025-11-27 18:24:18",
+    "best_model": "CalibratedStacking",
     "metrics": {
-        "Model": "XGBoost",
-        "Accuracy": 0.6600877192982456,
-        "Precision": 0.6592868778070943,
-        "Recall": 0.6600877192982456,
-        "F1_Score": 0.6577844057837902,
-        "F1_Macro": 0.6546922862712337
+        "Model": "CalibratedStacking",
+        "Accuracy": 0.6542397660818714,
+        "Precision": 0.6532362993359001,
+        "Recall": 0.6542397660818714,
+        "F1_Score": 0.6528934093029977,
+        "F1_Macro": 0.6502006957452502
     },
     "features_used": [
         "Points_Gap",
