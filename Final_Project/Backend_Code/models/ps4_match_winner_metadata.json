@@ -1,0 +1,25 @@
+{
+    "timestamp": "2025-12-01 18:33:38",
+    "best_model": "XGBoost",
+    "metrics": {
+        "Model": "XGBoost",
+        "Accuracy": 0.658625730994152,
+        "Precision": 0.6577961449716913,
+        "Recall": 0.658625730994152,
+        "F1_Score": 0.6563125107549033,
+        "F1_Macro": 0.653207091803583
+    },
+    "features_used": [
+        "Points_Gap",
+        "Goal_Difference_Gap",
+        "Form_Gap",
+        "Home_Goal_Difference",
+        "Away_Goal_Difference",
+        "Home_Win_Streak",
+        "Away_Win_Streak",
+        "Home_Goals_Scored",
+        "Away_Goals_Scored",
+        "Home_Goals_Conceded"
+    ],
+    "random_state": 42
+}

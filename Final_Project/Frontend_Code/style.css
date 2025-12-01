@@ -1,0 +1,224 @@
+/* Global Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@400;500;700;900&display=swap');
+
+:root {
+    --neon-cyan: #00f3ff;
+    --neon-purple: #bc13fe;
+    --neon-green: #0aff0a;
+    --bg-dark: #050510;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Orbitron', sans-serif !important;
+    color: #fff !important;
+    text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+    letter-spacing: 1px;
+}
+
+/* App Background */
+.stApp {
+    background: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #050510 100%);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: #e0e0e0;
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Logo Container */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    animation: float 6s ease-in-out infinite;
+}
+
+.logo-img {
+    border-radius: 50%;
+    box-shadow: 0 0 30px var(--neon-cyan);
+    border: 3px solid var(--neon-cyan);
+    transition: all 0.5s ease;
+}
+
+.logo-img:hover {
+    box-shadow: 0 0 50px var(--neon-purple);
+    border-color: var(--neon-purple);
+    transform: rotate(360deg);
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* Futuristic Divider */
+.futuristic-divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+    margin: 30px 0;
+    box-shadow: 0 0 15px var(--neon-cyan);
+}
+
+/* Glassmorphism Card */
+.metric-card,
+.card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    margin-bottom: 24px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+.metric-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: 0.5s;
+}
+
+.metric-card:hover::before {
+    left: 100%;
+}
+
+.metric-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(0, 243, 255, 0.15);
+    border-color: var(--neon-cyan);
+}
+
+/* Buttons */
+.stButton>button {
+    background: transparent;
+    color: var(--neon-cyan);
+    border: 2px solid var(--neon-cyan);
+    border-radius: 12px;
+    padding: 12px 24px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.stButton>button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background: var(--neon-cyan);
+    transition: all 0.3s ease;
+    z-index: -1;
+}
+
+.stButton>button:hover {
+    color: #000;
+    box-shadow: 0 0 20px var(--neon-cyan), 0 0 40px var(--neon-cyan);
+    transform: translateY(-2px);
+}
+
+.stButton>button:hover::before {
+    width: 100%;
+}
+
+/* Inputs */
+.stTextInput>div>div>input,
+.stNumberInput>div>div>input,
+.stSelectbox>div>div>div {
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.stTextInput>div>div>input:focus,
+.stNumberInput>div>div>input:focus,
+.stSelectbox>div>div>div:focus {
+    border-color: var(--neon-purple);
+    box-shadow: 0 0 15px rgba(188, 19, 254, 0.3);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Sidebar */
+[data-testid="stSidebar"] {
+    background-color: #02020a;
+    border-right: 1px solid var(--glass-border);
+}
+
+[data-testid="stSidebar"] .stMarkdown h1 {
+    color: var(--neon-cyan) !important;
+    text-align: center;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #050510;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--neon-cyan), var(--neon-purple));
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--neon-purple), var(--neon-cyan));
+}
+
+/* Plotly Chart Background */
+.js-plotly-plot .plotly .main-svg {
+    background: rgba(0, 0, 0, 0) !important;
+}

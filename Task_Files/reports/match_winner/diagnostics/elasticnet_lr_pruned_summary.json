@@ -1,0 +1,26 @@
+{
+    "mean_f1_macro_cv": 0.6306904993217732,
+    "std_f1_macro_cv": 0.013168870311893448,
+    "test_metrics": {
+        "Model": "ElasticNetLR_Pruned",
+        "Accuracy": 0.6483918128654971,
+        "Precision": 0.6489256190888745,
+        "Recall": 0.6483918128654971,
+        "F1_Score": 0.6486002278720407,
+        "F1_Macro": 0.6470290993611734
+    },
+    "dropped_features": [
+        "Away_Win_Streak",
+        "Home_Win_Streak",
+        "Home_Goals_Conceded"
+    ],
+    "remaining_features": [
+        "Points_Gap",
+        "Goal_Difference_Gap",
+        "Form_Gap",
+        "Home_Goal_Difference",
+        "Away_Goal_Difference",
+        "Home_Goals_Scored",
+        "Away_Goals_Scored"
+    ]
+}
