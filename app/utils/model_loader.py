@@ -38,14 +38,11 @@ MODEL_CONFIG = {
         "model_file": "ps3_top_scorer_goals_model.joblib",
         "metadata_file": "ps3_top_scorer_goals_metadata.json",
         "features": [
-            "goals_per_90",
-            "goals_per_90 xg_per_90",
-            "goals_per_90 npxg_per_90",
-            "goals_per_90 xag_per_90",
-            "goals_per_90 npxg_plus_xag_per_90",
-            "goals_per_90 matches_played",
-            "xg_per_90 matches_played",
-            "npxg_per_90 matches_played"
+            "position", "age", "matches_played", "starts", "minutes",
+            "goals_per_90", "assists_per_90",
+            "xg_per_90", "npxg_per_90", "xag_per_90", "npxg_plus_xag_per_90",
+            "non_penalty_goals_per_90",
+            "goals_per_xg", "assists_per_xag", "xag_impact", "npxg_impact"
         ],
         "target": "goals",
         "model_type": "XGBoost",
@@ -55,14 +52,11 @@ MODEL_CONFIG = {
         "model_file": "ps3_top_scorer_assists_model.joblib",
         "metadata_file": "ps3_top_scorer_assists_metadata.json",
         "features": [
-            "goals_per_90",
-            "goals_per_90 xg_per_90",
-            "goals_per_90 npxg_per_90",
-            "goals_per_90 xag_per_90",
-            "goals_per_90 npxg_plus_xag_per_90",
-            "goals_per_90 matches_played",
-            "xg_per_90 matches_played",
-            "npxg_per_90 matches_played"
+            "position", "age", "matches_played", "starts", "minutes",
+            "goals_per_90", "assists_per_90",
+            "xg_per_90", "npxg_per_90", "xag_per_90", "npxg_plus_xag_per_90",
+            "non_penalty_goals_per_90",
+            "goals_per_xg", "assists_per_xag", "xag_impact", "npxg_impact"
         ],
         "target": "assists",
         "model_type": "XGBoost",
