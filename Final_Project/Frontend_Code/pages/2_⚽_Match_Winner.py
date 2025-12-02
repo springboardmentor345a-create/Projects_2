@@ -57,7 +57,7 @@ def main():
         if home_team == away_team:
             st.warning("Please select different teams for Home and Away.")
         else:
-            if st.button("🔮 Predict Match (Auto)", type="primary", use_container_width=True):
+            if st.button("🔮 Predict Match (Auto)", type="primary"):
                 try:
                     with st.spinner("Analyzing match-up..."):
                         # 1. Calculate Features
@@ -122,7 +122,7 @@ def main():
                 away_scored = st.number_input("Away Goals Scored", value=int(np.random.randint(0, 4)), min_value=0)
                 home_conceded = st.number_input("Home Goals Conceded", value=int(np.random.randint(0, 3)), min_value=0)
                 
-            submitted = st.form_submit_button("🔮 Predict Match (Manual)", type="primary", use_container_width=True)
+            submitted = st.form_submit_button("🔮 Predict Match (Manual)", type="primary")
             
             if submitted:
                 try:
@@ -186,7 +186,7 @@ def display_prediction_results(probs):
             height=250
         )
         
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
 if __name__ == "__main__":
     main()
