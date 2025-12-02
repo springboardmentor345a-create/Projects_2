@@ -3,7 +3,7 @@ from pathlib import Path
 
 def load_css():
     """Loads the global custom CSS."""
-    css_path = Path("app/style.css")
+    css_path = Path(__file__).parent.parent / "style.css"
     if css_path.exists():
         with open(css_path, "r") as f:
             st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
