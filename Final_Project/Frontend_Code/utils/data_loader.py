@@ -8,7 +8,7 @@ import streamlit as st
 from pathlib import Path
 
 # Define data paths
-DATA_DIR = Path(__file__).parent.parent.parent / "data"
+DATA_DIR = Path(__file__).parent.parent.parent.parent / "Task_Files" / "data"
 
 @st.cache_data
 def load_league_winner_data():
