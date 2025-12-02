@@ -20,7 +20,7 @@ load_css()
 
 def main():
     # Dynamic Logo
-    logo_path = Path("app/image/logo_dark.jpg") # Default to dark for the futuristic theme
+    logo_path = Path(__file__).parent / "image/logo_dark.jpg" # Default to dark for the futuristic theme
     if logo_path.exists():
         st.logo(str(logo_path), icon_image=str(logo_path))
     

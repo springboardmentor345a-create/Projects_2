@@ -10,7 +10,7 @@ from pathlib import Path
 import json
 
 # Define model paths
-MODELS_DIR = Path(__file__).parent.parent.parent / "models"
+MODELS_DIR = Path(__file__).parent.parent.parent / "Backend_Code" / "models"
 
 # Model configurations based on metadata
 MODEL_CONFIG = {

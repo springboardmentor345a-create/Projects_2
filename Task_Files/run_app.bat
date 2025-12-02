@@ -8,7 +8,8 @@ echo ========================================
 echo.
 
 REM Check if in correct directory
-if not exist "app\main.py" (
+REM Check if in correct directory
+if not exist "Final_Project\Frontend_Code\main.py" (
     echo ERROR: Please run this script from the ScoreSight root directory
     echo Current directory: %CD%
     pause
@@ -22,6 +23,7 @@ echo Press Ctrl+C to stop the server
 echo.
 
 REM Run Streamlit
-streamlit run app\main.py
+cd Final_Project\Frontend_Code
+streamlit run main.py
 
 pause

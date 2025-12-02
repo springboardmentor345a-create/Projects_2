@@ -1,1 +1,1 @@
-https://scoresight-deployment-url-placeholder.com
+https://scoresight.streamlit.app/
