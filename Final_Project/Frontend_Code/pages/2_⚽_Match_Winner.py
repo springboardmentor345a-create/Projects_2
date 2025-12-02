@@ -42,8 +42,9 @@ def main():
     # Create tabs for different input modes
     tab1, tab2 = st.tabs(["🤖 Team Selection (Auto)", "✍️ Manual Input"])
     
-    input_data = {}
-    
+    # ==========================================
+    # TAB 1: AUTO SELECTION
+    # ==========================================
     with tab1:
         st.markdown("### Select Teams")
         col1, col2 = st.columns(2)
@@ -56,40 +57,52 @@ def main():
         if home_team == away_team:
             st.warning("Please select different teams for Home and Away.")
         else:
-            # Calculate features automatically
-            if st.button("Generate Match Stats"):
+            if st.button("🔮 Predict Match (Auto)", type="primary", use_container_width=True):
                 try:
-                    with st.spinner("Calculating team stats..."):
+                    with st.spinner("Analyzing match-up..."):
+                        # 1. Calculate Features
                         features = calculate_match_features(home_team, away_team, df)
-                        st.session_state['match_features'] = features
-                        st.success("Stats calculated successfully!")
+                        
+                        # 2. Load Model & Predict
+                        model = load_model("match_winner")
+                        feature_order = get_feature_order("match_winner")
+                        input_df = pd.DataFrame([features])[feature_order]
+                        
+                        probabilities = model.predict_proba(input_df)[0]
+                        probs = {
+                            "Home Win": probabilities[0],
+                            "Not Home Win": probabilities[1]
+                        }
+                        
+                        # 3. Display Results
+                        display_prediction_results(probs)
+                        
+                        # 4. Show Stats Used
+                        st.markdown("---")
+                        st.markdown("### 📊 Match Stats Used")
+                        col_s1, col_s2, col_s3 = st.columns(3)
+                        with col_s1:
+                            st.metric("Points Gap", f"{features.get('Points_Gap', 0):.1f}")
+                            st.metric("Goal Diff Gap", f"{features.get('Goal_Difference_Gap', 0):.1f}")
+                        with col_s2:
+                            st.metric("Home Win Streak", int(features.get('Home_Win_Streak', 0)))
+                            st.metric("Away Win Streak", int(features.get('Away_Win_Streak', 0)))
+                        with col_s3:
+                            st.metric("Home Goals Scored", int(features.get('Home_Goals_Scored', 0)))
+                            st.metric("Away Goals Scored", int(features.get('Away_Goals_Scored', 0)))
+                            
                 except Exception as e:
-                    st.error(f"Error calculating stats: {str(e)}")
-                    
-        # Use calculated features if available
-        if 'match_features' in st.session_state:
-            input_data = st.session_state['match_features']
-            
-            # Show calculated stats
-            st.markdown("### 📊 Calculated Match Stats")
-            col_s1, col_s2, col_s3 = st.columns(3)
-            with col_s1:
-                st.metric("Points Gap", f"{input_data.get('Points_Gap', 0):.1f}")
-                st.metric("Goal Diff Gap", f"{input_data.get('Goal_Difference_Gap', 0):.1f}")
-            with col_s2:
-                st.metric("Home Win Streak", int(input_data.get('Home_Win_Streak', 0)))
-                st.metric("Away Win Streak", int(input_data.get('Away_Win_Streak', 0)))
-            with col_s3:
-                st.metric("Home Goals Scored", int(input_data.get('Home_Goals_Scored', 0)))
-                st.metric("Away Goals Scored", int(input_data.get('Away_Goals_Scored', 0)))
+                    st.error(f"Prediction Error: {str(e)}")
 
+    # ==========================================
+    # TAB 2: MANUAL INPUT
+    # ==========================================
     with tab2:
         st.markdown("### Manual Feature Input")
         
         if st.button("🎲 Randomize Inputs"):
             st.session_state['random_seed'] = np.random.randint(0, 1000)
             
-        # Use random values if requested or defaults
         np.random.seed(st.session_state.get('random_seed', 42))
         
         with st.form("manual_match_form"):
@@ -109,89 +122,71 @@ def main():
                 away_scored = st.number_input("Away Goals Scored", value=int(np.random.randint(0, 4)), min_value=0)
                 home_conceded = st.number_input("Home Goals Conceded", value=int(np.random.randint(0, 3)), min_value=0)
                 
-            submitted = st.form_submit_button("Set Manual Stats")
+            submitted = st.form_submit_button("🔮 Predict Match (Manual)", type="primary", use_container_width=True)
             
             if submitted:
-                input_data = {
-                    "Points_Gap": points_gap,
-                    "Goal_Difference_Gap": gd_gap,
-                    "Form_Gap": form_gap,
-                    "Home_Goal_Difference": home_gd,
-                    "Away_Goal_Difference": away_gd,
-                    "Home_Win_Streak": home_streak,
-                    "Away_Win_Streak": away_streak,
-                    "Home_Goals_Scored": home_scored,
-                    "Away_Goals_Scored": away_scored,
-                    "Home_Goals_Conceded": home_conceded
-                }
-                st.session_state['match_features'] = input_data
-
-    st.markdown("---")
-    
-    # Prediction Section
-    if input_data:
-        col_pred, col_viz = st.columns([1, 2])
-        
-        with col_pred:
-            st.markdown("### 🔮 Prediction")
-            if st.button("Predict Match Winner", use_container_width=True):
                 try:
-                    with st.spinner("Analyzing match-up..."):
-                        model = load_model("match_winner")
-                        feature_order = get_feature_order("match_winner")
-                        
-                        # Prepare dataframe
-                        input_df = pd.DataFrame([input_data])[feature_order]
-                        
-                        # Predict
-                        probabilities = model.predict_proba(input_df)[0]
-                        
-                        # Model is binary: 0=H (Home Win), 1=NH (Not Home Win)
-                        probs = {
-                            "Home Win": probabilities[0],
-                            "Not Home Win (Draw/Away)": probabilities[1]
+                    with st.spinner("Analyzing manual inputs..."):
+                        input_data = {
+                            "Points_Gap": points_gap,
+                            "Goal_Difference_Gap": gd_gap,
+                            "Form_Gap": form_gap,
+                            "Home_Goal_Difference": home_gd,
+                            "Away_Goal_Difference": away_gd,
+                            "Home_Win_Streak": home_streak,
+                            "Away_Win_Streak": away_streak,
+                            "Home_Goals_Scored": home_scored,
+                            "Away_Goals_Scored": away_scored,
+                            "Home_Goals_Conceded": home_conceded
                         }
                         
-                        # Find winner
-                        winner = max(probs, key=probs.get)
-                        confidence = probs[winner] * 100
+                        model = load_model("match_winner")
+                        feature_order = get_feature_order("match_winner")
+                        input_df = pd.DataFrame([input_data])[feature_order]
                         
-                        # Display Result
-                        color = "green" if winner == "Home Win" else "purple"
-                        futuristic_card("Predicted Outcome", winner.upper(), f"Confidence: {confidence:.1f}%", color)
+                        probabilities = model.predict_proba(input_df)[0]
+                        probs = {
+                            "Home Win": probabilities[0],
+                            "Not Home Win": probabilities[1]
+                        }
                         
-                        # Store for visualization
-                        st.session_state['probs'] = probs
+                        display_prediction_results(probs)
                         
                 except Exception as e:
                     st.error(f"Prediction Error: {str(e)}")
+
+def display_prediction_results(probs):
+    """Helper to display prediction results consistently"""
+    winner = max(probs, key=probs.get)
+    confidence = probs[winner] * 100
+    
+    col_res, col_chart = st.columns([1, 2])
+    
+    with col_res:
+        color = "green" if winner == "Home Win" else "purple"
+        futuristic_card("Predicted Outcome", winner.upper(), f"Confidence: {confidence:.1f}%", color)
         
-        with col_viz:
-            if 'probs' in st.session_state:
-                st.markdown("### 📊 Probability Distribution")
-                probs = st.session_state['probs']
-                
-                # Create Plotly Chart
-                fig = go.Figure(data=[
-                    go.Bar(
-                        x=list(probs.keys()),
-                        y=[v*100 for v in probs.values()],
-                        marker_color=['#0aff0a', '#bc13fe'],
-                        text=[f"{v*100:.1f}%" for v in probs.values()],
-                        textposition='auto',
-                    )
-                ])
-                
-                fig.update_layout(
-                    plot_bgcolor='rgba(0,0,0,0)',
-                    paper_bgcolor='rgba(0,0,0,0)',
-                    font_color='white',
-                    yaxis_title="Probability (%)",
-                    margin=dict(t=20, b=20, l=20, r=20),
-                    height=300
-                )
-                
-                st.plotly_chart(fig, use_container_width=True)
+    with col_chart:
+        fig = go.Figure(data=[
+            go.Bar(
+                x=list(probs.keys()),
+                y=[v*100 for v in probs.values()],
+                marker_color=['#0aff0a', '#bc13fe'],
+                text=[f"{v*100:.1f}%" for v in probs.values()],
+                textposition='auto',
+            )
+        ])
+        
+        fig.update_layout(
+            plot_bgcolor='rgba(0,0,0,0)',
+            paper_bgcolor='rgba(0,0,0,0)',
+            font_color='white',
+            yaxis_title="Probability (%)",
+            margin=dict(t=20, b=20, l=20, r=20),
+            height=250
+        )
+        
+        st.plotly_chart(fig, use_container_width=True)
 
 if __name__ == "__main__":
     main()
