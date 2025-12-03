@@ -7,7 +7,9 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 
-MODELS_DIR = Path("models")
+# Get the project root directory (2 levels up from backend/utils)
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+MODELS_DIR = PROJECT_ROOT / "model_training" / "models"
 
 def load_model(model_name):
     """Load a trained model from the models directory."""
