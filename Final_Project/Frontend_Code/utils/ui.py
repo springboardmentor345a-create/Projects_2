@@ -77,15 +77,18 @@ def render_loading_overlay(placeholder):
     </div>
     <script>
         const texts = [
-            "Scouting Opponent...",
-            "Analyzing Form...",
-            "Calculating Probabilities...",
-            "Finalizing Strategy..."
+            "Consulting VAR...",
+            "Measuring Grass Height...",
+            "Checking Wind Speed...",
+            "Asking the Referee...",
+            "Predicting the Unpredictable...",
+            "Calculating xG...",
+            "Warming Up the GPU..."
         ];
         let index = 0;
         const textElement = document.getElementById("loading-text");
         
-        // Simple text cycler (Note: Streamlit re-renders might reset this, but it adds flavor)
+        // Simple text cycler
         if (textElement) {
             setInterval(() => {
                 index = (index + 1) % texts.length;
