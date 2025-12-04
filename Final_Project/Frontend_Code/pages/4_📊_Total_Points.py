@@ -13,7 +13,8 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 
 from utils.model_loader import load_model, get_feature_order
-from utils.ui import load_css, futuristic_header, futuristic_card
+from utils.ui import load_css, futuristic_header, futuristic_card, render_loading_overlay
+import time
 
 # Page config
 st.set_page_config(page_title="Total Points | ScoreSight", page_icon="📊", layout="wide")
@@ -49,8 +50,16 @@ def main():
         if submitted:
             try:
                 # Load model
-                with st.spinner("Calculating projection..."):
-                    model = load_model("total_points")
+                # Loading Animation
+                loader_placeholder = st.empty()
+                render_loading_overlay(loader_placeholder)
+                time.sleep(1.5)
+                
+                # Load model
+                model = load_model("total_points")
+                
+                # Clear loader
+                loader_placeholder.empty()
                 
                 # Prepare input data
                 feature_order = get_feature_order("total_points")

@@ -33,8 +33,8 @@ def main():
     futuristic_header("SCORESIGHT AI")
     
     st.markdown("""
-    <div style="text-align: center; margin-bottom: 2rem;">
-        <p style="font-size: 1.2rem; color: #a0a0a0; max-width: 600px; margin: 0 auto; font-family: 'Inter', sans-serif;">
+    <div class="hero-text animate-fade-in delay-100">
+        <p class="hero-desc">
             Advanced machine learning algorithms predicting the beautiful game. 
             Experience the future of football analytics.
         </p>
@@ -49,9 +49,9 @@ def main():
     with col1:
         # League Winner Card
         st.markdown("""
-        <div class="card">
+        <div class="card animate-slide-up delay-200">
             <h3 style="color: #00f3ff;">🏆 League Winner</h3>
-            <p style="color: #ccc;">Predict the EPL champion using season-long performance metrics.</p>
+            <p>Predict the EPL champion using season-long performance metrics.</p>
         </div>
         """, unsafe_allow_html=True)
         if st.button("Launch Module ↗", key="btn_league"):
@@ -59,9 +59,9 @@ def main():
             
         # Top Scorer Card
         st.markdown("""
-        <div class="card" style="margin-top: 20px;">
+        <div class="card animate-slide-up delay-300" style="margin-top: 20px;">
             <h3 style="color: #bc13fe;">👟 Top Scorer</h3>
-            <p style="color: #ccc;">Forecast the Golden Boot winner with player performance analysis.</p>
+            <p>Forecast the Golden Boot winner with player performance analysis.</p>
         </div>
         """, unsafe_allow_html=True)
         if st.button("Launch Module ↗", key="btn_scorer"):
@@ -70,9 +70,9 @@ def main():
     with col2:
         # Match Winner Card
         st.markdown("""
-        <div class="card">
+        <div class="card animate-slide-up delay-200">
             <h3 style="color: #0aff0a;">⚽ Match Winner</h3>
-            <p style="color: #ccc;">Predict match outcomes (Home/Draw/Away) with high precision.</p>
+            <p>Predict match outcomes (Home/Draw/Away) with high precision.</p>
         </div>
         """, unsafe_allow_html=True)
         if st.button("Launch Module ↗", key="btn_match"):
@@ -80,9 +80,9 @@ def main():
             
         # Total Points Card
         st.markdown("""
-        <div class="card" style="margin-top: 20px;">
+        <div class="card animate-slide-up delay-300" style="margin-top: 20px;">
             <h3 style="color: #ff0055;">📊 Total Points</h3>
-            <p style="color: #ccc;">Estimate final season points tally for any team.</p>
+            <p>Estimate final season points tally for any team.</p>
         </div>
         """, unsafe_allow_html=True)
         if st.button("Launch Module ↗", key="btn_points"):
@@ -91,7 +91,7 @@ def main():
     # Footer
     futuristic_divider()
     st.markdown("""
-    <div style="text-align: center; color: #666; font-size: 0.8rem; margin-top: 1rem;">
+    <div class="footer-text animate-fade-in delay-400">
         POWERED BY ADVANCED ML MODELS | V2.0.0
     </div>
     """, unsafe_allow_html=True)

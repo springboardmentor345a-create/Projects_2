@@ -15,7 +15,8 @@ sys.path.append(str(Path(__file__).parent.parent))
 
 from utils.model_loader import load_model, get_feature_order
 from utils.data_loader import load_match_winner_data, get_unique_teams, calculate_match_features
-from utils.ui import load_css, futuristic_header, futuristic_card
+from utils.ui import load_css, futuristic_header, futuristic_card, render_loading_overlay
+import time
 
 # Page config
 st.set_page_config(page_title="Match Winner | ScoreSight", page_icon="⚽", layout="wide")
@@ -59,37 +60,45 @@ def main():
         else:
             if st.button("🔮 Predict Match (Auto)", type="primary"):
                 try:
-                    with st.spinner("Analyzing match-up..."):
-                        # 1. Calculate Features
-                        features = calculate_match_features(home_team, away_team, df)
-                        
-                        # 2. Load Model & Predict
-                        model = load_model("match_winner")
-                        feature_order = get_feature_order("match_winner")
-                        input_df = pd.DataFrame([features])[feature_order]
-                        
-                        probabilities = model.predict_proba(input_df)[0]
-                        probs = {
-                            "Home Win": probabilities[0],
-                            "Not Home Win": probabilities[1]
-                        }
-                        
-                        # 3. Display Results
-                        display_prediction_results(probs)
-                        
-                        # 4. Show Stats Used
-                        st.markdown("---")
-                        st.markdown("### 📊 Match Stats Used")
-                        col_s1, col_s2, col_s3 = st.columns(3)
-                        with col_s1:
-                            st.metric("Points Gap", f"{features.get('Points_Gap', 0):.1f}")
-                            st.metric("Goal Diff Gap", f"{features.get('Goal_Difference_Gap', 0):.1f}")
-                        with col_s2:
-                            st.metric("Home Win Streak", int(features.get('Home_Win_Streak', 0)))
-                            st.metric("Away Win Streak", int(features.get('Away_Win_Streak', 0)))
-                        with col_s3:
-                            st.metric("Home Goals Scored", int(features.get('Home_Goals_Scored', 0)))
-                            st.metric("Away Goals Scored", int(features.get('Away_Goals_Scored', 0)))
+                    # Loading Animation
+                    loader_placeholder = st.empty()
+                    render_loading_overlay(loader_placeholder)
+                    time.sleep(1.5)
+                    
+                    # Clear loader
+                    loader_placeholder.empty()
+                    
+                    # with st.spinner("Analyzing match-up..."):
+                    # 1. Calculate Features
+                    features = calculate_match_features(home_team, away_team, df)
+                    
+                    # 2. Load Model & Predict
+                    model = load_model("match_winner")
+                    feature_order = get_feature_order("match_winner")
+                    input_df = pd.DataFrame([features])[feature_order]
+                    
+                    probabilities = model.predict_proba(input_df)[0]
+                    probs = {
+                        "Home Win": probabilities[0],
+                        "Not Home Win": probabilities[1]
+                    }
+                    
+                    # 3. Display Results
+                    display_prediction_results(probs)
+                    
+                    # 4. Show Stats Used
+                    st.markdown("---")
+                    st.markdown("### 📊 Match Stats Used")
+                    col_s1, col_s2, col_s3 = st.columns(3)
+                    with col_s1:
+                        st.metric("Points Gap", f"{features.get('Points_Gap', 0):.1f}")
+                        st.metric("Goal Diff Gap", f"{features.get('Goal_Difference_Gap', 0):.1f}")
+                    with col_s2:
+                        st.metric("Home Win Streak", int(features.get('Home_Win_Streak', 0)))
+                        st.metric("Away Win Streak", int(features.get('Away_Win_Streak', 0)))
+                    with col_s3:
+                        st.metric("Home Goals Scored", int(features.get('Home_Goals_Scored', 0)))
+                        st.metric("Away Goals Scored", int(features.get('Away_Goals_Scored', 0)))
                             
                 except Exception as e:
                     st.error(f"Prediction Error: {str(e)}")
@@ -126,31 +135,39 @@ def main():
             
             if submitted:
                 try:
-                    with st.spinner("Analyzing manual inputs..."):
-                        input_data = {
-                            "Points_Gap": points_gap,
-                            "Goal_Difference_Gap": gd_gap,
-                            "Form_Gap": form_gap,
-                            "Home_Goal_Difference": home_gd,
-                            "Away_Goal_Difference": away_gd,
-                            "Home_Win_Streak": home_streak,
-                            "Away_Win_Streak": away_streak,
-                            "Home_Goals_Scored": home_scored,
-                            "Away_Goals_Scored": away_scored,
-                            "Home_Goals_Conceded": home_conceded
-                        }
-                        
-                        model = load_model("match_winner")
-                        feature_order = get_feature_order("match_winner")
-                        input_df = pd.DataFrame([input_data])[feature_order]
-                        
-                        probabilities = model.predict_proba(input_df)[0]
-                        probs = {
-                            "Home Win": probabilities[0],
-                            "Not Home Win": probabilities[1]
-                        }
-                        
-                        display_prediction_results(probs)
+                    # Loading Animation
+                    loader_placeholder = st.empty()
+                    render_loading_overlay(loader_placeholder)
+                    time.sleep(1.5)
+                    
+                    # Clear loader
+                    loader_placeholder.empty()
+                    
+                    # with st.spinner("Analyzing manual inputs..."):
+                    input_data = {
+                        "Points_Gap": points_gap,
+                        "Goal_Difference_Gap": gd_gap,
+                        "Form_Gap": form_gap,
+                        "Home_Goal_Difference": home_gd,
+                        "Away_Goal_Difference": away_gd,
+                        "Home_Win_Streak": home_streak,
+                        "Away_Win_Streak": away_streak,
+                        "Home_Goals_Scored": home_scored,
+                        "Away_Goals_Scored": away_scored,
+                        "Home_Goals_Conceded": home_conceded
+                    }
+                    
+                    model = load_model("match_winner")
+                    feature_order = get_feature_order("match_winner")
+                    input_df = pd.DataFrame([input_data])[feature_order]
+                    
+                    probabilities = model.predict_proba(input_df)[0]
+                    probs = {
+                        "Home Win": probabilities[0],
+                        "Not Home Win": probabilities[1]
+                    }
+                    
+                    display_prediction_results(probs)
                         
                 except Exception as e:
                     st.error(f"Prediction Error: {str(e)}")

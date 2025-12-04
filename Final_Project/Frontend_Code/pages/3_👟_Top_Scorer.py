@@ -13,7 +13,8 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 
 from utils.model_loader import load_model, get_feature_order
-from utils.ui import load_css, futuristic_header, futuristic_card
+from utils.ui import load_css, futuristic_header, futuristic_card, render_loading_overlay
+import time
 
 # Page config
 st.set_page_config(page_title="Top Scorer | ScoreSight", page_icon="👟", layout="wide")
@@ -59,9 +60,17 @@ def main():
         if submitted:
             try:
                 # Load models
-                with st.spinner("Analyzing player profile..."):
-                    model_goals = load_model("top_scorer")
-                    model_assists = load_model("top_scorer_assists")
+                # Loading Animation
+                loader_placeholder = st.empty()
+                render_loading_overlay(loader_placeholder)
+                time.sleep(1.5)
+                
+                # Load models
+                model_goals = load_model("top_scorer")
+                model_assists = load_model("top_scorer_assists")
+                
+                # Clear loader
+                loader_placeholder.empty()
                 
                 # Prepare input data
                 feature_order = get_feature_order("top_scorer")
