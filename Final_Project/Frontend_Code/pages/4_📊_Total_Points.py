@@ -33,6 +33,7 @@ def main():
     col_input, col_viz = st.columns([1, 1])
     
     with col_input:
+        st.markdown('<div class="animate-slide-up delay-100">', unsafe_allow_html=True)
         st.markdown("### 📈 Current Season Stats")
         
         with st.form("total_points_form"):
@@ -45,6 +46,7 @@ def main():
             st.info(f"Calculated Goal Difference (GD): {goal_diff}")
             
             submitted = st.form_submit_button("🔮 Predict Final Points")
+        st.markdown('</div>', unsafe_allow_html=True)
     
     with col_viz:
         if submitted:
@@ -53,7 +55,7 @@ def main():
                 # Loading Animation
                 loader_placeholder = st.empty()
                 render_loading_overlay(loader_placeholder)
-                time.sleep(1.5)
+                time.sleep(2.0)
                 
                 # Load model
                 model = load_model("total_points")
@@ -77,7 +79,9 @@ def main():
                 predicted_points = model.predict(input_df)[0]
                 
                 # Display Result
+                st.markdown('<div class="animate-pop-in">', unsafe_allow_html=True)
                 futuristic_card("Projected Final Points", int(round(predicted_points)), "After 38 Matches", "green")
+                st.markdown('</div>', unsafe_allow_html=True)
                 
                 # Simple trajectory visualization
                 current_points = (predicted_points / 38) * matches_played # Rough estimate
@@ -108,7 +112,9 @@ def main():
             except Exception as e:
                 st.error(f"Prediction Error: {str(e)}")
         else:
+            st.markdown('<div class="animate-fade-in delay-200">', unsafe_allow_html=True)
             st.info("👈 Enter current team stats to project the final season tally.")
+            st.markdown('</div>', unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()

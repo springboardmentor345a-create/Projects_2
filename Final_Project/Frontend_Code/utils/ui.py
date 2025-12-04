@@ -59,7 +59,8 @@ def futuristic_header(text):
 
 def render_loading_overlay(placeholder):
     """
-    Renders a full-screen football loading animation in the given placeholder.
+    Renders a full-screen football loading animation (V2) in the given placeholder.
+    Includes a bouncing ball, shadow, and cycling text.
     
     Args:
         placeholder: Streamlit placeholder object (st.empty())
@@ -67,9 +68,30 @@ def render_loading_overlay(placeholder):
     html = """
     <div class="loading-overlay">
         <div class="loading-content">
-            <div class="football-bounce">⚽</div>
-            <div class="loading-text">Analyzing Match Data...</div>
+            <div class="football-container">
+                <div class="football-bounce">⚽</div>
+                <div class="football-shadow"></div>
+            </div>
+            <div class="loading-text" id="loading-text">Analyzing Match Data...</div>
         </div>
     </div>
+    <script>
+        const texts = [
+            "Scouting Opponent...",
+            "Analyzing Form...",
+            "Calculating Probabilities...",
+            "Finalizing Strategy..."
+        ];
+        let index = 0;
+        const textElement = document.getElementById("loading-text");
+        
+        // Simple text cycler (Note: Streamlit re-renders might reset this, but it adds flavor)
+        if (textElement) {
+            setInterval(() => {
+                index = (index + 1) % texts.length;
+                textElement.innerText = texts[index];
+            }, 800);
+        }
+    </script>
     """
     placeholder.markdown(html, unsafe_allow_html=True)

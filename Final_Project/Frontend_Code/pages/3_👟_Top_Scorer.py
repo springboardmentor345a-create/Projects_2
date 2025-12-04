@@ -33,6 +33,7 @@ def main():
     col_input, col_viz = st.columns([1, 1])
     
     with col_input:
+        st.markdown('<div class="animate-slide-up delay-100">', unsafe_allow_html=True)
         st.markdown("### 📊 Player Stats Profile")
         
         with st.form("top_scorer_form"):
@@ -55,6 +56,7 @@ def main():
                 non_penalty_goals_per_90 = st.number_input("Non-Penalty Goals per 90", 0.0, 3.0, 0.4, 0.01)
             
             submitted = st.form_submit_button("🔮 Predict Season Stats")
+        st.markdown('</div>', unsafe_allow_html=True)
     
     with col_viz:
         if submitted:
@@ -63,7 +65,7 @@ def main():
                 # Loading Animation
                 loader_placeholder = st.empty()
                 render_loading_overlay(loader_placeholder)
-                time.sleep(1.5)
+                time.sleep(2.0)
                 
                 # Load models
                 model_goals = load_model("top_scorer")
@@ -124,11 +126,13 @@ def main():
                 predicted_assists = model_assists.predict(input_df)[0]
                 
                 # Display Result
+                st.markdown('<div class="animate-pop-in">', unsafe_allow_html=True)
                 col_res1, col_res2 = st.columns(2)
                 with col_res1:
                     futuristic_card("Predicted Goals", int(round(predicted_goals)), f"Based on {matches_played} matches", "cyan")
                 with col_res2:
                     futuristic_card("Predicted Assists", int(round(predicted_assists)), "Season Projection", "purple")
+                st.markdown('</div>', unsafe_allow_html=True)
                 
                 # Radar Chart
                 categories = ['Goals/90', 'xG/90', 'npxG/90', 'xAG/90', 'Contribution']
@@ -162,7 +166,9 @@ def main():
                 st.error(f"Prediction Error: {str(e)}")
         else:
             # Placeholder for visualization area
+            st.markdown('<div class="animate-fade-in delay-200">', unsafe_allow_html=True)
             st.info("👈 Enter player stats to see the prediction and performance radar.")
+            st.markdown('</div>', unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()

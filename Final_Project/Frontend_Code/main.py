@@ -59,7 +59,7 @@ def main():
             
         # Top Scorer Card
         st.markdown("""
-        <div class="card animate-slide-up delay-300" style="margin-top: 20px;">
+        <div class="card animate-slide-up delay-400" style="margin-top: 20px;">
             <h3 style="color: #bc13fe;">👟 Top Scorer</h3>
             <p>Forecast the Golden Boot winner with player performance analysis.</p>
         </div>
@@ -70,7 +70,7 @@ def main():
     with col2:
         # Match Winner Card
         st.markdown("""
-        <div class="card animate-slide-up delay-200">
+        <div class="card animate-slide-up delay-300">
             <h3 style="color: #0aff0a;">⚽ Match Winner</h3>
             <p>Predict match outcomes (Home/Draw/Away) with high precision.</p>
         </div>
@@ -80,7 +80,7 @@ def main():
             
         # Total Points Card
         st.markdown("""
-        <div class="card animate-slide-up delay-300" style="margin-top: 20px;">
+        <div class="card animate-slide-up delay-500" style="margin-top: 20px;">
             <h3 style="color: #ff0055;">📊 Total Points</h3>
             <p>Estimate final season points tally for any team.</p>
         </div>
@@ -91,7 +91,7 @@ def main():
     # Footer
     futuristic_divider()
     st.markdown("""
-    <div class="footer-text animate-fade-in delay-400">
+    <div class="footer-text animate-fade-in delay-500">
         POWERED BY ADVANCED ML MODELS | V2.0.0
     </div>
     """, unsafe_allow_html=True)

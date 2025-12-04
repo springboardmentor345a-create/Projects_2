@@ -33,6 +33,7 @@ def main():
     col_input, col_viz = st.columns([1, 1])
     
     with col_input:
+        st.markdown('<div class="animate-slide-up delay-100">', unsafe_allow_html=True)
         st.markdown("### 📈 Team Performance Stats")
         
         with st.form("league_winner_form"):
@@ -44,6 +45,7 @@ def main():
             goals_conceded = st.number_input("Goals Conceded", 0, 150, 30)
             
             submitted = st.form_submit_button("🔮 Predict Champion Status")
+        st.markdown('</div>', unsafe_allow_html=True)
     
     with col_viz:
         if submitted:
@@ -51,7 +53,7 @@ def main():
                 # Loading Animation
                 loader_placeholder = st.empty()
                 render_loading_overlay(loader_placeholder)
-                time.sleep(1.5) # Show animation for at least 1.5s
+                time.sleep(2.0) # Extended for effect
                 
                 # Load model
                 model = load_model("league_winner")
@@ -78,10 +80,12 @@ def main():
                 probability = model.predict_proba(input_df)[0][1]
                 
                 # Display Result
+                st.markdown('<div class="animate-pop-in">', unsafe_allow_html=True)
                 if prediction == 1:
                     futuristic_card("Prediction", "CHAMPION", f"Probability: {probability:.1%}", "cyan")
                 else:
                     futuristic_card("Prediction", "NOT CHAMPION", f"Probability: {probability:.1%}", "purple")
+                st.markdown('</div>', unsafe_allow_html=True)
                 
                 # Radar Chart
                 categories = ['Wins', 'PPG', 'Goals', 'Defense']
@@ -115,7 +119,9 @@ def main():
             except Exception as e:
                 st.error(f"Prediction Error: {str(e)}")
         else:
+            st.markdown('<div class="animate-fade-in delay-200">', unsafe_allow_html=True)
             st.info("👈 Enter team stats to predict if they will win the league.")
+            st.markdown('</div>', unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
