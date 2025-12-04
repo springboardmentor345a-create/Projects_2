@@ -27,7 +27,7 @@ def futuristic_card(title, value, subtext="", color="cyan", delay_class=""):
     accent = colors.get(color, "#00f3ff")
     
     html = f"""
-    <div class="metric-card animate-slide-up {delay_class}" style="border-color: {accent}40;">
+    <div class="glass-portal animate-float-continuous {delay_class}" style="border-color: {accent}40;">
         <h3 style="color: #e0e0e0;">{title}</h3>
         <h1 style="margin: 10px 0; font-size: 3rem; color: {accent}; text-shadow: 0 0 20px {accent}40;">{value}</h1>
         <p style="margin: 0; color: #a0a0a0; font-size: 0.9rem;">{subtext}</p>

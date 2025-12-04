@@ -30,13 +30,20 @@ def main():
     if logo_path.exists():
         logo_container(str(logo_path))
             
-    futuristic_header("SCORESIGHT AI")
+    # Animated Header
+    st.markdown("""
+    <h1 class="animate-text-shimmer" style="
+        font-size: 4rem; 
+        margin-bottom: 0.5rem;
+        text-align: center;
+    ">SCORESIGHT AI</h1>
+    """, unsafe_allow_html=True)
     
     st.markdown("""
     <div class="hero-text animate-fade-in delay-100">
         <p class="hero-desc">
-            Advanced machine learning algorithms predicting the beautiful game. 
-            Experience the future of football analytics.
+            Advanced machine learning algorithms predicting the beautiful game. <br>
+            <span style="color: #00f3ff; font-weight: 600;">Experience the future of football analytics.</span>
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -49,7 +56,7 @@ def main():
     with col1:
         # League Winner Card
         st.markdown("""
-        <div class="card animate-slide-up delay-200">
+        <div class="glass-portal animate-float-continuous delay-100">
             <h3 style="color: #00f3ff;">🏆 League Winner</h3>
             <p>Predict the EPL champion using season-long performance metrics.</p>
         </div>
@@ -59,7 +66,7 @@ def main():
             
         # Top Scorer Card
         st.markdown("""
-        <div class="card animate-slide-up delay-400" style="margin-top: 20px;">
+        <div class="glass-portal animate-float-continuous delay-300" style="margin-top: 20px;">
             <h3 style="color: #bc13fe;">👟 Top Scorer</h3>
             <p>Forecast the Golden Boot winner with player performance analysis.</p>
         </div>
@@ -70,7 +77,7 @@ def main():
     with col2:
         # Match Winner Card
         st.markdown("""
-        <div class="card animate-slide-up delay-300">
+        <div class="glass-portal animate-float-continuous delay-200">
             <h3 style="color: #0aff0a;">⚽ Match Winner</h3>
             <p>Predict match outcomes (Home/Draw/Away) with high precision.</p>
         </div>
@@ -80,7 +87,7 @@ def main():
             
         # Total Points Card
         st.markdown("""
-        <div class="card animate-slide-up delay-500" style="margin-top: 20px;">
+        <div class="glass-portal animate-float-continuous delay-400" style="margin-top: 20px;">
             <h3 style="color: #ff0055;">📊 Total Points</h3>
             <p>Estimate final season points tally for any team.</p>
         </div>

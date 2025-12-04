@@ -143,3 +143,298 @@ h6 {
     opacity: 0;
     animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
+
+/* --- Advanced "Loud" Animations --- */
+
+/* Continuous Float */
+@keyframes floatContinuous {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* Glow Pulse */
+@keyframes glowPulse {
+    0% {
+        box-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary);
+    }
+
+    50% {
+        box-shadow: 0 0 20px var(--primary), 0 0 40px var(--secondary);
+    }
+
+    100% {
+        box-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary);
+    }
+}
+
+/* Text Shimmer */
+@keyframes textShimmer {
+    0% {
+        background-position: -200%;
+    }
+
+    100% {
+        background-position: 200%;
+    }
+}
+
+/* Border Flow */
+@keyframes borderFlow {
+    0% {
+        border-color: var(--primary);
+    }
+
+    33% {
+        border-color: var(--secondary);
+    }
+
+    66% {
+        border-color: var(--accent);
+    }
+
+    100% {
+        border-color: var(--primary);
+    }
+}
+
+/* Utility Animation Classes */
+.animate-float-continuous {
+    animation: floatContinuous 6s ease-in-out infinite;
+}
+
+.animate-glow-pulse {
+    animation: glowPulse 3s infinite;
+}
+
+.animate-text-shimmer {
+    background: linear-gradient(90deg, var(--primary), #fff, var(--primary));
+    background-size: 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textShimmer 3s linear infinite;
+}
+
+/* --- Component Styling --- */
+
+/* Glass Portal Card */
+.glass-portal {
+    background: rgba(10, 10, 25, 0.7);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(0, 243, 255, 0.2);
+    border-radius: 24px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.glass-portal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    opacity: 0.7;
+}
+
+.glass-portal:hover {
+    transform: translateY(-10px) scale(1.03);
+    border-color: var(--primary);
+    box-shadow: 0 0 30px rgba(0, 243, 255, 0.2), inset 0 0 20px rgba(0, 243, 255, 0.1);
+}
+
+.glass-portal h3 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.glass-portal p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+/* Header Styling */
+h1 {
+    background: linear-gradient(90deg, #fff, var(--primary), #fff);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 30px rgba(0, 243, 255, 0.3);
+    animation: shine 5s linear infinite;
+    text-align: center;
+    width: 100%;
+}
+
+@keyframes shine {
+    to {
+        background-position: 200% center;
+    }
+}
+
+/* Buttons */
+.stButton>button {
+    background: transparent;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    border-radius: 8px;
+    padding: 0.8rem 2rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    width: 100%;
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.1);
+}
+
+.stButton>button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 243, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+    z-index: -1;
+}
+
+.stButton>button:hover::before {
+    left: 100%;
+}
+
+.stButton>button:hover {
+    background: rgba(0, 243, 255, 0.1);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+    border-color: #fff;
+    transform: scale(1.05);
+}
+
+/* Inputs */
+.stTextInput>div>div>input,
+.stNumberInput>div>div>input,
+.stSelectbox>div>div>div {
+    background-color: rgba(10, 10, 25, 0.6);
+    border: 1px solid var(--glass-border);
+    color: var(--text-main);
+    border-radius: 12px;
+    padding: 1rem;
+    transition: all 0.3s ease;
+}
+
+.stTextInput>div>div>input:focus,
+.stNumberInput>div>div>input:focus,
+.stSelectbox>div>div>div:focus {
+    border-color: var(--primary);
+    background-color: rgba(0, 243, 255, 0.05);
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+/* Sidebar */
+[data-testid="stSidebar"] {
+    background-color: rgba(5, 5, 16, 0.95);
+    backdrop-filter: blur(20px);
+    border-right: 1px solid var(--glass-border);
+}
+
+/* Divider */
+.futuristic-divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+    margin: 4rem 0;
+    opacity: 0.5;
+    position: relative;
+}
+
+.futuristic-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 4px;
+    background: var(--primary);
+    box-shadow: 0 0 15px var(--primary);
+    border-radius: 2px;
+    animation: glowPulse 3s infinite;
+}
+
+/* Logo Animation */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    perspective: 1000px;
+}
+
+.logo-container img {
+    filter: drop-shadow(0 0 20px rgba(0, 243, 255, 0.4));
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: floatContinuous 6s ease-in-out infinite;
+}
+
+.logo-container img:hover {
+    filter: drop-shadow(0 0 40px rgba(188, 19, 254, 0.8));
+    transform: rotateY(10deg) scale(1.1);
+}
+
+/* Utility Classes for Text */
+.hero-text {
+    text-align: center;
+    margin-bottom: 4rem;
+    display: flex;
+    justify-content: center;
+}
+
+.hero-desc {
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: 'Outfit', sans-serif;
+    line-height: 1.8;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.footer-text {
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+    margin-top: 3rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.footer-text:hover {
+    opacity: 1;
+    color: var(--primary);
+    text-shadow: 0 0 10px var(--primary);
+}
