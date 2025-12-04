@@ -1,40 +1,18 @@
 {
   "pipeline": "Total Points Prediction",
-  "problem_statement": "PS3 - Total Points",
-  "timestamp": "2025-12-01 18:20:13",
-  "best_model": "Ridge (Points)",
+  "timestamp": "2025-12-04 23:21:01",
+  "best_model": "Ridge",
   "metrics": {
-    "Model": "Ridge (Points)",
-    "R2_Score": 0.9375322462910837,
-    "MAE": 3.7036119025195764,
-    "RMSE": 4.6409602208724605
+    "Model": "Ridge",
+    "R2_Score": 0.9154804862057812,
+    "MAE": 3.655373733112224,
+    "RMSE": 4.71188135874506
   },
-  "all_results": [
-    {
-      "Model": "Ridge (Points)",
-      "R2_Score": 0.9375322462910837,
-      "MAE": 3.7036119025195764,
-      "RMSE": 4.6409602208724605
-    },
-    {
-      "Model": "RandomForest (Points)",
-      "R2_Score": 0.9307342061073647,
-      "MAE": 3.9684972205013747,
-      "RMSE": 4.886965908799429
-    },
-    {
-      "Model": "XGBoost (Points)",
-      "R2_Score": 0.9294050335884094,
-      "MAE": 4.056771278381348,
-      "RMSE": 4.93363279688131
-    }
-  ],
   "features_used": [
+    "season_end_year",
     "played",
     "gf",
     "ga",
     "gd"
-  ],
-  "target_column": "points",
-  "random_state": 42
+  ]
 }
