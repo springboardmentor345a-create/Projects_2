@@ -200,14 +200,8 @@ def display_prediction_results(probs):
             )
         ])
         
-        fig.update_layout(
-            plot_bgcolor='rgba(0,0,0,0)',
-            paper_bgcolor='rgba(0,0,0,0)',
-            font_color='white',
-            yaxis_title="Probability (%)",
-            margin=dict(t=20, b=20, l=20, r=20),
-            height=250
-        )
+        from utils.ui import update_plot_layout
+        fig = update_plot_layout(fig, title="Win Probability", x_title="", y_title="Probability (%)")
         
         st.plotly_chart(fig, width="stretch")
 

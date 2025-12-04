@@ -148,16 +148,15 @@ def main():
                     fillcolor='rgba(0, 243, 255, 0.2)'
                 ))
                 
+                from utils.ui import update_plot_layout
+                fig = update_plot_layout(fig, title="Projected Goals vs Assists", x_title="", y_title="")
+                
+                # Specific polar chart tweaks
                 fig.update_layout(
                     polar=dict(
-                        radialaxis=dict(visible=True, range=[0, max(values)*1.2], showticklabels=False),
+                        radialaxis=dict(visible=True, range=[0, max(values)*1.2], showticklabels=False, gridcolor="rgba(255, 255, 255, 0.1)"),
                         bgcolor='rgba(0,0,0,0)'
-                    ),
-                    paper_bgcolor='rgba(0,0,0,0)',
-                    font_color='white',
-                    margin=dict(t=20, b=20, l=20, r=20),
-                    height=300,
-                    showlegend=False
+                    )
                 )
                 
                 st.plotly_chart(fig, width="stretch")

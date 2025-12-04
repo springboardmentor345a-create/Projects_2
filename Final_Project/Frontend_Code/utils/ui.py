@@ -98,3 +98,47 @@ def render_loading_overlay(placeholder):
     </script>
     """
     placeholder.markdown(html, unsafe_allow_html=True)
+
+def update_plot_layout(fig, title="", x_title="", y_title=""):
+    """
+    Updates the layout of a Plotly figure to match the futuristic theme.
+    
+    Args:
+        fig (go.Figure): The figure to update.
+        title (str): Chart title.
+        x_title (str): X-axis title.
+        y_title (str): Y-axis title.
+    """
+    fig.update_layout(
+        title=dict(
+            text=title,
+            font=dict(size=20, color="#00f3ff", family="Rajdhani, sans-serif"),
+            x=0.5,
+            xanchor='center'
+        ),
+        xaxis=dict(
+            title=x_title,
+            title_font=dict(color="#a0a0b0"),
+            tickfont=dict(color="#e0e0e0"),
+            gridcolor="rgba(255, 255, 255, 0.1)",
+            zerolinecolor="rgba(255, 255, 255, 0.1)"
+        ),
+        yaxis=dict(
+            title=y_title,
+            title_font=dict(color="#a0a0b0"),
+            tickfont=dict(color="#e0e0e0"),
+            gridcolor="rgba(255, 255, 255, 0.1)",
+            zerolinecolor="rgba(255, 255, 255, 0.1)"
+        ),
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+        font_color='white',
+        hoverlabel=dict(
+            bgcolor="rgba(10, 10, 25, 0.9)",
+            bordercolor="#00f3ff",
+            font=dict(color="white", family="Outfit, sans-serif")
+        ),
+        margin=dict(t=40, b=40, l=40, r=40),
+        showlegend=False
+    )
+    return fig

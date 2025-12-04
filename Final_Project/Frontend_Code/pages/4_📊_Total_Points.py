@@ -96,23 +96,14 @@ def main():
                     marker=dict(size=10, color='#0aff0a')
                 ))
                 
-                fig.update_layout(
-                    title="Projected Season Trajectory",
-                    xaxis_title="Matches Played",
-                    yaxis_title="Points",
-                    plot_bgcolor='rgba(0,0,0,0)',
-                    paper_bgcolor='rgba(0,0,0,0)',
-                    font_color='white',
-                    margin=dict(t=40, b=20, l=20, r=20),
-                    height=300
-                )
+                from utils.ui import update_plot_layout
+                fig = update_plot_layout(fig, title="Projected Season Trajectory", x_title="Matches Played", y_title="Points")
                 
                 st.plotly_chart(fig, width="stretch")
                 
             except Exception as e:
                 st.error(f"Prediction Error: {str(e)}")
         else:
-            st.markdown('<div class="animate-fade-in delay-200">', unsafe_allow_html=True)
             st.info("👈 Enter current team stats to project the final season tally.")
             st.markdown('</div>', unsafe_allow_html=True)
 
