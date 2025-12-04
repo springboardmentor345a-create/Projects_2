@@ -741,3 +741,28 @@ h1 {
         transform: scale(0.98);
     }
 }
+
+/* Fix Dropdown/Selectbox Visibility */
+div[data-baseweb="select"]>div {
+    background-color: rgba(10, 10, 25, 0.8) !important;
+    border-color: var(--glass-border) !important;
+    color: white !important;
+}
+
+div[data-baseweb="select"] span {
+    color: white !important;
+}
+
+div[data-baseweb="menu"] {
+    background-color: #050510 !important;
+    border: 1px solid var(--primary) !important;
+}
+
+div[data-baseweb="option"] {
+    color: white !important;
+}
+
+div[data-baseweb="option"]:hover {
+    background-color: rgba(0, 243, 255, 0.2) !important;
+    cursor: pointer;
+}

@@ -87,33 +87,80 @@ def main():
                     futuristic_card("Prediction", "NOT CHAMPION", f"Probability: {probability:.1%}", "purple")
                 st.markdown('</div>', unsafe_allow_html=True)
                 
-                # Radar Chart
-                categories = ['Wins', 'PPG', 'Goals', 'Defense']
-                # Normalize values for visualization roughly
-                values = [wins/38, points_per_game/3, goals_scored/100, (100-goals_conceded)/100]
+                # --- New Visualization Section ---
                 
-                fig = go.Figure()
-                fig.add_trace(go.Scatterpolar(
-                    r=values,
-                    theta=categories,
-                    fill='toself',
-                    name='Team Stats',
-                    line_color='#00f3ff',
-                    fillcolor='rgba(0, 243, 255, 0.2)'
+                # 1. Gauge Chart for Probability
+                fig_gauge = go.Figure(go.Indicator(
+                    mode = "gauge+number",
+                    value = probability * 100,
+                    domain = {'x': [0, 1], 'y': [0, 1]},
+                    title = {'text': "Championship Probability", 'font': {'size': 24, 'color': "white"}},
+                    number = {'suffix': "%", 'font': {'color': "white"}},
+                    gauge = {
+                        'axis': {'range': [None, 100], 'tickwidth': 1, 'tickcolor': "white"},
+                        'bar': {'color': "#00f3ff"},
+                        'bgcolor': "rgba(0,0,0,0)",
+                        'borderwidth': 2,
+                        'bordercolor': "white",
+                        'steps': [
+                            {'range': [0, 50], 'color': 'rgba(255, 0, 0, 0.3)'},
+                            {'range': [50, 80], 'color': 'rgba(255, 165, 0, 0.3)'},
+                            {'range': [80, 100], 'color': 'rgba(0, 255, 0, 0.3)'}
+                        ],
+                        'threshold': {
+                            'line': {'color': "white", 'width': 4},
+                            'thickness': 0.75,
+                            'value': 90
+                        }
+                    }
+                ))
+                
+                fig_gauge.update_layout(
+                    paper_bgcolor='rgba(0,0,0,0)',
+                    font={'color': "white", 'family': "Rajdhani"}
+                )
+                
+                st.plotly_chart(fig_gauge, width="stretch")
+                
+                # 2. Benchmark Comparison Chart
+                # Define benchmarks for a typical champion
+                benchmarks = {
+                    'Wins': 28,
+                    'PPG': 2.4,
+                    'Goals': 85,
+                    'Defense (GA)': 30 # Lower is better, but for bar chart we might invert or just show raw
+                }
+                
+                # Normalize for comparison (percentage of benchmark)
+                # For Defense, we want to be LOWER than benchmark, so maybe we just show raw values side-by-side
+                
+                categories = ['Wins', 'Points Per Game', 'Goals Scored']
+                team_values = [wins, points_per_game, goals_scored]
+                benchmark_values = [benchmarks['Wins'], benchmarks['PPG'], benchmarks['Goals']]
+                
+                fig_bar = go.Figure()
+                
+                fig_bar.add_trace(go.Bar(
+                    y=categories,
+                    x=team_values,
+                    name='Your Team',
+                    orientation='h',
+                    marker=dict(color='#00f3ff', line=dict(color='white', width=1))
+                ))
+                
+                fig_bar.add_trace(go.Bar(
+                    y=categories,
+                    x=benchmark_values,
+                    name='Champion Avg',
+                    orientation='h',
+                    marker=dict(color='rgba(255, 255, 255, 0.3)', line=dict(color='white', width=1))
                 ))
                 
                 from utils.ui import update_plot_layout
-                fig = update_plot_layout(fig, title="Team Performance Radar", x_title="", y_title="")
+                fig_bar = update_plot_layout(fig_bar, title="Vs. Champion Benchmarks", x_title="Value", y_title="")
+                fig_bar.update_layout(barmode='group')
                 
-                # Specific polar chart tweaks
-                fig.update_layout(
-                    polar=dict(
-                        radialaxis=dict(visible=True, range=[0, 1], showticklabels=False, gridcolor="rgba(255, 255, 255, 0.1)"),
-                        bgcolor='rgba(0,0,0,0)'
-                    )
-                )
-                
-                st.plotly_chart(fig, width="stretch")
+                st.plotly_chart(fig_bar, width="stretch")
                 
             except Exception as e:
                 st.error(f"Prediction Error: {str(e)}")
