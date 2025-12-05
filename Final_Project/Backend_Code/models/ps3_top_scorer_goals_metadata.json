@@ -1,16 +1,14 @@
 {
     "target": "goals",
-    "model_type": "XGBoost",
+    "model_type": "RandomForest",
     "metrics": {
-        "test_r2": 0.9740504026412964,
-        "cv_r2": 0.9629214406013489
+        "test_r2": 0.9797875803743864,
+        "cv_r2": 0.9826624367437816
     },
     "best_params": {
-        "model": "XGBoost",
-        "xgb_n_estimators": 247,
-        "xgb_learning_rate": 0.07981684191606148,
-        "xgb_max_depth": 5,
-        "xgb_subsample": 0.7357311717285758,
-        "xgb_colsample_bytree": 0.6522549912119404
+        "model": "RandomForest",
+        "rf_n_estimators": 299,
+        "rf_max_depth": 20,
+        "rf_min_samples_split": 2
     }
 }

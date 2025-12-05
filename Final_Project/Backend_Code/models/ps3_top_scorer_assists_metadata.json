@@ -2,15 +2,15 @@
     "target": "assists",
     "model_type": "XGBoost",
     "metrics": {
-        "test_r2": 0.9788938164710999,
-        "cv_r2": 0.9678038160006205
+        "test_r2": 0.9823493361473083,
+        "cv_r2": 0.9772233565648397
     },
     "best_params": {
         "model": "XGBoost",
-        "xgb_n_estimators": 125,
-        "xgb_learning_rate": 0.0869388024406169,
-        "xgb_max_depth": 5,
-        "xgb_subsample": 0.6841349170483766,
-        "xgb_colsample_bytree": 0.8124863752305331
+        "xgb_n_estimators": 67,
+        "xgb_learning_rate": 0.25112315517699807,
+        "xgb_max_depth": 3,
+        "xgb_subsample": 0.999831747209385,
+        "xgb_colsample_bytree": 0.9850300777065139
     }
 }
