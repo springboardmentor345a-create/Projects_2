@@ -1,0 +1,402 @@
+import streamlit as st
+import base64
+from pathlib import Path
+
+# Set page config
+st.set_page_config(
+    page_title="ScoreSight - Football Predictions",
+    page_icon="⚽",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
+
+# Initialize session state
+if 'show_cards' not in st.session_state:
+    st.session_state.show_cards = False
+if 'selected_page' not in st.session_state:
+    st.session_state.selected_page = None
+
+# Custom CSS
+st.markdown("""
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap');
+    
+    /* Hide Streamlit branding */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    
+    .block-container {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        max-width: 100% !important;
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Hero Section */
+    .hero-section {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        overflow: hidden;
+    }
+    
+    .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, 
+            rgba(15, 23, 42, 0.9), 
+            rgba(15, 23, 42, 0.8), 
+            rgba(15, 23, 42, 0.9));
+    }
+    
+    .glow-1, .glow-2 {
+        position: absolute;
+        width: 24rem;
+        height: 24rem;
+        border-radius: 50%;
+        filter: blur(80px);
+        animation: pulse 3s ease-in-out infinite;
+    }
+    
+    .glow-1 {
+        top: 25%;
+        left: 25%;
+        background: rgba(59, 130, 246, 0.2);
+    }
+    
+    .glow-2 {
+        bottom: 25%;
+        right: 25%;
+        background: rgba(168, 85, 247, 0.2);
+        animation-delay: 1s;
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 10;
+        text-align: center;
+        padding: 2rem;
+    }
+    
+    .hero-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 14rem !important;
+        font-weight: 900 !important;
+        background: linear-gradient(to right, #3b82f6, #8b5cf6, #06b6d4) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        line-height: 0.85 !important;
+        letter-spacing: -0.04em !important;
+    }
+    
+    @media (max-width: 1400px) { .hero-title { font-size: 12rem !important; } }
+    @media (max-width: 1200px) { .hero-title { font-size: 10rem !important; } }
+    @media (max-width: 992px) { .hero-title { font-size: 8rem !important; } }
+    @media (max-width: 768px) { .hero-title { font-size: 6rem !important; } }
+    @media (max-width: 576px) { .hero-title { font-size: 5rem !important; } }
+    
+    /* Centered Explore Button */
+    .explore-btn-container {
+        position: fixed;
+        top: 72%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+    }
+    
+    .stButton > button {
+        padding: 1.5rem 3rem !important;
+        font-size: 1.25rem !important;
+        font-weight: 700 !important;
+        color: white !important;
+        background: linear-gradient(to right, #8b5cf6, #3b82f6, #06b6d4) !important;
+        border: none !important;
+        border-radius: 0.5rem !important;
+        box-shadow: 0 0 30px rgba(139, 92, 246, 0.5) !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .stButton > button:hover {
+        transform: scale(1.05) !important;
+        box-shadow: 0 0 50px rgba(139, 92, 246, 0.8) !important;
+    }
+    
+    /* Cards Section */
+    .cards-container {
+        padding: 4rem 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+    
+    .section-title h2 {
+        font-family: 'Orbitron', sans-serif;
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 700;
+        color: #e2e8f0;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    
+    .gradient-text {
+        background: linear-gradient(to right, #3b82f6, #8b5cf6, #06b6d4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
+    .section-subtitle {
+        font-size: 1.125rem;
+        color: #94a3b8;
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    
+    /* Clickable Cards */
+    .clickable-card {
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
+        border: 1px solid rgba(139, 92, 246, 0.3);
+        border-radius: 1.5rem;
+        padding: 3rem 2rem;
+        transition: all 0.3s ease;
+        cursor: pointer !important;
+        animation: slideUp 0.6s ease-out forwards;
+        margin-bottom: 1.5rem;
+        min-height: 280px;
+        position: relative;
+    }
+    
+    .clickable-card:hover {
+        transform: translateY(-8px);
+        border-color: rgba(139, 92, 246, 0.6);
+        box-shadow: 0 20px 40px rgba(139, 92, 246, 0.4);
+    }
+    
+    .card-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(139, 92, 246, 0.2));
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .card-title {
+        font-family: 'Inter', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 1rem;
+    }
+    
+    .card-description {
+        color: #94a3b8;
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+    
+    .click-indicator {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        color: #8b5cf6;
+        font-size: 1.5rem;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .clickable-card:hover .click-indicator {
+        opacity: 1;
+    }
+    
+    .card-delay-0 { animation-delay: 0ms; opacity: 0; }
+    .card-delay-1 { animation-delay: 100ms; opacity: 0; }
+    .card-delay-2 { animation-delay: 200ms; opacity: 0; }
+    .card-delay-3 { animation-delay: 300ms; opacity: 0; }
+    .card-delay-4 { animation-delay: 400ms; opacity: 0; }
+    
+    /* Top Right Back Button */
+    .top-right-back {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+    }
+    
+    .top-right-back button {
+        background: linear-gradient(to right, #8b5cf6, #3b82f6) !important;
+        color: white !important;
+        padding: 0.75rem 1.5rem !important;
+        border-radius: 0.5rem !important;
+        font-weight: 600 !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+def hero_section():
+    """Hero section with explore button"""
+    st.markdown("""
+    <div class="hero-section" style="background-image: url('https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=1920');">
+        <div class="hero-overlay"></div>
+        <div class="glow-1"></div>
+        <div class="glow-2"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">ScoreSight</h1>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Centered explore button
+    col1, col2, col3 = st.columns([2, 1, 2])
+    with col2:
+        st.markdown('<div class="explore-btn-container">', unsafe_allow_html=True)
+        if st.button("Explore Predictions ➜", key="explore_btn"):
+            st.session_state.show_cards = True
+            st.rerun()
+        st.markdown('</div>', unsafe_allow_html=True)
+
+def cards_section():
+    """Cards section with clickable cards"""
+    predictions = [
+        {
+            "title": "League Winner Prediction",
+            "description": "AI-powered analysis to predict which team will claim the championship trophy this season.",
+            "icon": "🏆",
+            "route": "league_winner"
+        },
+        {
+            "title": "Points Prediction",
+            "description": "Forecast final points tally for teams based on performance metrics and historical data.",
+            "icon": "📊",
+            "route": "points_prediction"
+        },
+        {
+            "title": "Top Scorer Prediction",
+            "description": "Identify the season's most lethal finisher using advanced goal-scoring analytics.",
+            "icon": "⚽",
+            "route": "top_scorer"
+        },
+        {
+            "title": "Top Assist Provider",
+            "description": "Predict which playmaker will deliver the most assists this season.",
+            "icon": "🎯",
+            "route": "top_assist"
+        },
+        {
+            "title": "Top 4 / Top 6 Finish",
+            "description": "Calculate probabilities for teams securing Champions League and Europa League spots.",
+            "icon": "⭐",
+            "route": "top_finish"
+        }
+    ]
+    
+    # Back button
+    st.markdown('<div class="top-right-back">', unsafe_allow_html=True)
+    if st.button("← Back to Home", key="back_btn"):
+        st.session_state.show_cards = False
+        st.rerun()
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    # Title section
+    st.markdown("""
+    <div class="cards-container">
+        <div class="section-title">
+            <h2>Choose Your <span class="gradient-text">Prediction</span></h2>
+            <p class="section-subtitle">Select from our advanced prediction models powered by machine learning</p>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Create clickable cards
+    cols = st.columns(3)
+    
+    for idx, pred in enumerate(predictions):
+        col_idx = idx % 3
+        with cols[col_idx]:
+            # Create container for card with button
+            container = st.container()
+            
+            # The card HTML
+            container.markdown(f"""
+            <div class="clickable-card card-delay-{idx}">
+                <div class="card-icon">{pred['icon']}</div>
+                <div class="card-title">{pred['title']}</div>
+                <div class="card-description">{pred['description']}</div>
+                <div class="click-indicator">↗</div>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            # Button that triggers navigation when card is clicked
+            if container.button("Click Card", key=f"card_{pred['route']}", use_container_width=True, type="primary"):
+                st.session_state.selected_page = pred['route']
+                st.rerun()
+            
+            # Style to position button over card
+            st.markdown(f"""
+            <style>
+                /* Position button over the card */
+                div[data-testid="column"]:nth-of-type({col_idx + 1}) {{
+                    position: relative;
+                }}
+                
+                div[data-testid="column"]:nth-of-type({col_idx + 1}) > div > div:last-child {{
+                    position: absolute !important;
+                    top: 0 !important;
+                    left: 0 !important;
+                    right: 0 !important;
+                    bottom: 0 !important;
+                    z-index: 10 !important;
+                }}
+                
+                div[data-testid="column"]:nth-of-type({col_idx + 1}) button[kind="primary"] {{
+                    opacity: 0 !important;
+                    background: transparent !important;
+                    border: none !important;
+                    width: 100% !important;
+                    height: 100% !important;
+                    cursor: pointer !important;
+                    position: absolute !important;
+                    top: 0 !important;
+                    left: 0 !important;
+                }}
+            </style>
+            """, unsafe_allow_html=True)
+
+# Main app logic
+if st.session_state.selected_page:
+    # Back button for prediction pages
+    st.markdown('<div class="top-right-back">', unsafe_allow_html=True)
+    if st.button("← Back to Predictions", key="back_to_pred"):
+        st.session_state.selected_page = None
+        st.rerun()
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    # Prediction page content
+    st.markdown(f"""
+    <div style="text-align: center; padding: 4rem 2rem; color: white;">
+        <h1>🎯 {st.session_state.selected_page.replace('_', ' ').title()}</h1>
+        <p style="font-size: 1.2rem; margin-top: 1rem;">This page is under construction...</p>
+    </div>
+    """, unsafe_allow_html=True)
+        
+elif not st.session_state.show_cards:
+    hero_section()
+else:
+    cards_section()
