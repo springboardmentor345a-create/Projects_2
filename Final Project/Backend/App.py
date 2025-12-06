@@ -10,6 +10,19 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+# --- LIST OF ALL TEAMS (New Feature) ---
+ALL_TEAMS = [
+    "Charlton", "Chelsea", "Coventry", "Derby", "Leeds", "Leicester", "Liverpool",
+    "Sunderland", "Tottenham", "Man United", "Arsenal", "Bradford", "Ipswich",
+    "Middlesbrough", "Everton", "Man City", "Newcastle", "Southampton",
+    "West Ham", "Aston Villa", "Bolton", "Blackburn", "Fulham", "Birmingham",
+    "Middlesboro", "West Brom", "Portsmouth", "Wolves", "Norwich",
+    "Crystal Palace", "Wigan", "Reading", "Sheffield United", "Watford",
+    "Hull", "Stoke", "Burnley", "Blackpool", "QPR", "Swansea", "Cardiff",
+    "Bournemouth", "Brighton", "Huddersfield"
+]
+ALL_TEAMS.sort() # Sort teams alphabetically for clean dropdowns
+
 # --- MODEL FILE PATHS ---
 # NOTE: Ensure these files exist at the specified paths. Change them to relative paths
 # (e.g., "Goals.pkl") and place the files next to this script for better portability.
@@ -48,6 +61,7 @@ Assists_model = load_ml_model(ASSISTS_FILE)
 def predict_match_winner(features: dict, model) -> str:
     home_team = features.get('HomeTeam', 'Home Team')
     away_team = features.get('AwayTeam', 'Away Team')
+    # NOTE: The features below must be in the exact order expected by the trained model
     feature_names = [
         'HTWinStreak5','ATLossStreak5','ATWinStreak5','HTP','HTLossStreak5',
         'HTWinStreak3','ATP','ATWinStreak3','HTLossStreak3','HTGC',
@@ -56,6 +70,9 @@ def predict_match_winner(features: dict, model) -> str:
     ]
     if model is not None and hasattr(model, 'predict'):
         try:
+            # Prepare data, converting HomeTeam/AwayTeam to a numerical/one-hot format 
+            # might be required here if the model expects it. 
+            # Assuming the model can handle string inputs for simplicity/simulation for now.
             input_data = [features[name] for name in feature_names]
             input_df = pd.DataFrame([input_data], columns=feature_names)
             prediction = model.predict(input_df)[0]
@@ -316,52 +333,38 @@ elif page == "Goals & Assist":
                     st.error(f"Error during prediction: {e}")
                 st.expander("Show Input Features").json(features_data)
 
-# --- MATCH WINNER PREDICTION PAGE ---
-ALL_TEAMS = [
-    "Charlton", "Chelsea", "Coventry", "Derby", "Leeds", "Leicester", "Liverpool",
-    "Sunderland", "Tottenham", "Man United", "Arsenal", "Bradford", "Ipswich",
-    "Middlesbrough", "Everton", "Man City", "Newcastle", "Southampton",
-    "West Ham", "Aston Villa", "Bolton", "Blackburn", "Fulham", "Birmingham",
-    "Middlesboro", "West Brom", "Portsmouth", "Wolves", "Norwich",
-    "Crystal Palace", "Wigan", "Reading", "Sheffield United", "Watford",
-    "Hull", "Stoke", "Burnley", "Blackpool", "QPR", "Swansea", "Cardiff",
-    "Bournemouth", "Brighton", "Huddersfield"
-]
-# Sort the teams for cleaner presentation in the dropdowns
-ALL_TEAMS.sort()
-
-# --- Start of Match Winner Prediction Page Logic ---
-if page == "Match Winner Prediction":
+# --- MATCH WINNER PREDICTION PAGE (UPDATED WITH DROPDOWNS) ---
+elif page == "Match Winner Prediction":
     st.title("⚽ Match Winner Predictor")
     st.markdown("Enter the match details and team statistics below to get a prediction.")
 
-    # Team names
+    # Team names (UPDATED TO USE DROPDOWNS)
     st.header("Team Information")
     col1, col2 = st.columns(2)
-    
-    # Home Team Dropdown
+
     with col1:
-        # Default to a specific team if it exists, otherwise use the first team
+        # Set default Home Team to 'Man United' if available
         default_home_index = ALL_TEAMS.index("Man United") if "Man United" in ALL_TEAMS else 0
         home_team = st.selectbox(
             "Home Team", 
             options=ALL_TEAMS, 
-            index=default_home_index
+            index=default_home_index,
+            key="home_team_select"
         )
-    
-    # Away Team Dropdown Logic
-    # Create the list of options for the Away Team by removing the selected Home Team
+
+    # Create the restricted list for the Away Team by removing the selected Home Team
     away_team_options = [team for team in ALL_TEAMS if team != home_team]
-    
+
     with col2:
-        # Set a default value for the Away Team that is NOT the Home Team
+        # Set default Away Team to 'Liverpool' (or the first available option)
         default_away_team = "Liverpool" if "Liverpool" in away_team_options else away_team_options[0]
         default_away_index = away_team_options.index(default_away_team)
         
         away_team = st.selectbox(
             "Away Team", 
             options=away_team_options,
-            index=default_away_index
+            index=default_away_index,
+            key="away_team_select"
         )
 
     mw = st.number_input("Match Week", value=10, min_value=1, max_value=38)
@@ -380,8 +383,8 @@ if page == "Match Winner Prediction":
         at_gc = st.number_input("AT Goals Conceded", value=7)
         at_p = st.number_input("AT Points", value=18)
     with col_c:
-        diff_pts = st.number_input("Diff Pts", value=2)
-        diff_form_pts = st.number_input("Diff Form Pts", value=1)
+        diff_pts = st.number_input("Diff Pts", value=3)
+        diff_form_pts = st.number_input("Diff Form Pts", value=2)
 
     # Streaks
     st.header("Streaks")
@@ -410,19 +413,16 @@ if page == "Match Winner Prediction":
 
     st.markdown("---")
     if st.button("🔮 Predict Match Winner", use_container_width=True, type="primary"):
-        # The logic for calculating prediction is kept as-is
         with st.spinner('Calculating prediction...'):
-             # Replace this with a sleep for demonstration if running outside of a full app
-             # time.sleep(1.0)
-             # Calling an undefined function will cause an error, assuming it's imported
-             # winner = predict_match_winner(features_data, Match_winner)
-             winner = "Man United" # Placeholder for testing the UI flow
-             st.markdown("### Match Winner Prediction:")
-             if winner == 'Draw':
-                 st.info("The model predicts a Draw!", icon="🤝")
-             else:
-                 st.success(f"The predicted winner is {winner}!", icon="🏆")
-             st.expander("Show Input Features").json(features_data)
+            time.sleep(1.0)
+            winner = predict_match_winner(features_data, Match_winner)
+            st.markdown("### Match Winner Prediction:")
+            if winner == 'Draw':
+                st.info("The model predicts a Draw!", icon="🤝")
+            else:
+                st.success(f"The predicted winner is {winner}!", icon="🏆")
+            st.expander("Show Input Features").json(features_data)
+
 # --- STYLING ---
 st.markdown("""
 <style>
@@ -439,6 +439,3 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
-
-
-
