@@ -1,0 +1,5 @@
+st.sidebar.title("Navigation")
+page = st.sidebar.radio(
+    "Go to:",
+    ["Home", "League Winner", "Total Points Team Can Score", "Goals & Assist", "Match Winner Prediction"]
+)
