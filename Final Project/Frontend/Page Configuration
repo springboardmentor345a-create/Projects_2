@@ -1,0 +1,5 @@
+st.set_page_config(
+    page_title="EPL Match Predictor",
+    layout="centered",
+    initial_sidebar_state="expanded",
+)
