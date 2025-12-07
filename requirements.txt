@@ -4,3 +4,5 @@ numpy
 scikit-learn 
 joblib 
 pickle5 
+matplotlib 
+seaborn 
