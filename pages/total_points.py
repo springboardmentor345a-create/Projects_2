@@ -152,16 +152,23 @@ def calculate_points_from_goals(goals_scored, goals_conceded, goal_difference):
 def total_points_prediction_page():
     """Total Points Prediction Page with Only Goals Inputs"""
     
-    st.markdown('<div class="prediction-container">', unsafe_allow_html=True)
+    # Initialize session state
+    if 'points_prediction_result' not in st.session_state:
+        st.session_state.points_prediction_result = None
     
     # Header
     st.markdown("""
-    <div class="prediction-header">
-        <h1>📊 Total Points Prediction</h1>
-        <p>Predict final points based on goals statistics</p>
+    <div style="text-align: center; padding: 2rem 0; margin-bottom: 2rem;">
+        <h1 style="color: #ffffff; font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem; font-family: 'Orbitron', 'Rajdhani', 'Exo 2', sans-serif; letter-spacing: 0.05em;">
+            📊 Total Points Prediction
+        </h1>
+        <p style="color: #94a3b8; font-size: 1.2rem; margin: 0; font-family: 'Inter', sans-serif;">
+            Predict final points based on goals statistics
+        </p>
     </div>
     """, unsafe_allow_html=True)
-    
+
+    st.markdown('<div class="prediction-container">', unsafe_allow_html=True)
     # Input Section
     with st.container():
         st.markdown("""
@@ -294,27 +301,25 @@ def total_points_prediction_page():
                 "goals_conceded": goals_conceded,
                 "goal_difference": goal_difference
             }
-            
-            st.session_state.prediction_made = True
-            st.rerun()
         
         st.markdown('</div>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
     
-    if st.session_state.get('points_prediction_result'):
+    # Show results if prediction has been made
+    if st.session_state.points_prediction_result is not None:
         result = st.session_state.points_prediction_result
         
         st.markdown('<div class="result-section">', unsafe_allow_html=True)
         
+        # Fixed HTML structure
         st.markdown(f"""
         <div class="points-result-card">
             <div style="font-size: 2.5rem; margin-bottom: 1rem;">📈</div>
             <div style="color: #94a3b8; font-size: 1.25rem; margin-bottom: 0.5rem;">
                 Final Points Prediction
             </div>
-            <h1>
             <div class="points-value">{result['predicted_points']} points</div>
-            <div class="points-range"></h1>
+            <div class="points-range">
                 Expected range: {result['range_min']} - {result['range_max']} points
             </div>
         </div>
@@ -428,10 +433,8 @@ def total_points_prediction_page():
         st.plotly_chart(fig4, use_container_width=True)
         
         st.markdown('<div style="text-align: center; margin-top: 2rem;">', unsafe_allow_html=True)
-        if st.button("Make New Prediction", type="secondary"):
+        if st.button("Make New Prediction", type="secondary", key="new_prediction_btn"):
             st.session_state.points_prediction_result = None
-            st.session_state.prediction_made = False
-            st.rerun()
         st.markdown('</div>', unsafe_allow_html=True)
         
         st.markdown('</div>', unsafe_allow_html=True)

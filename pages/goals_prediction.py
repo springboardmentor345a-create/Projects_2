@@ -164,16 +164,19 @@ def goals_prediction_page():
     if 'goals_prediction_made' not in st.session_state:
         st.session_state.goals_prediction_made = False
     
-    st.markdown('<div class="prediction-container">', unsafe_allow_html=True)
-    
-    # Header - Matching other pages
+    # Header
     st.markdown("""
-    <div class="prediction-header">
-        <h1>⚽ Goals Prediction</h1>
-        <p>Predict total goals based on player statistics</p>
+    <div style="text-align: center; padding: 2rem 0; margin-bottom: 2rem;">
+        <h1 style="color: #ffffff; font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem; font-family: 'Orbitron', 'Rajdhani', 'Exo 2', sans-serif; letter-spacing: 0.05em;">
+            ⚽ Goals Prediction
+        </h1>
+        <p style="color: #94a3b8; font-size: 1.2rem; margin: 0; font-family: 'Inter', sans-serif;">
+            Predict total goals based on player statistics
+        </p>
     </div>
     """, unsafe_allow_html=True)
-    
+
+    st.markdown('<div class="prediction-container">', unsafe_allow_html=True)
     # Input Section - With all requested inputs
     with st.container():
         st.markdown("""
@@ -451,7 +454,6 @@ def goals_prediction_page():
                 }
                 
                 st.session_state.goals_prediction_made = True
-                st.rerun()
         
         st.markdown('</div>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
@@ -463,16 +465,15 @@ def goals_prediction_page():
         
         st.markdown('<div class="result-section">', unsafe_allow_html=True)
         
-        # Display main prediction
+        # Display main prediction - FIXED HTML STRUCTURE
         st.markdown(f"""
         <div class="points-result-card">
             <div style="font-size: 2.5rem; margin-bottom: 1rem;">⚽</div>
             <div style="color: #94a3b8; font-size: 1.25rem; margin-bottom: 0.5rem;">
                 Total Goals Prediction
             </div>
-            <h1>
             <div class="points-value">{result['predicted_goals']:.1f} goals</div>
-            <div class="points-range"></h1>
+            <div class="points-range">
                 Expected range: {result['range_min']:.1f} - {result['range_max']:.1f} goals
             </div>
         </div>
@@ -659,7 +660,7 @@ def goals_prediction_page():
         
         # Reset button
         st.markdown('<div style="text-align: center; margin-top: 2rem;">', unsafe_allow_html=True)
-        if st.button("Make New Prediction", type="secondary"):
+        if st.button("Make New Prediction", type="secondary", key="new_goals_prediction"):
             st.session_state.goals_prediction_result = None
             st.session_state.goals_prediction_made = False
             st.rerun()

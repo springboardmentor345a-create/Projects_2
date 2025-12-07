@@ -166,7 +166,7 @@ def create_assist_distribution_chart(predicted):
     return fig
 
 def assist_prediction_page():
-    """Assist Prediction Page - EXACT SAME STRUCTURE as Goals Prediction Page"""
+    """Assist Prediction Page - FIXED HEADER VISIBILITY"""
     
     # Initialize session state
     if 'assist_prediction_result' not in st.session_state:
@@ -174,28 +174,30 @@ def assist_prediction_page():
     if 'assist_prediction_made' not in st.session_state:
         st.session_state.assist_prediction_made = False
     
-    st.markdown('<div class="prediction-container">', unsafe_allow_html=True)
-    
-    # Header - MATCHING GOALS PAGE
+    # Header - COMPLETELY REWRITTEN WITHOUT CSS CLASSES
     st.markdown("""
-    <div class="prediction-header">
-        <h1>🎯 Assist Prediction</h1>
-        <p>Predict total assists based on player statistics</p>
+    <div style="text-align: center; padding: 2rem 0; margin-bottom: 2rem;">
+        <h1 style="color: #ffffff; font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem; font-family: 'Orbitron', 'Rajdhani', 'Exo 2', sans-serif; letter-spacing: 0.05em;">
+            🎯 Assist Prediction
+        </h1>
+        <p style="color: #94a3b8; font-size: 1.2rem; margin: 0; font-family: 'Inter', sans-serif;">
+            Predict total assists based on player statistics
+        </p>
     </div>
     """, unsafe_allow_html=True)
     
-    # Input Section - SAME STRUCTURE AS GOALS
+    st.markdown('<div class="prediction-container">', unsafe_allow_html=True)
+    
+    # Input Section
     with st.container():
         st.markdown("""
         <div class="input-section">
             <h2 style="color:#e2e8f0; font-family:'Inter',sans-serif; margin-bottom:2rem;">Enter Player Statistics</h2>
         """, unsafe_allow_html=True)
         
-        # Create two main columns for inputs - JUST LIKE GOALS PAGE
         col1, col2 = st.columns(2)
         
         with col1:
-            # Basic Info Section - SAME AS GOALS
             st.markdown('<div class="input-card">', unsafe_allow_html=True)
             st.markdown('<div class="input-header">👤 Basic Information</div>', unsafe_allow_html=True)
             
@@ -216,7 +218,6 @@ def assist_prediction_page():
             
             st.markdown('</div>', unsafe_allow_html=True)
             
-            # Appearance Statistics Section - SAME AS GOALS
             st.markdown('<div class="input-card">', unsafe_allow_html=True)
             st.markdown('<div class="input-header">📊 Appearance Statistics</div>', unsafe_allow_html=True)
             
@@ -257,7 +258,6 @@ def assist_prediction_page():
             st.markdown('</div>', unsafe_allow_html=True)
         
         with col2:
-            # Expected Metrics Section - SAME AS GOALS BUT FOR ASSISTS
             st.markdown('<div class="input-card">', unsafe_allow_html=True)
             st.markdown('<div class="input-header">🎯 Expected Metrics</div>', unsafe_allow_html=True)
             
@@ -303,7 +303,6 @@ def assist_prediction_page():
             
             st.markdown('</div>', unsafe_allow_html=True)
             
-            # Progressive Actions Section - SAME AS GOALS
             st.markdown('<div class="input-card">', unsafe_allow_html=True)
             st.markdown('<div class="input-header">🚀 Progressive Actions</div>', unsafe_allow_html=True)
             
@@ -330,11 +329,9 @@ def assist_prediction_page():
             
             st.markdown('</div>', unsafe_allow_html=True)
         
-        # Performance Summary Section - SAME AS GOALS
         st.markdown('<div class="input-card">', unsafe_allow_html=True)
         st.markdown('<div class="input-header">📈 Performance Summary</div>', unsafe_allow_html=True)
         
-        # Calculate metrics - SIMILAR TO GOALS
         col1, col2, col3, col4 = st.columns(4)
         
         with col1:
@@ -347,7 +344,6 @@ def assist_prediction_page():
             
             st.metric("xAG per 90", f"{xag_per90:.2f}")
             
-            # Position indicator - SAME AS GOALS
             position_color = "#EF4444" if position.upper() in ["AT", "FW", "ST"] else "#F59E0B" if position.upper() in ["MF", "CM", "AM"] else "#3B82F6"
             st.markdown(f"""
             <div style="margin-top: 1rem; text-align: center;">
@@ -375,12 +371,10 @@ def assist_prediction_page():
             else:
                 st.metric("Penalty Goals %", "0.0%")
             
-            # Age indicator - SAME AS GOALS
             age_color = "#10B981" if 24 <= age <= 28 else "#F59E0B" if 29 <= age <= 32 else "#EF4444"
             st.metric("Age", f"{age}", delta="Prime" if 24 <= age <= 28 else "Peak" if 29 <= age <= 32 else "Developing")
         
         with col4:
-            # Total progressive actions
             total_prog = prog_carries + prog_passes + prog_receives
             st.metric("Total Prog Actions", f"{total_prog}")
             
@@ -392,16 +386,14 @@ def assist_prediction_page():
         
         st.markdown('</div>', unsafe_allow_html=True)
         
-        # Predict Button - EXACT SAME AS GOALS PAGE
+        # Predict Button
         st.markdown('<div style="text-align: center; margin-top: 2rem;">', unsafe_allow_html=True)
         if st.button("Predict Total Assists", type="primary", use_container_width=False, key="predict_assist_btn"):
-            # Validate inputs - SIMILAR TO GOALS
             if minutes <= 0 and nineties <= 0 and matches <= 0:
                 st.error("Please enter at least one of: Minutes, 90s Played, or Matches")
             elif xag <= 0:
                 st.error("Please enter xAG (Expected Assists)")
             else:
-                # Prepare user input
                 user_input = {
                     'Position': position,
                     'Age': age,
@@ -418,10 +410,8 @@ def assist_prediction_page():
                     'Prog_Receives': prog_receives
                 }
                 
-                # Calculate predicted assists (using same logic structure as goals)
                 predicted_assists = calculate_predicted_assists(user_input)
                 
-                # Try to get model prediction
                 try:
                     user_df = pd.DataFrame([{
                         "Position": position,
@@ -450,10 +440,8 @@ def assist_prediction_page():
                             if numbers:
                                 predicted_assists = float(numbers[0])
                 except Exception as e:
-                    # Use calculated prediction if model fails
                     st.warning(f"Using calculated prediction. Model error: {str(e)[:50]}...")
                 
-                # Store result - SAME STRUCTURE AS GOALS
                 st.session_state.assist_prediction_result = {
                     "predicted_assists": predicted_assists,
                     "range_min": round(predicted_assists * 0.8, 1),
@@ -463,34 +451,30 @@ def assist_prediction_page():
                 }
                 
                 st.session_state.assist_prediction_made = True
-                st.rerun()
         
         st.markdown('</div>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
     
-    # Show Results if prediction was made - EXACT SAME STRUCTURE AS GOALS PAGE
+    # Show Results
     if st.session_state.assist_prediction_made and st.session_state.assist_prediction_result:
         result = st.session_state.assist_prediction_result
         user_input = result['user_input']
         
         st.markdown('<div class="result-section">', unsafe_allow_html=True)
         
-        # Display main prediction - SAME AS GOALS
         st.markdown(f"""
         <div class="points-result-card">
             <div style="font-size: 2.5rem; margin-bottom: 1rem;">🎯</div>
             <div style="color: #94a3b8; font-size: 1.25rem; margin-bottom: 0.5rem;">
                 Total Assists Prediction
             </div>
-            <h1>
             <div class="points-value">{result['predicted_assists']:.1f} assists</div>
-            <div class="points-range"></h1>
+            <div class="points-range">
                 Expected range: {result['range_min']:.1f} - {result['range_max']:.1f} assists
             </div>
         </div>
         """, unsafe_allow_html=True)
         
-        # Player Profile Section - SAME AS GOALS
         st.markdown("""
         <div style="text-align:center; margin:2rem 0;">
             <h3 style="color:#e2e8f0; font-family:'Inter',sans-serif;">Player Profile</h3>
@@ -545,7 +529,6 @@ def assist_prediction_page():
             </div>
             """, unsafe_allow_html=True)
         
-        # Statistics Grid - SAME AS GOALS BUT FOR ASSIST METRICS
         st.markdown("""
         <div style="text-align:center; margin:2rem 0;">
             <h3 style="color:#e2e8f0; font-family:'Inter',sans-serif;">Expected Assist Statistics</h3>
@@ -598,7 +581,6 @@ def assist_prediction_page():
             </div>
             """, unsafe_allow_html=True)
         
-        # Progressive Actions Grid - EXACT SAME AS GOALS
         st.markdown("""
         <div style="text-align:center; margin:2rem 0;">
             <h3 style="color:#e2e8f0; font-family:'Inter',sans-serif;">Progressive Actions</h3>
@@ -652,7 +634,6 @@ def assist_prediction_page():
             </div>
             """, unsafe_allow_html=True)
         
-        # Visualizations - SAME STRUCTURE AS GOALS
         st.markdown("""
         <div style="margin-top: 3rem;">
             <h3 style="color:#e2e8f0; font-family:'Inter',sans-serif; text-align: center; margin-bottom: 2rem;">📊 Visual Analysis</h3>
@@ -669,9 +650,8 @@ def assist_prediction_page():
             fig2 = create_assist_metrics_radar_chart(user_input, result['predicted_assists'])
             st.plotly_chart(fig2, use_container_width=True)
         
-        # Reset button - EXACT SAME AS GOALS
         st.markdown('<div style="text-align: center; margin-top: 2rem;">', unsafe_allow_html=True)
-        if st.button("Make New Prediction", type="secondary"):
+        if st.button("Make New Prediction", type="secondary", key="new_assist_prediction"):
             st.session_state.assist_prediction_result = None
             st.session_state.assist_prediction_made = False
             st.rerun()

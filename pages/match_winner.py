@@ -330,15 +330,19 @@ def match_winner_prediction_page():
     if 'match_prediction_made' not in st.session_state:
         st.session_state.match_prediction_made = False
     
-    st.markdown('<div class="prediction-container">', unsafe_allow_html=True)
-    
     # Header
     st.markdown("""
-    <div class="prediction-header">
-        <h1>⭐ Match Winner Prediction</h1>
-        <p>Predict match winner based on team statistics and form</p>
+    <div style="text-align: center; padding: 2rem 0; margin-bottom: 2rem;">
+        <h1 style="color: #ffffff; font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem; font-family: 'Orbitron', 'Rajdhani', 'Exo 2', sans-serif; letter-spacing: 0.05em;">
+            ⭐ Match Winner Prediction
+        </h1>
+        <p style="color: #94a3b8; font-size: 1.2rem; margin: 0; font-family: 'Inter', sans-serif;">
+            Predict match winner based on team statistics and form
+        </p>
     </div>
     """, unsafe_allow_html=True)
+
+    st.markdown('<div class="predict ion-container">', unsafe_allow_html=True)
     
     # Input Section with Table Format
     with st.container():
@@ -611,7 +615,6 @@ def match_winner_prediction_page():
                 }
                 
                 st.session_state.match_prediction_made = True
-                st.rerun()
         
         st.markdown('</div>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)

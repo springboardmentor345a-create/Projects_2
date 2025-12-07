@@ -18,12 +18,8 @@ def create_probability_bar(probability, is_champion=True):
 
 def create_team_comparison_chart(selected_team_prob, other_teams):
     """Create team comparison bar chart"""
-    teams = ["Man City", "Arsenal", "Liverpool", "Chelsea", "Man United"]
-    probabilities = other_teams
-    
-    # Highlight first team (Man City) as active if champion probability is high
-    if selected_team_prob >= 70:
-        probabilities[0] = selected_team_prob
+    teams = ["Your Team", "Arsenal", "Liverpool", "Chelsea", "Man United"]
+    probabilities = [selected_team_prob] + other_teams
     
     fig = go.Figure(data=[
         go.Bar(
@@ -179,23 +175,32 @@ def calculate_champion_probability(wins, draws, losses, points_per_game, goal_di
 
 def determine_champion_status(probability):
     """Determine if team is champion based on probability"""
-    if probability >= 70:
-        return True
-    else:
-        return False
+    return probability >= 70
 
 def league_winner_prediction():
     """League Winner Prediction Page with Enhanced UI"""
     
-    st.markdown('<div class="prediction-container">', unsafe_allow_html=True)
+    # Initialize session state variables ONCE
+    if 'prediction_made' not in st.session_state:
+        st.session_state.prediction_made = False
+    if 'team_data' not in st.session_state:
+        st.session_state.team_data = None
+    if 'prediction_result' not in st.session_state:
+        st.session_state.prediction_result = None
     
-    # Header
+   # Header
     st.markdown("""
-    <div class="prediction-header">
-        <h1>🏆 League Winner Prediction</h1>
-        <p>Advanced AI analysis to predict the championship winner</p>
+    <div style="text-align: center; padding: 2rem 0; margin-bottom: 2rem;">
+        <h1 style="color: #ffffff; font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem; font-family: 'Orbitron', 'Rajdhani', 'Exo 2', sans-serif; letter-spacing: 0.05em;">
+            🏆 League Winner Prediction
+        </h1>
+        <p style="color: #94a3b8; font-size: 1.2rem; margin: 0; font-family: 'Inter', sans-serif;">
+            Advanced AI analysis to predict the championship winner
+        </p>
     </div>
     """, unsafe_allow_html=True)
+
+    st.markdown('<div class="prediction-container">', unsafe_allow_html=True)
     
     # Input Section
     with st.container():
@@ -260,7 +265,7 @@ def league_winner_prediction():
                 </div>
                 <div style="display: flex; justify-content: space-between; color: #94a3b8; font-size: 0.9rem; margin-top: 0.25rem;">
                     <span>Based on {total_matches} matches</span>
-                    <span>{(calculated_points/total_matches):.2f} PPG</span>
+                    <span>{(calculated_points/total_matches if total_matches > 0 else 0):.2f} PPG</span>
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -374,10 +379,11 @@ def league_winner_prediction():
                     use_container_width=False,
                     key="predict_btn"):
             
+            # Calculate probability
             probability = calculate_champion_probability(wins, draws, losses, points_per_game, goal_diff)
-            
             is_champion = determine_champion_status(probability)
             
+            # Store in session state
             st.session_state.team_data = {
                 'name': "Your Team",
                 'wins': wins,
@@ -398,6 +404,7 @@ def league_winner_prediction():
                 'probability': probability
             }
             
+            # Try to get model prediction
             user_input_df = pd.DataFrame([{
                 "Wins": wins,
                 "Draws": draws,
@@ -409,50 +416,23 @@ def league_winner_prediction():
             
             try:
                 result = problem1_logic(user_input_df)
-                if isinstance(result, str):
-                    model_pred = result
-                elif isinstance(result, pd.DataFrame):
-                    model_pred = str(result.iloc[0, 0]) if not result.empty else str(is_champion)
-                else:
-                    model_pred = str(result)
-                
-                model_is_champion = False
-                if 'champion' in str(model_pred).lower() or 'winner' in str(model_pred).lower():
-                    model_is_champion = True
-                elif 'yes' in str(model_pred).lower() or 'true' in str(model_pred).lower():
-                    model_is_champion = True
-                elif '1' in str(model_pred):
-                    model_is_champion = True
-                
-                if probability >= 70:
-                    model_is_champion = True
-                    model_pred = "Champion"
-                
-                final_prediction = "Champion" if model_is_champion else "Not Champion"
-                
+                # Process model result (if needed)
             except Exception as e:
-                if probability >= 70:
-                    is_champion = True
-                final_prediction = "Champion" if is_champion else "Not Champion"
+                pass  # Use calculated prediction
             
+            final_prediction = "Champion" if is_champion else "Not Champion"
             st.session_state.prediction_result = final_prediction
             st.session_state.prediction_made = True
-            st.rerun()
         
         st.markdown('</div>', unsafe_allow_html=True)
-        
         st.markdown('</div>', unsafe_allow_html=True)
     
-    if st.session_state.prediction_made:
+    # Show results if prediction has been made
+    if st.session_state.prediction_made and st.session_state.team_data is not None:
         team_data = st.session_state.team_data
-        
         prediction_result = st.session_state.prediction_result
         is_champion = prediction_result == "Champion"
         probability = team_data['probability']
-        
-        if probability >= 70:
-            is_champion = True
-            prediction_result = "Champion"
         
         st.markdown('<div class="result-section">', unsafe_allow_html=True)
         
@@ -524,7 +504,7 @@ def league_winner_prediction():
         
         st.markdown('<div class="viz-section">', unsafe_allow_html=True)
         
-        other_probabilities = [65, 45, 25, 15, 5]
+        other_probabilities = [65, 45, 25, 15]
         fig1 = create_team_comparison_chart(probability, other_probabilities)
         st.plotly_chart(fig1, use_container_width=True)
         
@@ -564,7 +544,7 @@ def league_winner_prediction():
         </div>
         """, unsafe_allow_html=True)
         
-        st.markdown("""
+        st.markdown(f"""
         <div style="margin-top: 3rem; padding: 2rem; background: rgba(30,41,59,0.5); border-radius: 1rem;">
             <h3 style="color:#e2e8f0; font-family:'Inter',sans-serif; margin-bottom: 1.5rem;">Key Factors Analysis</h3>
             <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
@@ -596,7 +576,6 @@ def league_winner_prediction():
                 st.info("Feature coming soon: Detailed comparison with other Premier League teams")
         
         st.markdown('</div>', unsafe_allow_html=True)
-        
         st.markdown('</div>', unsafe_allow_html=True)
     
     st.markdown('</div>', unsafe_allow_html=True)
