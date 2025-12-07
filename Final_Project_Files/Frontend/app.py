@@ -166,20 +166,31 @@ st.markdown(css, unsafe_allow_html=True)
 # ============================================================================
 # Load Models
 # ============================================================================
-
 @st.cache_resource
 def load_models():
     try:
+        # 1. Get the path to the current file (Frontend/app.py)
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        
+        # 2. Construct the path to the Backend folder (Sibling directory)
+        #    ".." means go up one level
+        backend_dir = os.path.join(current_dir, '..', 'Backend')
+        
+        # 3. Load all models using the backend_dir path
         models = {
-            'match': joblib.load('match_winner_model.pkl'),
-            'league_class': joblib.load('league_class_model.pkl'),
-            'league_points': joblib.load('league_points_model.pkl'),
-            'goals': joblib.load('player_goals_model.pkl'),
-            'assists': joblib.load('player_assists_model.pkl')
+            'match': joblib.load(os.path.join(backend_dir, 'match_winner_model.pkl')),
+            'league_class': joblib.load(os.path.join(backend_dir, 'league_class_model.pkl')),
+            'league_points': joblib.load(os.path.join(backend_dir, 'league_points_model.pkl')),
+            'goals': joblib.load(os.path.join(backend_dir, 'player_goals_model.pkl')),
+            'assists': joblib.load(os.path.join(backend_dir, 'player_assists_model.pkl'))
         }
         return models
+        
     except FileNotFoundError as e:
-        st.error(f"Model file not found: {e}")
+        st.error(f"Critical Error: Model file not found.")
+        st.error(str(e))
+        # Debug helper to show where it was looking
+        st.code(f"Looking in: {os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'Backend'))}")
         return None
 
 # ============================================================================
