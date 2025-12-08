@@ -1,3 +1,4 @@
 Model,Accuracy,Precision,Recall,F1_Score
 RandomForest,0.95,0.975,0.95,0.9576576576576576
+GradientBoosting,0.95,0.975,0.95,0.9576576576576576
 XGBoost,0.95,0.975,0.95,0.9576576576576576
